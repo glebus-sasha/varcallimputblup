@@ -8,7 +8,7 @@ process FASTQC {
 //  errorStrategy 'ignore'
 
     input:
-    tuple val(sid), path(reads)
+    tuple val(sid), path(read1), path(read2)
 
     output:
     path "*.html", emit: html

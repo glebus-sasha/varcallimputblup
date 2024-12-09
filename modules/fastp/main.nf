@@ -9,23 +9,21 @@ process FASTP{
 //    errorStrategy 'ignore'
 
     input:
-    tuple val(sid), path(reads)
+    tuple val(sid), path(read1), path(read2)
 
     output:
-    tuple val(sid), path(fq_1_trimmed), path(fq_2_trimmed), emit: trimmed_reads
+    tuple val(sid), path("${sid}.R1.fastq.gz"), path("${sid}.R2.fastq.gz"), emit: trimmed_reads
     path '*.html', emit: html, optional: true
     path '*.json', emit: json, optional: true
 
     script:
-    fq_1_trimmed = sid + '_R1.fastq.gz'
-    fq_2_trimmed = sid + '_R2.fastq.gz'
     """
     fastp \
     --thread ${task.cpus} \
-    --in1 ${reads[0]} \
-    --in2 ${reads[1]}\
-    --out1 $fq_1_trimmed \
-    --out2 $fq_2_trimmed \
+    --in1 $read1 \
+    --in2 $read2\
+    --out1 "${sid}.R1.fastq.gz" \
+    --out2 "${sid}.R2.fastq.gz" \
     --html ${sid}.fastp_stats.html \
     --json ${sid}.fastp_stats.json 
     """
