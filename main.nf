@@ -42,14 +42,19 @@ workflow test {
 }
 
 workflow FASTQ_QC_TRIM_ALIGN_VARCALL { 
-    FASTQC(input_fastqs)
+    FASTQC1(input_fastqs)
     FASTP(input_fastqs)
-    BWA_MEM(TRIM.out.trimmed_reads, reference, bwaidx, bed_file)
-    SAMTOOLS_FLAGSTAT(ALIGN.out.bam)
-    SAMTOOLS_INDEX(ALIGN.out.bam)
-    BCFTOOLS_MPILEUP(reference, BAMINDEX.out.bai, faidx, bed_file)
-    BCFTOOLS_STATS(VARCALL_MPILEUP.out.vcf)
-    MULTIQC(TRIM.out.json.collect(), QCONTROL.out.zip.collect(), FLAGSTAT.out.flagstat.collect(), BCFSTATS.out.bcfstats.collect())
+    BWA_MEM(FASTP.out.trimmed_reads, reference, bwaidx, bed_file)
+    SAMTOOLS_FLAGSTAT(BWA_MEM.out.bam)
+    SAMTOOLS_INDEX(BWA_MEM.out.bam)
+    BCFTOOLS_MPILEUP(reference, SAMTOOLS_INDEX.out.bai, faidx, bed_file)
+    BCFTOOLS_STATS(BCFTOOLS_MPILEUP.out.vcf)
+    MULTIQC(
+        FASTP.out.json.collect(), 
+        FASTQC1.out.zip.collect(), 
+        SAMTOOLS_FLAGSTAT.out.flagstat.collect(), 
+        BCFTOOLS_STATS.out.bcfstats.collect()
+        )
 }
 
 workflow IMPUTE {
