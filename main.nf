@@ -1,8 +1,8 @@
 #!/usr/bin/env nextflow
 
 // Include processes
-include { QCONTROL              } from './modules/fasqc'
-include { TRIM                  } from './modules/fastp'
+include { FASTQC    } from './modules/fastqc'
+include { FASTP     } from './modules/fastp'
 
 // Logging pipeline information
 log.info """\
