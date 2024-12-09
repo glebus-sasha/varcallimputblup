@@ -28,7 +28,7 @@ log.info """\
 reference = Channel.fromPath("${params.reference}").collect()
 
 // Define the input channel for FASTQ files, if provided
-input_fastqs = Channel.fromFilePairs(["${params.reads}/*[rR]{1,2}*.*{fastq,fq}*", "${params.reads}/*_{1,2}.{fastq,fq}*"], flat = true)
+input_fastqs = Channel.fromFilePairs(["${params.reads}/*[rR]{1,2}*.*{fastq,fq}*", "${params.reads}/*_{1,2}.{fastq,fq}*"], flat: true)
 
 // Define the input channel for bwa index files, if provided
 bwaidx = Channel.fromPath("${params.bwaidx}/*", checkIfExists: true).collect()
