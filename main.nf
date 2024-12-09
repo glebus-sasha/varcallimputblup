@@ -66,7 +66,7 @@ workflow IMPUTE {
 }
 
 workflow {
-    test()
+    FASTQ_QC_TRIM_ALIGN_VARCALL()
 }
 
 
