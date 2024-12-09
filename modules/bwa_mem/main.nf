@@ -19,7 +19,7 @@ process BWA_MEM {
     """
         bwa mem \
             -t ${task.cpus} ${reference} ${fq_1_trimmed} ${fq_2_trimmed} | \
-        samtools view -bh ${bed_option} | \
+        samtools view -bh | \
         samtools sort -o --threads ${task.cpus} ${sid}.sorted.bam
 
     """
