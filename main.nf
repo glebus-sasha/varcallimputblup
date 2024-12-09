@@ -38,7 +38,7 @@ faidx = Channel.fromPath("${params.faidx}/*.fai", checkIfExists: true).collect()
 
 // Define the workflow
 workflow test { 
-
+    input_fastqs.view()
 }
 
 workflow FASTQ_QC_TRIM_ALIGN_VARCALL { 
@@ -66,7 +66,7 @@ workflow IMPUTE {
 }
 
 workflow {
-    FASTQ_QC_TRIM_ALIGN_VARCALL()
+    test()
 }
 
 
