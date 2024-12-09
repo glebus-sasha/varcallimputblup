@@ -44,10 +44,10 @@ workflow test {
 workflow FASTQ_QC_TRIM_ALIGN_VARCALL { 
     FASTQC1(input_fastqs)
     FASTP(input_fastqs)
-    BWA_MEM(FASTP.out.trimmed_reads, reference, bwaidx, bed_file)
+    BWA_MEM(FASTP.out.trimmed_reads, reference, bwaidx)
     SAMTOOLS_FLAGSTAT(BWA_MEM.out.bam)
     SAMTOOLS_INDEX(BWA_MEM.out.bam)
-    BCFTOOLS_MPILEUP(reference, SAMTOOLS_INDEX.out.bai, faidx, bed_file)
+    BCFTOOLS_MPILEUP(reference, SAMTOOLS_INDEX.out.bai, faidx)
     BCFTOOLS_STATS(BCFTOOLS_MPILEUP.out.vcf)
     MULTIQC(
         FASTP.out.json.collect(), 

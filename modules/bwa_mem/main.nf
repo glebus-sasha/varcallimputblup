@@ -11,13 +11,11 @@ process BWA_MEM {
     tuple val(sid), path(fq_1_trimmed), path(fq_2_trimmed)
     path reference
     path idx
-    path bedfile
     
     output:
     tuple val(sid), path("*.sorted.bam"), emit: bam
     
     script:
-    def bed_option = bedfile.getBaseName() == 'dummy' ? "" : "-L ${bedfile}"    // If the base name of bedfile is 'dummy', set bed_option to an empty string
     """
         bwa mem \
             -t ${task.cpus} ${reference} ${fq_1_trimmed} ${fq_2_trimmed} | \
