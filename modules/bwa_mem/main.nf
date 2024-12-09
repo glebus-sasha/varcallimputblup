@@ -1,7 +1,7 @@
 // Define the `ALIGN` process that aligns reads to the reference genome
 process BWA_MEM {
     container = 'glebusasha/bwa_samtools'
-    tag "$reference ${sid} $bedfile"
+    tag "$reference ${sid}"
     cpus 10
     publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/BWA_MEM"
 //	  debug true
@@ -20,7 +20,7 @@ process BWA_MEM {
         bwa mem \
             -t ${task.cpus} ${reference} ${fq_1_trimmed} ${fq_2_trimmed} | \
         samtools view -bh | \
-        samtools sort -o --threads ${task.cpus} ${sid}.sorted.bam
+        samtools sort --threads ${task.cpus} -o ${sid}.sorted.bam
 
     """
 }
