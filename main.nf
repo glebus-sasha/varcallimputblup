@@ -53,6 +53,7 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
     MULTIQC(
         FASTP.out.json.collect(), 
         FASTQC1.out.zip.collect(), 
+        FASTQC2.out.zip.collect(), 
         SAMTOOLS_FLAGSTAT.out.flagstat.collect(), 
         BCFTOOLS_STATS.out.bcfstats.collect()
         )
