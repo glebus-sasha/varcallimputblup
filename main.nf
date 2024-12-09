@@ -1,4 +1,5 @@
 #!/usr/bin/env nextflow
+
 // Include processes
 include { QCONTROL              } from './modules/fasqc'
 include { TRIM                  } from './modules/fastp'
@@ -24,7 +25,7 @@ bwaidx = params.bwaidx ? Channel.fromPath("${params.bwaidx}/*", checkIfExists: t
 faidx = params.bwaidx ? Channel.fromPath("${params.faidx}/*.fai", checkIfExists: true).collect() : null
 
 // Define the workflow
-workflow main { 
+workflow test { 
     input_fastqs.view()
 }
 
@@ -34,7 +35,7 @@ workflow two {
 
 
 workflow {
-    main()
+    test()
 }
 
 
