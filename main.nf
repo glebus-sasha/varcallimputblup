@@ -16,7 +16,7 @@ log.info """\
 reference = params.reference ? Channel.fromPath("${params.reference}").collect(): null
 
 // Define the input channel for FASTQ files, if provided
-input_fastqs = params.reads ? Channel.fromFilePairs(["${params.reads}/*[rR]{1,2}*.*{fastq,fq}*", "${params.reads}/*_{1,2}.{fastq,fq}*"], checkIfExists: true) : null
+input_fastqs = Channel.fromFilePairs(["${params.reads}/*[rR]{1,2}*.*{fastq,fq}*", "${params.reads}/*_{1,2}.{fastq,fq}*"])
 
 // Define the input channel for bwa index files, if provided
 bwaidx = params.bwaidx ? Channel.fromPath("${params.bwaidx}/*", checkIfExists: true).collect() : null
@@ -28,11 +28,6 @@ faidx = params.bwaidx ? Channel.fromPath("${params.faidx}/*.fai", checkIfExists:
 workflow test { 
     input_fastqs.view()
 }
-
-workflow two { 
-
-}
-
 
 workflow {
     test()
