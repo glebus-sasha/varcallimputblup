@@ -16,7 +16,7 @@ process FASTQC {
 
     script:
     """
-    fastqc $reads
+    fastqc $read1 $read2
     """
 
     stub:
