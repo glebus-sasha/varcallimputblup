@@ -20,16 +20,25 @@ process GLIMPSE2_SPLITREFERENCE {
     def prefix      = task.ext.prefix ?: "${ref_panel.baseName}_${output_region.replace(":","_")}"
 
     """
-    GLIMPSE2_split_reference \
+    REF=$ref_panel
+    while IFS="" read -r LINE || [ -n "$LINE" ];
+    do
+        printf -v ID "%02d" $(echo $LINE | cut -d" " -f1)
+        IRG=$(echo $LINE | cut -d" " -f3)
+        ORG=$(echo $LINE | cut -d" " -f4)
+
+        GLIMPSE2_split_reference --reference ${REF} --input-region ${IRG} --output-region ${ORG} --output ${ref_panel.baseName}
+    done < chunks.chr22.txt
+    """
+
+    stub:
+    """
+        GLIMPSE2_split_reference \
         --reference $ref_panel \
         --input-region $input_region \
         --output-region $output_region \
         --thread $task.cpus \
         --output ${prefix}
-    """
-
-    stub:
-    """
     touch ${ref_panel.baseName}.bin
     """
 }
