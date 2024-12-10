@@ -21,7 +21,7 @@ process FASTP{
     fastp \
     --thread ${task.cpus} \
     --in1 $read1 \
-    --in2 $read2\
+    --in2 $read2 \
     --out1 "${sid}.R1.fastq.gz" \
     --out2 "${sid}.R2.fastq.gz" \
     --html ${sid}.fastp_stats.html \

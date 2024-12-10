@@ -24,24 +24,30 @@ log.info """\
     """
     .stripIndent(true)
 
-// Define the input channel for reference file
 reference = Channel.fromPath("${params.reference}").collect()
-
-// Define the input channel for FASTQ files, if provided
 input_fastqs = Channel.fromFilePairs(["${params.reads}/*[rR]{1,2}*.*{fastq,fq}*", "${params.reads}/*_{1,2}.{fastq,fq}*"], flat: true)
-
-// Define the input channel for bwa index files, if provided
 bwaidx = Channel.fromPath("${params.bwaidx}/*", checkIfExists: true).collect()
-
-// Define the input channel for fai index files, if provided
 faidx = Channel.fromPath("${params.faidx}/*.fai", checkIfExists: true).collect()
+ref_panel = Channel.fromPath("${params.ref_panel}").collect()
+ref_panel_index = Channel.fromPath("${params.ref_panel_index}").collect()
 
 // Define the workflow
 workflow test { 
-    input_fastqs.view()
+    take:
+    ref_panel
+
+    main:
+    GLIMPSE2_CHUNK(ref_panel, ref_panel_index, 'chr1')
 }
 
 workflow FASTQ_QC_TRIM_ALIGN_VARCALL { 
+    take:
+    reference
+    input_fastqs
+    bwaidx
+    faidx
+
+    main:
     FASTQC1(input_fastqs)
     FASTP(input_fastqs)
     FASTQC2(FASTP.out.trimmed_reads)
@@ -60,15 +66,16 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
 }
 
 workflow IMPUTE {
-    GLIMPSE2_CHUNK
+
+    GLIMPSE2_CHUNK()
     GLIMPSE2_CONCORDANCE
     GLIMPSE2_LIGATE
-    GLIMPSE2_PHASE
+    GLIMPSE2_PHASE()
     GLIMPSE2_SPLITREFERENCE
 }
 
 workflow {
-    FASTQ_QC_TRIM_ALIGN_VARCALL()
+    test()
 }
 
 
