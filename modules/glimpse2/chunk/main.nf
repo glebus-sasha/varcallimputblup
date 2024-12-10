@@ -18,6 +18,7 @@ process GLIMPSE2_CHUNK {
     GLIMPSE2_chunk \
         --input $ref_panel \
         --region $region \
+        --recursive \
         --threads $task.cpus \
         --output ${ref_panel.baseName}.txt
     """
