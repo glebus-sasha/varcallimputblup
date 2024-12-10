@@ -2,7 +2,7 @@ process GLIMPSE2_CHUNK {
     tag "$meta.id"
     label 'process_low'
     conda "${moduleDir}/environment.yml"
-    container 'biocontainers/glimpse-bio:2.0.1--h46b9e50_1'
+    container 'imary116/glimpse2:with-bcftools-and-updated-info-score'
     publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/GLIMPSE2_CHUNK"
 
     input:
