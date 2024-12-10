@@ -19,7 +19,7 @@ process GLIMPSE2_CHUNK {
         --input $ref_panel \
         --region $region \
         --sequential \
-        --threads $task.cpus \
+        --threads 60 \
         --output ${ref_panel.baseName}.txt
     """
 
