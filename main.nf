@@ -75,7 +75,7 @@ workflow IMPUTE {
 }
 
 workflow {
-    test()
+    test(ref_panel)
 }
 
 
