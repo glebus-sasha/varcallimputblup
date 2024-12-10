@@ -8,7 +8,7 @@ process GLIMPSE2_CHUNK {
     input:
     path(ref_panel)
     path(ref_panel_index)
-    path(region)
+    val(region)
 
     output:
     path("${ref_panel.baseName}.txt"), emit: chunk_chr
