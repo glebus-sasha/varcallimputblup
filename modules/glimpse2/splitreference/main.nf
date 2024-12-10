@@ -21,7 +21,7 @@ process GLIMPSE2_SPLITREFERENCE {
 
     """
     GLIMPSE2_split_reference \
-        --reference $reference \
+        --reference $ref_panel \
         --input-region $input_region \
         --output-region $output_region \
         --thread $task.cpus \
