@@ -38,6 +38,7 @@ workflow test {
 
     main:
     GLIMPSE2_CHUNK(ref_panel, ref_panel_index, 'chr1')
+    GLIMPSE2_SPLITREFERENCE(ref_panel, ref_panel_index, 'chr1', 'chr1')
 }
 
 workflow FASTQ_QC_TRIM_ALIGN_VARCALL { 
@@ -66,8 +67,12 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
 }
 
 workflow IMPUTE {
+    take:
+    ref_panel
 
-    GLIMPSE2_CHUNK()
+    main:
+    GLIMPSE2_CHUNK(ref_panel, ref_panel_index, 'chr1')
+
     GLIMPSE2_CONCORDANCE
     GLIMPSE2_LIGATE
     GLIMPSE2_PHASE()
