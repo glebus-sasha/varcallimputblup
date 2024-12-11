@@ -86,7 +86,7 @@ workflow IMPUTE {
 }
 
 workflow {
-    test(ref_panel)
+    test(ref_panel, ref_panel_index, bam, bamindex)
 }
 
 
