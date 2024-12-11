@@ -31,8 +31,9 @@ faidx = Channel.fromPath("${params.faidx}/*.fai", checkIfExists: true).collect()
 ref_panel = Channel.fromPath("${params.ref_panel}").collect()
 ref_panel_index = Channel.fromPath("${params.ref_panel_index}").collect()
 bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.baseName, file]}
-bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.baseName, file]}
+bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.baseName.baseName, file]}
 bam.join(bamindex).view()
+
 
 // Define the workflow
 workflow test { 
