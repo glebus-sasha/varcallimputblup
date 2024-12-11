@@ -16,7 +16,7 @@ process GLIMPSE2_SPLITREFERENCE {
         tuple val(meta), path("*.bin"), emit: bin_ref
         path "versions.yml"           , emit: versions
 
-    shell:
+    script:
     """
     while IFS="" read -r LINE || [ -n "$LINE" ];
     do
