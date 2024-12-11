@@ -25,7 +25,7 @@ process GLIMPSE2_SPLITREFERENCE {
     REF=!ref_panel
     while IFS="" read -r LINE || [ -n "!LINE" ];
     do
-        printf -v ID "%02d" $(echo !LINE | cut -d" " -f1)
+        printf -v ID "%02d" !(echo !LINE | cut -d" " -f1)
         IRG=$(echo !LINE | cut -d" " -f3)
         ORG=$(echo !LINE | cut -d" " -f4)
 
