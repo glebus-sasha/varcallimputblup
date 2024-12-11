@@ -8,7 +8,7 @@ process GLIMPSE2_SPLITREFERENCE {
     input:
     path(ref_panel)
     path(ref_panel_index)
-    val(chunk_chr)
+    path(chunk_chr)
     val(input_region)
     val(output_region)
 
