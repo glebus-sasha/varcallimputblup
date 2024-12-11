@@ -30,15 +30,21 @@ bwaidx = Channel.fromPath("${params.bwaidx}/*", checkIfExists: true).collect()
 faidx = Channel.fromPath("${params.faidx}/*.fai", checkIfExists: true).collect()
 ref_panel = Channel.fromPath("${params.ref_panel}").collect()
 ref_panel_index = Channel.fromPath("${params.ref_panel_index}").collect()
+bam = Channel.fromPath("${params.bam}/*.bam")
+bamindex = Channel.fromPath("${params.bam}/*.bam.bai")
 
 // Define the workflow
 workflow test { 
     take:
     ref_panel
+    ref_panel_index
+    bam
+    bamindex
 
     main:
     GLIMPSE2_CHUNK(ref_panel, ref_panel_index, 'chr1')
-    GLIMPSE2_SPLITREFERENCE(ref_panel, ref_panel_index, 'chr1', 'chr1')
+//    GLIMPSE2_SPLITREFERENCE(ref_panel, ref_panel_index, 'chr1', 'chr1')
+//    GLIMPSE2_PHASE(ref_panel, ref_panel_index, bam, bamindex)
 }
 
 workflow FASTQ_QC_TRIM_ALIGN_VARCALL { 
