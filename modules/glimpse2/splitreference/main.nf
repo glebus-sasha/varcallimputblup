@@ -18,13 +18,12 @@ process GLIMPSE2_SPLITREFERENCE {
 
     shell:
     """
-    REF=!ref_panel
     while IFS="" read -r LINE || [ -n "!LINE" ];
     do
         printf -v ID "%02d" !(echo !LINE | cut -d" " -f1)
         IRG=!(echo !LINE | cut -d" " -f3)
         ORG=!(echo !LINE | cut -d" " -f4)
-        ./bin/GLIMPSE2_split_reference --reference !{REF} --input-region !{IRG} --output-region !{ORG} --output reference_panel/split/1000GP.chr22.noNA12878
+        ./bin/GLIMPSE2_split_reference --reference !{ref_panel} --input-region !{IRG} --output-region !{ORG} --output reference_panel/split/1000GP.chr22.noNA12878
     done < !chunk_chr
     """
 
