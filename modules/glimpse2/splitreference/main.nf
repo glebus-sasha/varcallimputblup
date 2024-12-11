@@ -12,14 +12,12 @@ process GLIMPSE2_SPLITREFERENCE {
     val(input_region)
     val(output_region)
 
-
     output:
         tuple val(meta), path("*.bin"), emit: bin_ref
         path "versions.yml"           , emit: versions
 
     shell:
     """
-    #!/bin/bash
     REF=!ref_panel
     while IFS="" read -r LINE || [ -n "!LINE" ];
     do
