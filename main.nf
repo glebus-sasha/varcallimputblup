@@ -45,7 +45,7 @@ workflow test {
     GLIMPSE2_CHUNK(ref_panel, ref_panel_index, 'chr1')
 
 
-    GLIMPSE2_CHUNK.out.chunk_chr.splitCsv(header:false,sep:'\t').map{T->T[3]}.view()
+    GLIMPSE2_CHUNK.out.chunk_chr.splitCsv(header:false,sep:'\t').map{T->[T[2],T[3]]}.view()
     
 //    GLIMPSE2_SPLITREFERENCE(ref_panel, ref_panel_index, GLIMPSE2_CHUNK.out.chunk_chr, 'chr1', 'chr1')
 //    GLIMPSE2_PHASE(ref_panel, ref_panel_index, bam, bamindex)
