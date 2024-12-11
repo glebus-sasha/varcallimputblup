@@ -30,8 +30,8 @@ bwaidx = Channel.fromPath("${params.bwaidx}/*", checkIfExists: true).collect()
 faidx = Channel.fromPath("${params.faidx}/*.fai", checkIfExists: true).collect()
 ref_panel = Channel.fromPath("${params.ref_panel}").collect()
 ref_panel_index = Channel.fromPath("${params.ref_panel_index}").collect()
-bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.baseName, file]}
-bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.baseName.baseName, file]}
+bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.path.name, file]}
+bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.baseName, file]}
 bam.join(bamindex).view()
 
 
