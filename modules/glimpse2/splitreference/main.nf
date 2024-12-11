@@ -19,6 +19,7 @@ process GLIMPSE2_SPLITREFERENCE {
 
     shell:
     """
+    #!/bin/bash
     REF=!ref_panel
     while IFS="" read -r LINE || [ -n "!LINE" ];
     do
