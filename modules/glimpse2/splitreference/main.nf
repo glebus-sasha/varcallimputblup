@@ -16,7 +16,7 @@ process GLIMPSE2_SPLITREFERENCE {
         path("*.bin"), emit: bin_ref
 
     script:
-    def prefix      = task.ext.prefix ?: "${ref_panel.baseName}_${output_region.replace(":","_")}"
+    def prefix = "${ref_panel.baseName}_${output_region.replace(":","_")}"
     """
     GLIMPSE2_split_reference \
         --reference ${ref_panel} \
