@@ -18,7 +18,7 @@ process GLIMPSE2_SPLITREFERENCE {
 
     script:
     """
-    GLIMPSE2_split_reference --reference ${ref_panel} --input-region  chr1:1-2500761 --output-region   chr1:4000800-8500895 --output reference_panel/split/1000GP.chr22.noNA12878
+    GLIMPSE2_split_reference --reference ${ref_panel} --input-region  chr1:1-2500761 --output-region   chr1:1-2500761 --output reference_panel/split/1000GP.chr22.noNA12878
     """
 
     stub:
