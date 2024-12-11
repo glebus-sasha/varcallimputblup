@@ -13,26 +13,21 @@ process GLIMPSE2_SPLITREFERENCE {
     tuple val(input_region), val(output_region)
 
     output:
-        tuple val(meta), path("*.bin"), emit: bin_ref
-        path "versions.yml"           , emit: versions
+        path("*.bin"), emit: bin_ref
 
     script:
+    def prefix      = task.ext.prefix ?: "${ref_panel.baseName}_${output_region.replace(":","_")}"
     """
     GLIMPSE2_split_reference \
         --reference ${ref_panel} \
         --input-region $input_region \
         --output-region $output_region \
-        --output ${ref_panel.baseName}
+        --thread $task.cpus \
+        --output ${prefix}
     """
 
     stub:
     """
-        GLIMPSE2_split_reference \
-        --reference $ref_panel \
-        --input-region $input_region \
-        --output-region $output_region \
-        --thread $task.cpus \
-        --output ${prefix}
     touch ${ref_panel.baseName}.bin
     """
 }
