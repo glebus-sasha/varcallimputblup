@@ -28,6 +28,7 @@ process GLIMPSE2_SPLITREFERENCE {
         ORG=!(echo !LINE | cut -d" " -f4)
         ./bin/GLIMPSE2_split_reference --reference !{REF} --input-region !{IRG} --output-region !{ORG} --output reference_panel/split/1000GP.chr22.noNA12878
     done < !chunk_chr
+    """
 
     stub:
     """
