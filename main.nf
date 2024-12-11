@@ -33,6 +33,9 @@ ref_panel_index = Channel.fromPath("${params.ref_panel_index}").collect()
 bam = Channel.fromPath("${params.bam}/*.bam")
 bamindex = Channel.fromPath("${params.bam}/*.bam.bai")
 
+
+bam.map{file->file.extension}.view()
+
 // Define the workflow
 workflow test { 
     take:
@@ -87,7 +90,7 @@ workflow IMPUTE {
 }
 
 workflow {
-    test(ref_panel, ref_panel_index, bam, bamindex)
+//    test(ref_panel, ref_panel_index, bam, bamindex)
 }
 
 
