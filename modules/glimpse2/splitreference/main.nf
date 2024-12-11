@@ -30,13 +30,5 @@ process GLIMPSE2_SPLITREFERENCE {
         --thread $task.cpus \
         --output ${prefix}
     touch ${ref_panel.baseName}.bin
-
-    while IFS="" read -r LINE || [ -n "$LINE" ];
-    do
-        printf -v ID "%02d" $(echo $LINE | cut -d" " -f1)
-        IRG=$(echo $LINE | cut -d" " -f3)
-        ORG=$(echo $LINE | cut -d" " -f4)
-        echo "$IRG  $ORG"
-    done < 1000G_chr1_phased.vcf.txt 
     """
 }
