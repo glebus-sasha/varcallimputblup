@@ -18,7 +18,7 @@ process GLIMPSE2_SPLITREFERENCE {
 
     script:
     """
-    GLIMPSE2_split_reference --reference ${ref_panel} --input-region  chr1:1-2500761 --output-region   chr1:1-2500761 --output reference_panel/split/1000GP.chr22.noNA12878
+    GLIMPSE2_split_reference --reference ${ref_panel} --input-region  chr1:154644662-1248956422 --output-region   chr1:155644650-1248956422 --output reference_panel/split/1000GP.chr22.noNA12878
     """
 
     stub:
@@ -31,13 +31,12 @@ process GLIMPSE2_SPLITREFERENCE {
         --output ${prefix}
     touch ${ref_panel.baseName}.bin
 
-
-        while IFS="" read -r LINE || [ -n "$LINE" ];
+    while IFS="" read -r LINE || [ -n "$LINE" ];
     do
-        printf -v ID "%02d" `echo $LINE | cut -d" " -f1`
-        IRG=`echo $LINE | cut -d" " -f3`
-        ORG=`echo $LINE | cut -d" " -f4`
-        GLIMPSE2_split_reference --reference ${ref_panel} --input-region ${IRG} --output-region ${ORG} --output reference_panel/split/1000GP.chr22.noNA12878
-    done < $chunk_chr
+        printf -v ID "%02d" $(echo $LINE | cut -d" " -f1)
+        IRG=$(echo $LINE | cut -d" " -f3)
+        ORG=$(echo $LINE | cut -d" " -f4)
+        echo "$IRG  $ORG"
+    done < 1000G_chr1_phased.vcf.txt 
     """
 }
