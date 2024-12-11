@@ -1,5 +1,5 @@
 process GLIMPSE2_PHASE {
-    tag "$meta.id"
+    tag ""
     label 'process_medium'
     conda "${moduleDir}/environment.yml"
     container 'imary116/glimpse2:with-bcftools-and-updated-info-score'
