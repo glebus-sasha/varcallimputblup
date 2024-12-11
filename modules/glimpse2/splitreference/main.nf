@@ -9,8 +9,7 @@ process GLIMPSE2_SPLITREFERENCE {
     path(ref_panel)
     path(ref_panel_index)
     path(chunk_chr)
-    val(input_region)
-    val(output_region)
+    tuple path(input_region), path(output_region)
 
     output:
         tuple val(meta), path("*.bin"), emit: bin_ref
@@ -18,7 +17,11 @@ process GLIMPSE2_SPLITREFERENCE {
 
     script:
     """
-    GLIMPSE2_split_reference --reference ${ref_panel} --input-region  chr1:154644662-1248956422 --output-region   chr1:155644650-1248956422 --output reference_panel/split/1000GP.chr22.noNA12878
+    GLIMPSE2_split_reference \
+        --reference ${ref_panel} \
+        --input-region $input_region \
+        --output-region $output_region \
+        --output ${ref_panel.baseName}
     """
 
     stub:
