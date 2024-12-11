@@ -43,7 +43,7 @@ workflow test {
 
     main:
     GLIMPSE2_CHUNK(ref_panel, ref_panel_index, 'chr1')
-//    GLIMPSE2_SPLITREFERENCE(ref_panel, ref_panel_index, 'chr1', 'chr1')
+    GLIMPSE2_SPLITREFERENCE(ref_panel, ref_panel_index, chunk_chr, 'chr1', 'chr1')
 //    GLIMPSE2_PHASE(ref_panel, ref_panel_index, bam, bamindex)
 }
 
