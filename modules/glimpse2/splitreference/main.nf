@@ -17,7 +17,7 @@ process GLIMPSE2_SPLITREFERENCE {
         tuple val(meta), path("*.bin"), emit: bin_ref
         path "versions.yml"           , emit: versions
 
-    script:
+    shell:
     """
     #!/bin/bash
     REF=!ref_panel
