@@ -9,8 +9,7 @@ process GLIMPSE2_PHASE {
     input:
         path ref_panel_bin
         path ref_panel_index
-        path bam
-        path bamndex
+        tuple (file), path(bam), path(bamindex)
 
     output:
         path("*.{vcf,vcf.gz,bcf,bgen}"), emit: phased_variants

@@ -32,8 +32,6 @@ ref_panel = Channel.fromPath("${params.ref_panel}").collect()
 ref_panel_index = Channel.fromPath("${params.ref_panel_index}").collect()
 bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.name, file]}
 bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.baseName, file]}
-bam.join(bamindex).view()
-
 
 // Define the workflow
 workflow test { 
@@ -47,7 +45,7 @@ workflow test {
     GLIMPSE2_CHUNK(ref_panel, ref_panel_index, 'chr1')
     IRG_ORG = GLIMPSE2_CHUNK.out.chunk_chr.splitCsv(header:false,sep:'\t').map{T->[T[2],T[3]]}
     GLIMPSE2_SPLITREFERENCE(ref_panel, ref_panel_index, GLIMPSE2_CHUNK.out.chunk_chr, IRG_ORG)
-    GLIMPSE2_PHASE(GLIMPSE2_SPLITREFERENCE.out.bin_ref, ref_panel_index, bam, bamindex)
+    GLIMPSE2_PHASE(GLIMPSE2_SPLITREFERENCE.out.bin_ref, ref_panel_index, bam.join(bamindex))
 }
 
 workflow FASTQ_QC_TRIM_ALIGN_VARCALL { 
@@ -89,7 +87,7 @@ workflow IMPUTE {
 }
 
 workflow {
-//    test(ref_panel, ref_panel_index, bam, bamindex)
+    test(ref_panel, ref_panel_index, bam, bamindex)
 }
 
 
