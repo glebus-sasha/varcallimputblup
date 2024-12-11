@@ -9,7 +9,7 @@ process GLIMPSE2_SPLITREFERENCE {
     path(ref_panel)
     path(ref_panel_index)
     path(chunk_chr)
-    tuple path(input_region), path(output_region)
+    tuple val(input_region), val(output_region)
 
     output:
         tuple val(meta), path("*.bin"), emit: bin_ref
