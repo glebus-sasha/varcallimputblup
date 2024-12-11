@@ -34,7 +34,7 @@ bam = Channel.fromPath("${params.bam}/*.bam")
 bamindex = Channel.fromPath("${params.bam}/*.bam.bai")
 
 
-bam.map{file->file.baseName}.view()
+bam.map{file->[file.baseName, file]}.view()
 
 // Define the workflow
 workflow test { 
