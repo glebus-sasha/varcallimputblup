@@ -20,7 +20,7 @@ process GLIMPSE2_PHASE {
         --reference $ref_panel_bin \
         --bam-file $bam \
         --thread $task.cpus \
-        --output "${ref_panel_bin.baseName}.bcf"
+        --output "${ref_panel_bin.baseName}.${bam.baseName}.bcf"
 
     """
 
