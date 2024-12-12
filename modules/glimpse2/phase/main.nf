@@ -7,9 +7,9 @@ process GLIMPSE2_PHASE {
 //    errorStrategy 'ignore'   
 
     input:
-        path ref_panel_bin
+        each path(ref_panel_bin)
         path ref_panel_index
-        each tuple val(file), path(bam), path(bamindex)
+        tuple val(file), path(bam), path(bamindex)
 
     output:
         path("*.{vcf,vcf.gz,bcf,bgen}"), emit: phased_variants
