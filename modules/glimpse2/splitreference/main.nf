@@ -7,9 +7,7 @@ process GLIMPSE2_SPLITREFERENCE {
     errorStrategy 'ignore'   
 
     input:
-    path(ref_panel)
-    path(ref_panel_index)
-    path(chunk_chr)
+    tuple val(chunk_chr), path(ref_panel), path(ref_panel_index)
     tuple val(input_region), val(output_region)
 
     output:
