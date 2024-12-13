@@ -8,7 +8,7 @@ process GLIMPSE2_LIGATE {
     tuple val(meta), path(input_list), path(input_index)
 
     output:
-    tuple val(meta), path("*.{vcf,bcf,vcf.gz,bcf.gz}"), emit: merged_variants
+    tuple val(meta), path("*vcf.gz"), emit: merged_variants
 
     when:
     task.ext.when == null || task.ext.when
