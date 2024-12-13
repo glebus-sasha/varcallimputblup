@@ -48,7 +48,7 @@ workflow test {
     IRG_ORG = GLIMPSE2_CHUNK.out.chunk_chr.splitCsv(header:false,sep:'\t').map{coord->[coord[2],coord[3]]}
     GLIMPSE2_SPLITREFERENCE(ref_panel.join(ref_panel_index), IRG_ORG)
     GLIMPSE2_PHASE(GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]}, ref_panel_index, bam.join(bamindex))
-    GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.bin_ref)
+//    GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.bin_ref)
 }
 
 workflow FASTQ_QC_TRIM_ALIGN_VARCALL { 
