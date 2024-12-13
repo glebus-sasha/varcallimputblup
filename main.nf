@@ -28,8 +28,10 @@ reference = Channel.fromPath("${params.reference}").collect()
 input_fastqs = Channel.fromFilePairs(["${params.reads}/*[rR]{1,2}*.*{fastq,fq}*", "${params.reads}/*_{1,2}.{fastq,fq}*"], flat: true)
 bwaidx = Channel.fromPath("${params.bwaidx}/*", checkIfExists: true).collect()
 faidx = Channel.fromPath("${params.faidx}/*.fai", checkIfExists: true).collect()
-ref_panel = Channel.fromPath("${params.ref_panel}").collect()
-ref_panel_index = Channel.fromPath("${params.ref_panel_index}").collect()
+
+ref_panel = Channel.fromPath("${params.ref_panel}").map{file->[file.baseName, file]}
+ref_panel_index = Channel.fromPath("${params.ref_panel_index}").map{file->[file.baseName, file]}
+
 bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.name, file]}
 bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.baseName, file]}
 
@@ -42,7 +44,7 @@ workflow test {
     bamindex
 
     main:
-    GLIMPSE2_CHUNK(ref_panel, ref_panel_index, 'chr1')
+    GLIMPSE2_CHUNK(ref_panel.join(ref_panel_index))
     IRG_ORG = GLIMPSE2_CHUNK.out.chunk_chr.splitCsv(header:false,sep:'\t').map{T->[T[2],T[3]]}
     GLIMPSE2_SPLITREFERENCE(ref_panel, ref_panel_index, GLIMPSE2_CHUNK.out.chunk_chr, IRG_ORG)
     GLIMPSE2_PHASE(GLIMPSE2_SPLITREFERENCE.out.bin_ref, ref_panel_index, bam.join(bamindex))

@@ -1,7 +1,6 @@
 process GLIMPSE2_LIGATE {
     tag "$meta.id"
     label 'process_low'
-
     conda "${moduleDir}/environment.yml"
     container 'imary116/glimpse2:with-bcftools-and-updated-info-score'
 
@@ -21,12 +20,10 @@ process GLIMPSE2_LIGATE {
     """
     printf "%s\\n" $input_list | tr -d '[],' | sort -V > all_files.txt
 
-    GLIMPSE2_ligate \\
-        $args \\
-        --input all_files.txt \\
-        --thread $task.cpus \\
+    GLIMPSE2_ligate \
+        --input all_files.txt \
+        --thread $task.cpus \
         --output ${prefix}.${suffix}
-
     """
 
     stub:
