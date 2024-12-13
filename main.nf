@@ -29,8 +29,8 @@ input_fastqs = Channel.fromFilePairs(["${params.reads}/*[rR]{1,2}*.*{fastq,fq}*"
 bwaidx = Channel.fromPath("${params.bwaidx}/*", checkIfExists: true).collect()
 faidx = Channel.fromPath("${params.faidx}/*.fai", checkIfExists: true).collect()
 
-ref_panel = Channel.fromPath("${params.ref_panel}").map{file->[file.baseName, file]}
-ref_panel_index = Channel.fromPath("${params.ref_panel_index}").map{file->[file.baseName, file]}
+ref_panel = Channel.fromPath("${params.ref_panel}").map{file->[file.simpleName, file]}
+ref_panel_index = Channel.fromPath("${params.ref_panel_index}").map{file->[file.simpleName, file]}
 
 bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.name, file]}
 bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.baseName, file]}
