@@ -9,7 +9,6 @@ process GLIMPSE2_LIGATE {
 
     output:
     tuple val(meta), path("*.{vcf,bcf,vcf.gz,bcf.gz}"), emit: merged_variants
-    path "versions.yml"                               , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

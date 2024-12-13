@@ -11,7 +11,7 @@ process GLIMPSE2_SPLITREFERENCE {
     tuple val(input_region), val(output_region)
 
     output:
-        path("*.bin"), emit: bin_ref
+    tuple val(chunk_chr), path("*.bin"), emit: bin_ref
 
     script:
     def prefix = "${ref_panel.baseName}_${output_region.replace(":","_")}"
