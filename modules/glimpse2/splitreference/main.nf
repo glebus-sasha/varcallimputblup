@@ -7,15 +7,14 @@ process GLIMPSE2_SPLITREFERENCE {
     errorStrategy 'ignore'   
 
     input:
-    tuple val(chr), path(ref_panel)
-    tuple val(chr), path(ref_panel_index)
+    tuple val(chr), path(ref_panel), path(ref_panel_index)
     tuple val(input_region), val(output_region)
 
     output:
     tuple val(chr), path("*.bin"), emit: bin_ref
 
     script:
-    def prefix = "${ref_panel.baseName}_${output_region.replace(":","_")}"
+    def prefix = "${chr}_${output_region.replace(":","_")}"
     """
     GLIMPSE2_split_reference \
         --reference ${ref_panel} \
@@ -27,6 +26,6 @@ process GLIMPSE2_SPLITREFERENCE {
 
     stub:
     """
-    touch ${ref_panel.baseName}.bin
+    touch ${chr}_${output_region.replace(":","_")}.bin
     """
 }
