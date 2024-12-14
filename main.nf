@@ -31,26 +31,27 @@ faidx = Channel.fromPath("${params.faidx}/*.fai", checkIfExists: true).collect()
 
 ref_panel = Channel.fromPath("${params.ref_panel}").map{file->[file.simpleName, file]}
 ref_panel_index = Channel.fromPath("${params.ref_panel_index}").map{file->[file.simpleName, file]}
+ref_pane_with_index = ref_panel.join(ref_panel_index)
 
 bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.simpleName, file]}
 bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.simpleName, file]}
+align = bam.join(bamindex)
 
 // Define the workflow
 workflow test { 
     take:
-    ref_panel
+    ref_pane_with_index
     ref_panel_index
-    bam
-    bamindex
+    align
 
     main:
-    GLIMPSE2_CHUNK(ref_panel.join(ref_panel_index))
+    GLIMPSE2_CHUNK(ref_pane_with_index)
     IRG_ORG = GLIMPSE2_CHUNK.out.chunk_chr.splitCsv(header:false,sep:'\t').map{coord->[coord[2],coord[3]]}
-    GLIMPSE2_SPLITREFERENCE(ref_panel.join(ref_panel_index).combine(IRG_ORG))
+    GLIMPSE2_SPLITREFERENCE(ref_pane_with_index.combine(IRG_ORG))
+    
     GLIMPSE2_PHASE(
-        GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]},
-        ref_panel_index, 
-        bam.join(bamindex)
+        GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]}.combine(align),
+        ref_panel_index
         )
     GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants.groupTuple())
     bam.join(bamindex).view()

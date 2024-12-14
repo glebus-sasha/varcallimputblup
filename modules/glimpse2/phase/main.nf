@@ -8,8 +8,7 @@ process GLIMPSE2_PHASE {
 
     input:
         each path(ref_panel_bin)
-        tuple val(chunk_chr), path(ref_panel_index)
-        tuple val(sid), path(bam), path(bamindex)
+        tuple val(chunk_chr), path(ref_panel_index), val(sid), path(bam), path(bamindex)
 
     output:
         tuple val(sid), path("*.bcf"), path("*.bcf.csi"), emit: phased_variants
