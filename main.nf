@@ -1,21 +1,21 @@
 #!/usr/bin/env nextflow
 
 // Include processes
-include { FASTQC as FASTQC1           } from './modules/fastqc'
-include { FASTP                       } from './modules/fastp'
-include { FASTQC as FASTQC2           } from './modules/fastqc'
-include { BWA_MEM                     } from './modules/bwa_mem'
-include { SAMTOOLS_FLAGSTAT           } from './modules/samtools/flagstat'
-include { SAMTOOLS_INDEX              } from './modules/samtools/index'
-include { BCFTOOLS_MPILEUP            } from './modules/bcftools/mpileup'
-include { BCFTOOLS_STATS1             } from './modules/bcftools/stats'
-include { MULTIQC                     } from './modules/multiqc'
-include { GLIMPSE2_CHUNK              } from './modules/glimpse2/chunk'
-include { GLIMPSE2_CONCORDANCE        } from './modules/glimpse2/concordance'
-include { GLIMPSE2_LIGATE             } from './modules/glimpse2/ligate'
-include { GLIMPSE2_PHASE              } from './modules/glimpse2/phase'
-include { GLIMPSE2_SPLITREFERENCE     } from './modules/glimpse2/splitreference'
-include { BCFTOOLS_STATS2             } from './modules/bcftools/stats'
+include { FASTQC as FASTQC1                 } from './modules/fastqc'
+include { FASTP                             } from './modules/fastp'
+include { FASTQC as FASTQC2                 } from './modules/fastqc'
+include { BWA_MEM                           } from './modules/bwa_mem'
+include { SAMTOOLS_FLAGSTAT                 } from './modules/samtools/flagstat'
+include { SAMTOOLS_INDEX                    } from './modules/samtools/index'
+include { BCFTOOLS_MPILEUP                  } from './modules/bcftools/mpileup'
+include { BCFTOOLS_STATS as BCFTOOLS_STATS1 } from './modules/bcftools/stats'
+include { MULTIQC                           } from './modules/multiqc'
+include { GLIMPSE2_CHUNK                    } from './modules/glimpse2/chunk'
+include { GLIMPSE2_CONCORDANCE              } from './modules/glimpse2/concordance'
+include { GLIMPSE2_LIGATE                   } from './modules/glimpse2/ligate'
+include { GLIMPSE2_PHASE                    } from './modules/glimpse2/phase'
+include { GLIMPSE2_SPLITREFERENCE           } from './modules/glimpse2/splitreference'
+include { BCFTOOLS_STATS as BCFTOOLS_STATS2 } from './modules/bcftools/stats'
 
 // Logging pipeline information
 log.info """\
