@@ -44,10 +44,9 @@ workflow test {
     bamindex
 
     main:
-    GLIMPSE2_CHUNK(ref_panel.join(ref_panel_index))
+    GLIMPSE2_CHUNK(ref_panel, ref_panel_index)
     IRG_ORG = GLIMPSE2_CHUNK.out.chunk_chr.splitCsv(header:false,sep:'\t').map{coord->[coord[2],coord[3]]}
-    IRG_ORG.view()
-    GLIMPSE2_SPLITREFERENCE(ref_panel.join(ref_panel_index), IRG_ORG)
+    GLIMPSE2_SPLITREFERENCE(ref_panel, ref_panel_index, IRG_ORG)
     GLIMPSE2_PHASE(
         GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]},
         ref_panel_index, 
