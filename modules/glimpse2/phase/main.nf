@@ -13,7 +13,6 @@ process GLIMPSE2_PHASE {
 
     output:
         tuple val(sid), path("*.bcf"), emit: phased_variants
-        tuple val(sid), path("${sid}.txt"), emit: list
 
     script:
     """
@@ -22,7 +21,6 @@ process GLIMPSE2_PHASE {
         --bam-file $bam \
         --thread $task.cpus \
         --output "${sid}_${ref_panel_bin.baseName}.bcf"
-    ls -1v *.bcf > ${sid}.txt
     """
 
     stub:

@@ -6,8 +6,6 @@ process GLIMPSE2_LIGATE {
 
     input:
     tuple val(sid), path(phased_variants)
-    tuple val(sid), path(list)
-
     output:
     tuple val(meta), path("*.bcf"), emit: merged_variants
 
@@ -15,9 +13,9 @@ process GLIMPSE2_LIGATE {
     def prefix = "${sid}"
     def suffix = "bcf"
     """
-
+    ls -1v *.bcf > files.txt
     GLIMPSE2_ligate \
-        --input $list \
+        --input files.txt \
         --thread $task.cpus \
         --output ${prefix}.${suffix}
     """
