@@ -5,7 +5,7 @@ process GLIMPSE2_LIGATE {
     container 'imary116/glimpse2:with-bcftools-and-updated-info-score'
 
     input:
-    tuple val(sid), path(phased_variants)
+    tuple val(sid), path(phased_variants), path(phased_variants_index)
     output:
     tuple val(meta), path("*.bcf"), emit: merged_variants
 

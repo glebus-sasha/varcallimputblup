@@ -12,7 +12,7 @@ process GLIMPSE2_PHASE {
         tuple val(sid), path(bam), path(bamindex)
 
     output:
-        tuple val(sid), path("*.bcf"), emit: phased_variants
+        tuple val(sid), path("*.bcf"), path("*.bcf.csi"), emit: phased_variants
 
     script:
     """
@@ -21,6 +21,7 @@ process GLIMPSE2_PHASE {
         --bam-file $bam \
         --thread $task.cpus \
         --output "${sid}_${ref_panel_bin.baseName}.bcf"
+    bcftools index ${sid}_${ref_panel_bin.baseName}.bcf
     """
 
     stub:
