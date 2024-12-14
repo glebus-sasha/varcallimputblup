@@ -48,6 +48,7 @@ workflow test {
     GLIMPSE2_CHUNK(ref_panel_with_index)
     IRG_ORG = GLIMPSE2_CHUNK.out.chunk_chr.splitCsv(header:false,sep:'\t').map{coord->[coord[2],coord[3]]}
     GLIMPSE2_SPLITREFERENCE(ref_panel_with_index.combine(IRG_ORG))
+    GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]}.combine(align).view()
     GLIMPSE2_PHASE(
         GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]}.combine(align),
         ref_panel_index
