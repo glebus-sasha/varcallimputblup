@@ -7,8 +7,10 @@ process GLIMPSE2_PHASE {
 //    errorStrategy 'ignore'   
 
     input:
-        each path(ref_panel_bin)
-        tuple val(chunk_chr), path(ref_panel_index), val(sid), path(bam), path(bamindex)
+        path(ref_panel_bin), val(sid), path(bam), path(bamindex)
+        tuple val(chunk_chr), path(ref_panel_index),
+        
+
 
     output:
         tuple val(sid), path("*.bcf"), path("*.bcf.csi"), emit: phased_variants
@@ -20,7 +22,6 @@ process GLIMPSE2_PHASE {
         --bam-file $bam \
         --thread $task.cpus \
         --output "${sid}_${ref_panel_bin.baseName}.bcf"
-   # bcftools index ${sid}_${ref_panel_bin.baseName}.bcf
     """
 
     stub:
