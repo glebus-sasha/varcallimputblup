@@ -12,13 +12,13 @@ process GLIMPSE2_LIGATE {
 
     script:
     def prefix = "${sid}"
-    def suffix = "bcf"
+    def suffix = "_imputed.bcf"
     """
     ls -1v *.bcf > files.txt
     GLIMPSE2_ligate \
         --input files.txt \
         --thread $task.cpus \
-        --output ${sid}.${suffix}
+        --output ${sid}${suffix}
     """
 
     stub:

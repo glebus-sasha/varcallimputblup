@@ -8,13 +8,14 @@ include { BWA_MEM                     } from './modules/bwa_mem'
 include { SAMTOOLS_FLAGSTAT           } from './modules/samtools/flagstat'
 include { SAMTOOLS_INDEX              } from './modules/samtools/index'
 include { BCFTOOLS_MPILEUP            } from './modules/bcftools/mpileup'
-include { BCFTOOLS_STATS              } from './modules/bcftools/stats'
+include { BCFTOOLS_STATS1             } from './modules/bcftools/stats'
 include { MULTIQC                     } from './modules/multiqc'
 include { GLIMPSE2_CHUNK              } from './modules/glimpse2/chunk'
 include { GLIMPSE2_CONCORDANCE        } from './modules/glimpse2/concordance'
 include { GLIMPSE2_LIGATE             } from './modules/glimpse2/ligate'
 include { GLIMPSE2_PHASE              } from './modules/glimpse2/phase'
 include { GLIMPSE2_SPLITREFERENCE     } from './modules/glimpse2/splitreference'
+include { BCFTOOLS_STATS2             } from './modules/bcftools/stats'
 
 // Logging pipeline information
 log.info """\
@@ -52,6 +53,8 @@ workflow test {
         align.combine(GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]}).combine(ref_panel_index)
         )
     GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants.groupTuple())
+    BCFTOOLS_STATS2(GLIMPSE2_LIGATE.out.merged_variants)
+    MULTIQC(BCFTOOLS_STATS2.out.bcfstats.collect())
 }
 
 workflow FASTQ_QC_TRIM_ALIGN_VARCALL { 
@@ -79,7 +82,7 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
         )
 }
 
-workflow IMPUTE {
+workflow BCF_IMPUTE {
     take:
     ref_panel
 
