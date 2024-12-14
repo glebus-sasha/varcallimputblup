@@ -15,20 +15,17 @@ process GLIMPSE2_PHASE {
         tuple val(sid), path("*.bcf"), emit: phased_variants
 
     script:
-    def region = "${output_region.replace(":","_")}"
-    def prefix = "${meta.id}_${region}"
-    def suffix = "bcf"
     """
     GLIMPSE2_phase \
         --reference $ref_panel_bin \
         --bam-file $bam \
         --thread $task.cpus \
-        --output "${sid}_${chunk_chr}.bcf"
+        --output "${sid}_${ref_panel_bin.baseName}.bcf"
 
     """
 
     stub:
     """
-    touch ${prefix}.${suffix}
+    touch ${sid}_${ref_panel_bin.baseName}.bcf
     """
 }
