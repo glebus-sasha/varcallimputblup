@@ -49,11 +49,11 @@ workflow test {
     IRG_ORG = GLIMPSE2_CHUNK.out.chunk_chr.splitCsv(header:false,sep:'\t').map{coord->[coord[2],coord[3]]}
     GLIMPSE2_SPLITREFERENCE(ref_panel_with_index.combine(IRG_ORG))
     align.combine(GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]}).take(3).view()
-//    GLIMPSE2_PHASE(
- //       align.combine(GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]}),
-   //     ref_panel_index
-     //   )
-   // GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants.groupTuple())
+    GLIMPSE2_PHASE(
+        align.combine(GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]}),
+        ref_panel_index
+        )
+    GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants.groupTuple())
 }
 
 workflow FASTQ_QC_TRIM_ALIGN_VARCALL { 

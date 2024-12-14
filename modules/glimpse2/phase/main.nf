@@ -7,7 +7,7 @@ process GLIMPSE2_PHASE {
 //    errorStrategy 'ignore'   
 
     input:
-        val(sid), path(bam), path(bamindex), path(ref_panel_bin)
+        tuple val(sid), path(bam), path(bamindex), path(ref_panel_bin)
         path(ref_panel_index)
 
     output:
