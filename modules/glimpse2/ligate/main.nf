@@ -17,7 +17,7 @@ process GLIMPSE2_LIGATE {
     GLIMPSE2_ligate \
         --input files.txt \
         --thread $task.cpus \
-        --output ${prefix}.${suffix}
+        --output ${sid}.${suffix}
     """
 
     stub:
