@@ -52,7 +52,7 @@ workflow test {
         ref_panel_index, 
         bam.join(bamindex)
         )
-    GLIMPSE2_PHASE.out.phased_variants.groupTuple.view()
+    GLIMPSE2_PHASE.out.phased_variants.groupTuple().view()
     //GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants)
 }
 
