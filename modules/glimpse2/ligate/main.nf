@@ -8,14 +8,14 @@ process GLIMPSE2_LIGATE {
     tuple val(meta), path(input_list), path(input_index)
 
     output:
-    tuple val(meta), path("*vcf.gz"), emit: merged_variants
+    tuple val(meta), path("*.bcf"), emit: merged_variants
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
     def prefix = "${meta.id}"
-    def suffix = "vcf.gz"
+    def suffix = "bcf"
     """
     printf "%s\\n" $input_list | tr -d '[],' | sort -V > all_files.txt
 
