@@ -52,7 +52,7 @@ workflow test {
         ref_panel_index, 
         bam.join(bamindex)
         )
-    GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants)
+    GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants, GLIMPSE2_PHASE.out.list)
 }
 
 workflow FASTQ_QC_TRIM_ALIGN_VARCALL { 

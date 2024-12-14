@@ -5,30 +5,26 @@ process GLIMPSE2_LIGATE {
     container 'imary116/glimpse2:with-bcftools-and-updated-info-score'
 
     input:
-    tuple val(meta), path(input_list), path(input_index)
+    tuple val(sid), path(phased_variants)
+    tuple val(sid), path(list)
 
     output:
     tuple val(meta), path("*.bcf"), emit: merged_variants
 
-    when:
-    task.ext.when == null || task.ext.when
-
     script:
-    def prefix = "${meta.id}"
+    def prefix = "${sid}"
     def suffix = "bcf"
     """
-    printf "%s\\n" $input_list | tr -d '[],' | sort -V > all_files.txt
 
     GLIMPSE2_ligate \
-        --input all_files.txt \
+        --input $list \
         --thread $task.cpus \
         --output ${prefix}.${suffix}
     """
 
     stub:
-    def args   = task.ext.args   ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
-    def suffix = task.ext.suffix ?: "vcf.gz"
+    def prefix = "${sid}"
+    def suffix = "bcf"
     """
     touch ${prefix}.${suffix}
     """
