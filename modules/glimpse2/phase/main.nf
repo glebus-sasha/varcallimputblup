@@ -21,7 +21,7 @@ process GLIMPSE2_PHASE {
         --bam-file $bam \
         --thread $task.cpus \
         --output "${sid}_${ref_panel_bin.baseName}.bcf"
-    bcftools index ${sid}_${ref_panel_bin.baseName}.bcf
+   # bcftools index ${sid}_${ref_panel_bin.baseName}.bcf
     """
 
     stub:
