@@ -95,7 +95,8 @@ workflow IMPUTE {
 }
 
 workflow {
-    test(ref_panel_with_index, ref_panel_index, align)
+    GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]}.combine(align).view()
+    //test(ref_panel_with_index, ref_panel_index, align)
 }
 
 
