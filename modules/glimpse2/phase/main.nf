@@ -8,7 +8,7 @@ process GLIMPSE2_PHASE {
 
     input:
         path(ref_panel_bin), val(sid), path(bam), path(bamindex)
-        tuple val(chunk_chr), path(ref_panel_index),
+        path(ref_panel_index)
         
 
 
