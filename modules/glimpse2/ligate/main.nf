@@ -7,7 +7,7 @@ process GLIMPSE2_LIGATE {
     input:
     tuple val(sid), path(phased_variants), path(phased_variants_index)
     output:
-    tuple val(meta), path("*.bcf"), emit: merged_variants
+    tuple val(sid), path("*.bcf"), emit: merged_variants
 
     script:
     def prefix = "${sid}"
