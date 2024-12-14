@@ -7,8 +7,7 @@ process GLIMPSE2_SPLITREFERENCE {
     errorStrategy 'ignore'   
 
     input:
-    tuple val(chr), path(ref_panel), path(ref_panel_index)
-    tuple val(input_region), val(output_region)
+    tuple val(chr), path(ref_panel), path(ref_panel_index), val(input_region), val(output_region)
 
     output:
     tuple val(chr), path("*.bin"), emit: bin_ref
