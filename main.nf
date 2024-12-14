@@ -95,7 +95,8 @@ workflow IMPUTE {
 }
 
 workflow {
-    test(ref_panel_with_index, ref_panel_index, align)
+    ref_panel_with_index.view()
+    //test(ref_panel_with_index, ref_panel_index, align)
 }
 
 
