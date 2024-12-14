@@ -7,11 +7,12 @@ process GLIMPSE2_SPLITREFERENCE {
     errorStrategy 'ignore'   
 
     input:
-    tuple val(chunk_chr), path(ref_panel), path(ref_panel_index)
+    tuple val(chr), path(ref_panel)
+    tuple val(chr), path(ref_panel_index)
     tuple val(input_region), val(output_region)
 
     output:
-    tuple val(chunk_chr), path("*.bin"), emit: bin_ref
+    tuple val(chr), path("*.bin"), emit: bin_ref
 
     script:
     def prefix = "${ref_panel.baseName}_${output_region.replace(":","_")}"

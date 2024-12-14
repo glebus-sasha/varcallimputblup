@@ -6,7 +6,8 @@ process GLIMPSE2_CHUNK {
     publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/GLIMPSE2_CHUNK"
 
     input:
-    tuple val(region), path(ref_panel), path(ref_panel_index)
+    tuple val(chr), path(ref_panel)
+    tuple val(chr), path(ref_panel_index)
 
     output:
     path("${ref_panel.baseName}.txt"), emit: chunk_chr
@@ -15,7 +16,7 @@ process GLIMPSE2_CHUNK {
     """
     GLIMPSE2_chunk \
         --input $ref_panel \
-        --region $region \
+        --region $chr \
         --sequential \
         --threads 60 \
         --output ${ref_panel.baseName}.txt
