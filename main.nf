@@ -8,6 +8,7 @@ include { BWA_MEM                           } from './modules/bwa_mem'
 include { SAMTOOLS_FLAGSTAT                 } from './modules/samtools/flagstat'
 include { SAMTOOLS_INDEX                    } from './modules/samtools/index'
 include { BCFTOOLS_MPILEUP                  } from './modules/bcftools/mpileup'
+include { BCFTOOLS_INDEX                    } from './modules/bcftools/index'
 include { BCFTOOLS_STATS as BCFTOOLS_STATS1 } from './modules/bcftools/stats'
 include { MULTIQC                           } from './modules/multiqc'
 include { GLIMPSE2_CHUNK                    } from './modules/glimpse2/chunk'
@@ -38,22 +39,8 @@ bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.simpleName, file]}
 bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.simpleName, file]}
 align = bam.join(bamindex)
 
-// Define the workflow
 workflow test { 
-    take:
-    ref_panel_with_index
-    ref_panel_index
-    align
 
-    main:
-    GLIMPSE2_CHUNK(ref_panel_with_index)
-    IRG_ORG = GLIMPSE2_CHUNK.out.chunk_chr.splitCsv(header:false,sep:'\t').map{coord->[coord[2],coord[3]]}
-    GLIMPSE2_SPLITREFERENCE(ref_panel_with_index.combine(IRG_ORG))
-    GLIMPSE2_PHASE(
-        align.combine(GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]}).combine(ref_panel_index)
-        )
-    GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants.groupTuple())
-    BCFTOOLS_STATS2(GLIMPSE2_LIGATE.out.merged_variants)
 }
 
 workflow FASTQ_QC_TRIM_ALIGN_VARCALL { 
@@ -71,7 +58,8 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
     SAMTOOLS_FLAGSTAT(BWA_MEM.out.bam)
     SAMTOOLS_INDEX(BWA_MEM.out.bam)
     BCFTOOLS_MPILEUP(reference, SAMTOOLS_INDEX.out.bai, faidx)
-    BCFTOOLS_STATS1(BCFTOOLS_MPILEUP.out.vcf)
+    BCFTOOLS_INDEX(BCFTOOLS_MPILEUP.out.bcf)
+    BCFTOOLS_STATS1(BCFTOOLS_MPILEUP.out.bcf)
     MULTIQC(
         FASTP.out.json.collect(),
         FASTQC1.out.zip.collect(),
@@ -79,8 +67,10 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
         SAMTOOLS_FLAGSTAT.out.flagstat.collect(),
         BCFTOOLS_STATS1.out.bcfstats.collect()
         )
+    
     emit:
-    align = BCFTOOLS_STATS1.out
+    align = BCFTOOLS_MPILEUP.out.bcf.join(BCFTOOLS_INDEX.out.index)
+    bcfstats = BCFTOOLS_STATS1.out.bcfstats
 }
 
 workflow BCF_IMPUTE {
