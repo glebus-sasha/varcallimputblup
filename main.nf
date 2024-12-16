@@ -107,7 +107,7 @@ workflow {
         FASTQ_QC_TRIM_ALIGN_VARCALL.out.bcfstats1.collect(),
         BCF_IMPUTE.out.bcfstats2.collect()
     )
-
+    MULTIQC.out.html.view()
     publish:
     MULTIQC.out.html >> 'foo'
 }
