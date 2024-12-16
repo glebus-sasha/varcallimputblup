@@ -94,7 +94,7 @@ workflow IMPUTE {
 workflow {
     
     main:
-    VARCALL(reference,
+    ALIGN_VARCALL(reference,
         input_fastqs,
         bwaidx,
         faidx)
