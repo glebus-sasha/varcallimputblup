@@ -13,7 +13,7 @@ process BCFTOOLS_STATS {
     val tag
 
     output:
-    path "${sid}.bcfstats",      emit: bcfstats
+    path "${sid}_${tag}.bcfstats",      emit: bcfstats
     
     script:
     """
