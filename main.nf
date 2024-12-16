@@ -85,7 +85,7 @@ workflow BCF_IMPUTE {
         align.combine(GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]}).combine(ref_panel_index)
         )
     GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants.groupTuple())
-    BCFTOOLS_STATS2(GLIMPSE2_LIGATE.out.merged_variants, 'before')
+    BCFTOOLS_STATS2(GLIMPSE2_LIGATE.out.merged_variants, 'after')
 
     emit:
     imputed_bcf = GLIMPSE2_LIGATE.out.merged_variants
