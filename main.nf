@@ -80,6 +80,7 @@ workflow BCF_IMPUTE {
     align
 
     main:
+    align.view()
     GLIMPSE2_CHUNK(ref_panel_with_index)
     IRG_ORG = GLIMPSE2_CHUNK.out.chunk_chr.splitCsv(header:false,sep:'\t').map{coord->[coord[2],coord[3]]}
     GLIMPSE2_SPLITREFERENCE(ref_panel_with_index.combine(IRG_ORG))
