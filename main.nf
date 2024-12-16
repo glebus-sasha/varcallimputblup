@@ -103,7 +103,7 @@ workflow {
         input_fastqs,
         bwaidx,
         faidx)
-//    BCF_IMPUTE(ref_panel_with_index, ref_panel_index, align)
+    BCF_IMPUTE(ref_panel_with_index, ref_panel_index, align)
 }
 
 
