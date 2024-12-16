@@ -80,7 +80,7 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
         BCFTOOLS_STATS1.out.bcfstats.collect()
         )
     emit:
-    align = BCFTOOLS_STATS2.out
+    align = BCFTOOLS_STATS1.out
 }
 
 workflow BCF_IMPUTE {
