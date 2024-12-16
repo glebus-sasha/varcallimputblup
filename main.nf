@@ -2,7 +2,7 @@
 
 // Include workflows
 include { ALIGN_VARCALL             } from './workflows/align_varcall'
-include { IMPUTE                    } from './workflows/inpute'
+include { IMPUTE                    } from './workflows/impute'
 
 
 
