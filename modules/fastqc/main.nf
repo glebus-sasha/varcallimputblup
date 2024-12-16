@@ -17,8 +17,8 @@ process FASTQC {
     script:
     """
     fastqc $read1 $read2 --threads 6
-    mv ${read1.baseName}_fastqc.html ${read1.baseName}_${tag}_fastqc.html
-    mv ${read2.baseName}_fastqc.html ${read1.baseName}_${tag}_fastqc.html
+    mv ${read1.simpleName}_fastqc.html ${read1.simpleName}_${tag}_fastqc.html
+    mv ${read2.simpleName}_fastqc.html ${read1.simpleName}_${tag}_fastqc.html
     """
 
     stub:
