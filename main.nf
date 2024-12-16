@@ -68,7 +68,6 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
     fastqc2 = FASTQC2.out.zip
     flagstat = SAMTOOLS_FLAGSTAT.out.flagstat
     bcfstats1 = BCFTOOLS_STATS1.out.bcfstats
-
 }
 
 workflow BCF_IMPUTE {
@@ -107,6 +106,8 @@ workflow {
         BCF_IMPUTE.out.bcfstats2.collect()
     )
 
+    publish:
+    MULTIQC.out.html >> 'foo'
 }
 
 

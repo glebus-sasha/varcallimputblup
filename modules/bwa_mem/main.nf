@@ -18,9 +18,9 @@ process BWA_MEM {
     script:
     """
         bwa mem \
-            -t ${task.cpus} ${reference} ${fq_1_trimmed} ${fq_2_trimmed} | \
+            -t 6 ${reference} ${fq_1_trimmed} ${fq_2_trimmed} | \
         samtools view -bh | \
-        samtools sort --threads ${task.cpus} -o ${sid}.sorted.bam
+        samtools sort --threads 6 -o ${sid}.sorted.bam
 
     """
 }
