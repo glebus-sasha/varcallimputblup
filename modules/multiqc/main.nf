@@ -11,13 +11,14 @@ process MULTIQC {
     path fastqc1
     path fastqc2
     path flagstat
-    path bcfstats
+    path bcfstats1
+    path bcfstats2
 
     output:
     path '*.html', emit: html
 
     script:
     """
-    multiqc $fastqc1 $fastqc2 $fastp $flagstat $bcfstats
+    multiqc $fastqc1 $fastqc2 $fastp $flagstat $bcfstats1 $bcfstats2
     """
 }
