@@ -6,7 +6,7 @@ process BCFTOOLS_STATS {
 
 //    cache "lenient" 
 //    debug true
-    errorStrategy 'ignore'
+//    errorStrategy 'ignore'
 	
     input:
     tuple val(sid), path(vcf)
