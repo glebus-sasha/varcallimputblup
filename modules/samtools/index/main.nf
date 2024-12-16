@@ -9,7 +9,7 @@ process SAMTOOLS_INDEX {
     tuple val(sid), path(bamFile)
 
     output:
-    tuple val(sid), path('*.bai'), path(bamFile), emit: bai
+    tuple val(sid), path(bamFile), path('*.bai'), emit: bai
 
     script:
     """

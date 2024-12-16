@@ -8,7 +8,7 @@ process BCFTOOLS_MPILEUP {
 	
     input:
     path reference
-    tuple val(sid), path(bai), path(bamFile)
+    tuple val(sid), path(bamFile), path(bai)
     path fai
     
     output:
