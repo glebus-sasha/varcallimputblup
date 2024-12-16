@@ -8,7 +8,6 @@ process FASTQC {
 
     input:
     tuple val(sid), path(read1), path(read2)
-    val tag
 
     output:
     path "*.html", emit: html
@@ -17,9 +16,6 @@ process FASTQC {
     script:
     """
     fastqc $read1 $read2 --threads 6
-    for report in *_fastqc.html; do
-        mv "$report" "${report%.html}_${tag}.html"
-    done
     """
 
     stub:
