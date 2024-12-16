@@ -17,7 +17,6 @@ process FASTQC {
     script:
     """
     fastqc $read1 $read2 --threads 6
-
     for report in *_fastqc.html; do
         mv "$report" "${report%.html}_${tag}.html"
     done
