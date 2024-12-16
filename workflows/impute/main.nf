@@ -5,7 +5,6 @@ include { GLIMPSE2_LIGATE                   } from '../../modules/glimpse2/ligat
 include { GLIMPSE2_PHASE                    } from '../../modules/glimpse2/phase'
 include { GLIMPSE2_SPLITREFERENCE           } from '../../modules/glimpse2/splitreference'
 include { BCFTOOLS_STATS as BCFTOOLS_STATS2 } from '../../modules/bcftools/stats'
-include { MULTIQC                           } from '../../modules/multiqc'
 
 workflow IMPUTE {
     take:

@@ -4,6 +4,8 @@
 include { ALIGN_VARCALL             } from './workflows/align_varcall'
 include { IMPUTE                    } from './workflows/impute'
 
+// Include processes
+include { MULTIQC                           } from './modules/multiqc'
 
 
 
