@@ -59,7 +59,7 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
     SAMTOOLS_INDEX(BWA_MEM.out.bam)
     BCFTOOLS_MPILEUP(reference, BWA_MEM.out.bam.join(SAMTOOLS_INDEX.out.bai), faidx)
     BCFTOOLS_INDEX(BCFTOOLS_MPILEUP.out.bcf)
-    BCFTOOLS_STATS1(BCFTOOLS_MPILEUP.out.bcf)
+    BCFTOOLS_STATS1(BCFTOOLS_MPILEUP.out.bcf, 'before')
 
     emit:
     fastp = FASTP.out.json
@@ -85,7 +85,7 @@ workflow BCF_IMPUTE {
         align.combine(GLIMPSE2_SPLITREFERENCE.out.bin_ref.map{it->it[1]}).combine(ref_panel_index)
         )
     GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants.groupTuple())
-    BCFTOOLS_STATS2(GLIMPSE2_LIGATE.out.merged_variants)
+    BCFTOOLS_STATS2(GLIMPSE2_LIGATE.out.merged_variants, 'before')
 
     emit:
     imputed_bcf = GLIMPSE2_LIGATE.out.merged_variants
@@ -98,15 +98,13 @@ workflow {
         bwaidx,
         faidx)
     BCF_IMPUTE(ref_panel_with_index, ref_panel_index, FASTQ_QC_TRIM_ALIGN_VARCALL.out.align)
-    def before_stats = FASTQ_QC_TRIM_ALIGN_VARCALL.out.bcfstats1.collect().map { file -> file.rename("${file.baseName}_before.bcfstats") }
-    def after_stats = BCF_IMPUTE.out.bcfstats2.collect().map { file -> file.rename("${file.baseName}_after.bcfstats") }
     MULTIQC(
         FASTQ_QC_TRIM_ALIGN_VARCALL.out.fastp.collect(),
         FASTQ_QC_TRIM_ALIGN_VARCALL.out.fastqc1.collect(),
         FASTQ_QC_TRIM_ALIGN_VARCALL.out.fastqc2.collect(),
         FASTQ_QC_TRIM_ALIGN_VARCALL.out.flagstat.collect(),
-        before_stats,
-        after_stats
+        FASTQ_QC_TRIM_ALIGN_VARCALL.out.bcfstats1.collect(),
+        BCF_IMPUTE.out.bcfstats2.collect()
     )
 
 }
