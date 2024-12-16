@@ -60,17 +60,15 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
     BCFTOOLS_MPILEUP(reference, BWA_MEM.out.bam.join(SAMTOOLS_INDEX.out.bai), faidx)
     BCFTOOLS_INDEX(BCFTOOLS_MPILEUP.out.bcf)
     BCFTOOLS_STATS1(BCFTOOLS_MPILEUP.out.bcf)
-    MULTIQC(
-        FASTP.out.json.collect(),
-        FASTQC1.out.zip.collect(),
-        FASTQC2.out.zip.collect(),
-        SAMTOOLS_FLAGSTAT.out.flagstat.collect(),
-        BCFTOOLS_STATS1.out.bcfstats.collect()
-        )
 
     emit:
+    fastp = FASTP.out.json
     align = BWA_MEM.out.bam.join(SAMTOOLS_INDEX.out.bai)
-    bcfstats = BCFTOOLS_STATS1.out.bcfstats
+    fastqc1 = FASTQC1.out.zip
+    fastqc2 = FASTQC2.out.zip
+    flagstat = SAMTOOLS_FLAGSTAT.out.flagstat
+    bcfstats1 = BCFTOOLS_STATS1.out.bcfstats
+
 }
 
 workflow BCF_IMPUTE {
@@ -88,6 +86,10 @@ workflow BCF_IMPUTE {
         )
     GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants.groupTuple())
     BCFTOOLS_STATS2(GLIMPSE2_LIGATE.out.merged_variants)
+
+    emit:
+    imputed_bcf = GLIMPSE2_LIGATE.merged_variants
+    bcfstats2 = BCFTOOLS_STATS2.out.bcfstats
 }
 
 workflow {
@@ -96,6 +98,15 @@ workflow {
         bwaidx,
         faidx)
     BCF_IMPUTE(ref_panel_with_index, ref_panel_index, FASTQ_QC_TRIM_ALIGN_VARCALL.out.align)
+    MULTIQC(
+        FASTQ_QC_TRIM_ALIGN_VARCALL.out.fastp.collect(),
+        FASTQ_QC_TRIM_ALIGN_VARCALL.out.fastqc1.collect(),
+        FASTQ_QC_TRIM_ALIGN_VARCALL.out.fastqc2.collect(),
+        FASTQ_QC_TRIM_ALIGN_VARCALL.out.flagstat.collect(),
+        FASTQ_QC_TRIM_ALIGN_VARCALL.out.bcfstats1.collect(),
+        BCF_IMPUTE.out.bcfstats2.collect()
+    )
+
 }
 
 
