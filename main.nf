@@ -43,7 +43,7 @@ workflow test {
 
 }
 
-workflow FASTQ_QC_TRIM_ALIGN_VARCALL { 
+workflow ALIGN_VARCALL { 
     take:
     reference
     input_fastqs
@@ -70,7 +70,7 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
     bcfstats1 = BCFTOOLS_STATS1.out.bcfstats
 }
 
-workflow BCF_IMPUTE {
+workflow IMPUTE {
     take:
     ref_panel_with_index
     ref_panel_index
@@ -94,22 +94,19 @@ workflow BCF_IMPUTE {
 workflow {
     
     main:
-    FASTQ_QC_TRIM_ALIGN_VARCALL(reference,
+    VARCALL(reference,
         input_fastqs,
         bwaidx,
         faidx)
-    BCF_IMPUTE(ref_panel_with_index, ref_panel_index, FASTQ_QC_TRIM_ALIGN_VARCALL.out.align)
+    IMPUTE(ref_panel_with_index, ref_panel_index, ALIGN_VARCALL.out.align)
     MULTIQC(
-        FASTQ_QC_TRIM_ALIGN_VARCALL.out.fastp.collect(),
-        FASTQ_QC_TRIM_ALIGN_VARCALL.out.fastqc1.collect(),
-        FASTQ_QC_TRIM_ALIGN_VARCALL.out.fastqc2.collect(),
-        FASTQ_QC_TRIM_ALIGN_VARCALL.out.flagstat.collect(),
-        FASTQ_QC_TRIM_ALIGN_VARCALL.out.bcfstats1.collect(),
-        BCF_IMPUTE.out.bcfstats2.collect()
+        ALIGN_VARCALL.out.fastp.collect(),
+        ALIGN_VARCALL.out.fastqc1.collect(),
+        ALIGN_VARCALL.out.fastqc2.collect(),
+        ALIGN_VARCALL.out.flagstat.collect(),
+        ALIGN_VARCALL.out.bcfstats1.collect(),
+        IMPUTE.out.bcfstats2.collect()
     )
-    MULTIQC.out.html.view()
-    publish:
-    MULTIQC.out.html >> 'foo'
 }
 
 
