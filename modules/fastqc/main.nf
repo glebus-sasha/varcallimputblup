@@ -11,7 +11,7 @@ process FASTQC {
     val tag
 
     output:
-    path "*.html", emit: html,  saveAs {it -> "${it.simpleName}.html"}
+    path "*.html", emit: html,  saveAs {it -> "${sid}_${tag}.html"}
     path "*.zip" , emit: zip
 
     script:
