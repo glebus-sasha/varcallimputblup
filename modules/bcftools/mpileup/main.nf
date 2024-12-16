@@ -4,7 +4,7 @@ process BCFTOOLS_MPILEUP {
     tag "$reference $bamFile"
     publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/BCFTOOLS_MPILEUP"
 //	debug true
-  errorStrategy 'ignore'
+//  errorStrategy 'ignore'
 	
     input:
     path reference
