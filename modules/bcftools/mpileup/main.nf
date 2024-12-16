@@ -13,11 +13,9 @@ process BCFTOOLS_MPILEUP {
     
     output:
     tuple val(sid), path("${sid}.bcf")    ,     emit: bcf
-    tuple val(sid), path("${sid}.bcf.csi"),     emit: index
     
     script:
     """    
     bcftools mpileup -f $reference $bamFile -Ou | bcftools call -m -Ob -o ${sid}.bcf --threads ${task.cpus}
-    bcftools index ${sid}.vcf
     """
 }
