@@ -105,7 +105,7 @@ workflow {
         input_fastqs,
         bwaidx,
         faidx)
-    BCF_IMPUTE(ref_panel_with_index, ref_panel_index, FASTQ_QC_TRIM_ALIGN_VARCALL.out.aling)
+    BCF_IMPUTE(ref_panel_with_index, ref_panel_index, FASTQ_QC_TRIM_ALIGN_VARCALL.out.align)
 }
 
 
