@@ -1,7 +1,4 @@
 // Include processes
-include { FASTQC as FASTQC1                 } from '../../modules/fastqc'
-include { FASTP                             } from '../../modules/fastp'
-include { FASTQC as FASTQC2                 } from '../../modules/fastqc'
 include { BWA_MEM                           } from '../../modules/bwa_mem'
 include { SAMTOOLS_FLAGSTAT                 } from '../../modules/samtools/flagstat'
 include { SAMTOOLS_INDEX                    } from '../../modules/samtools/index'
@@ -17,9 +14,6 @@ workflow ALIGN_VARCALL {
     faidx
 
     main:
-    FASTQC1(input_fastqs)
-    FASTP(input_fastqs)
-    FASTQC2(FASTP.out.trimmed_reads)
     BWA_MEM(FASTP.out.trimmed_reads, reference, bwaidx)
     SAMTOOLS_FLAGSTAT(BWA_MEM.out.bam)
     SAMTOOLS_INDEX(BWA_MEM.out.bam)

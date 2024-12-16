@@ -1,8 +1,9 @@
 // Define the `FASTP` process that performs quality trimming and filtering of reads
 process FASTP{
-    
     container = 'nanozoo/fastp:0.23.1--9f2e255'
-    tag "${sid}"
+    tag { 
+        sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
+    }
  //   publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/FASTP"
     cpus 10
 //	  debug true

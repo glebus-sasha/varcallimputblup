@@ -1,5 +1,7 @@
 process GLIMPSE2_LIGATE {
-    tag "$sid"
+    tag { 
+        sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
+    }
     label 'process_low'
     conda "${moduleDir}/environment.yml"
     container 'imary116/glimpse2:with-bcftools-and-updated-info-score'

@@ -1,7 +1,9 @@
 // Define the `ALIGN` process that aligns reads to the reference genome
 process BWA_MEM {
     container = 'glebusasha/bwa_samtools'
-    tag "$reference ${sid}"
+    tag { 
+        sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
+    }
     cpus 10
 //    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/BWA_MEM"
 //	  debug true
