@@ -52,8 +52,8 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
 
     main:
     FASTQC1(input_fastqs, 'before')
-    FASTP(input_fastqs, 'after')
-    FASTQC2(FASTP.out.trimmed_reads)
+    FASTP(input_fastqs)
+    FASTQC2(FASTP.out.trimmed_reads, 'after')
     BWA_MEM(FASTP.out.trimmed_reads, reference, bwaidx)
     SAMTOOLS_FLAGSTAT(BWA_MEM.out.bam)
     SAMTOOLS_INDEX(BWA_MEM.out.bam)
