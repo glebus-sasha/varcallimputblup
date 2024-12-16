@@ -79,6 +79,8 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
         SAMTOOLS_FLAGSTAT.out.flagstat.collect(),
         BCFTOOLS_STATS1.out.bcfstats.collect()
         )
+    emit:
+    align = BCFTOOLS_STATS2.out
 }
 
 workflow BCF_IMPUTE {
@@ -96,8 +98,6 @@ workflow BCF_IMPUTE {
         )
     GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants.groupTuple())
     BCFTOOLS_STATS2(GLIMPSE2_LIGATE.out.merged_variants)
-    emit:
-    align = BCFTOOLS_STATS2.out
 }
 
 workflow {
