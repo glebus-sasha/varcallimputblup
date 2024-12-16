@@ -67,7 +67,7 @@ workflow FASTQ_QC_TRIM_ALIGN_VARCALL {
         SAMTOOLS_FLAGSTAT.out.flagstat.collect(),
         BCFTOOLS_STATS1.out.bcfstats.collect()
         )
-    align = BCFTOOLS_INDEX.out.bai
+    align = SAMTOOLS_INDEX.out.bai
     align.view()
     emit:
     align = BCFTOOLS_MPILEUP.out.bcf.join(BCFTOOLS_INDEX.out.index)
