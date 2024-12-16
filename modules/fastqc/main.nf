@@ -19,7 +19,6 @@ process FASTQC {
     fastqc $read1 $read2 --threads 6
     mv ${read1}_fastqc.html > ${read1}_${tag}_fastqc.html
     mv ${read2}_fastqc.html > ${read1}_${tag}_fastqc.html
-
     """
 
     stub:
