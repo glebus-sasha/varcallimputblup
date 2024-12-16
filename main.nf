@@ -1,8 +1,8 @@
 #!/usr/bin/env nextflow
 
 // Include workflows
-include { ALIGN_VARCALL             } from 'workflows/align_varcall'
-include { IMPUTE                    } from 'workflows/impute'
+include { ALIGN_VARCALL             } from './workflows/align_varcall'
+include { IMPUTE                    } from './workflows/impute'
 
 
 
