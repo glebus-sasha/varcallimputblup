@@ -88,7 +88,7 @@ workflow BCF_IMPUTE {
     BCFTOOLS_STATS2(GLIMPSE2_LIGATE.out.merged_variants)
 
     emit:
-    imputed_bcf = GLIMPSE2_LIGATE.merged_variants
+    imputed_bcf = GLIMPSE2_LIGATE.out.merged_variants
     bcfstats2 = BCFTOOLS_STATS2.out.bcfstats
 }
 
