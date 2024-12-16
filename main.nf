@@ -92,6 +92,8 @@ workflow BCF_IMPUTE {
 }
 
 workflow {
+    
+    main:
     FASTQ_QC_TRIM_ALIGN_VARCALL(reference,
         input_fastqs,
         bwaidx,
