@@ -11,14 +11,12 @@ process FASTQC {
     val tag
 
     output:
-    path "*.html", emit: html
+    path "*.html", emit: html,  saveAs {it -> "${it.simpleName}.html"}
     path "*.zip" , emit: zip
 
     script:
     """
     fastqc $read1 $read2 --threads 6
-    mv ${read1}_fastqc.html > ${read1}_${tag}_fastqc.html
-    mv ${read2}_fastqc.html > ${read1}_${tag}_fastqc.html
     """
 
     stub:
