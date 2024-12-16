@@ -2,7 +2,7 @@
 process BCFTOOLS_MPILEUP {
     container = 'staphb/bcftools:latest'
     tag "$reference $bamFile"
-    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/BCFTOOLS_MPILEUP"
+//    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/BCFTOOLS_MPILEUP"
 //	debug true
 //  errorStrategy 'ignore'
 	

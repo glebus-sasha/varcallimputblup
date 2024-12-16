@@ -2,7 +2,7 @@
 process SAMTOOLS_FLAGSTAT {
     container = 'glebusasha/bwa_samtools'
     tag "$bamFile"
-    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/SAMTOOLS_FLAGSTAT"
+//    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/SAMTOOLS_FLAGSTAT"
 //	  debug true
 //    errorStrategy 'ignore'
 

@@ -2,7 +2,7 @@
 process MULTIQC {
     container = 'staphb/multiqc:latest'
     tag "$flagstat"
-    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/MULTIQC"
+//    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/MULTIQC"
 //	  debug true
 //    errorStrategy 'ignore'
 	

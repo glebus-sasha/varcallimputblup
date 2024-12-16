@@ -2,7 +2,7 @@
 process SAMTOOLS_INDEX {
     container = 'glebusasha/bwa_samtools'
     tag "$bamFile"
-    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/SAMTOOLS_INDEX"
+ //   publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/SAMTOOLS_INDEX"
 //	  debug true
 //    errorStrategy 'ignore'
     input:

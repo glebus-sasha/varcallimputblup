@@ -2,7 +2,7 @@
 process BCFTOOLS_INDEX {
     container = 'staphb/bcftools:latest'
     tag "$sid"
-    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/BCFTOOLS_INDEX"
+//    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/BCFTOOLS_INDEX"
 
 //    cache "lenient" 
 //    debug true

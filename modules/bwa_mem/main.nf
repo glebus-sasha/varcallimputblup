@@ -3,7 +3,7 @@ process BWA_MEM {
     container = 'glebusasha/bwa_samtools'
     tag "$reference ${sid}"
     cpus 10
-    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/BWA_MEM"
+//    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/BWA_MEM"
 //	  debug true
 //    errorStrategy 'ignore'
 
