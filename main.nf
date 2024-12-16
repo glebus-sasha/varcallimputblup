@@ -96,6 +96,8 @@ workflow BCF_IMPUTE {
         )
     GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants.groupTuple())
     BCFTOOLS_STATS2(GLIMPSE2_LIGATE.out.merged_variants)
+    emit:
+    align = BCFTOOLS_STATS2.out
 }
 
 workflow {
@@ -103,7 +105,7 @@ workflow {
         input_fastqs,
         bwaidx,
         faidx)
-    BCF_IMPUTE(ref_panel_with_index, ref_panel_index, align)
+    BCF_IMPUTE(ref_panel_with_index, ref_panel_index, FASTQ_QC_TRIM_ALIGN_VARCALL.out.aling)
 }
 
 
