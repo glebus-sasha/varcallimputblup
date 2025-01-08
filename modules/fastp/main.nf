@@ -1,6 +1,7 @@
 // Define the `FASTP` process that performs quality trimming and filtering of reads
 process FASTP{
-    container = 'nanozoo/fastp:0.23.1--9f2e255'
+    container 'nanozoo/fastp:0.23.1--9f2e255'
+    conda 'fastp'
     tag { 
         sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
     }
