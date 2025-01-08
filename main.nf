@@ -31,7 +31,13 @@ bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.simpleName, file]}
 bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.simpleName, file]}
 align = bam.join(bamindex)
 
-workflow {
+workflow test{
+    QC_TRIM(
+        input_fastqs
+    )
+}
+
+workflow freeze{
     QC_TRIM(
         input_fastqs
     )
@@ -56,5 +62,7 @@ workflow {
     )
 }
 
-
+workflow {
+    test()
+}
 
