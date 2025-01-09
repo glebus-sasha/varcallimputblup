@@ -1,6 +1,7 @@
 // Define the `ALIGN` process that aligns reads to the reference genome
 process BWA_MEM {
-    container = 'glebusasha/bwa_samtools'
+    container 'glebusasha/bwa_samtools'
+    conda 'bwa, samtools'
     tag { 
         sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
     }

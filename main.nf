@@ -35,9 +35,15 @@ workflow test{
     QC_TRIM(
         input_fastqs
     )
+    ALIGN_VARCALL(
+        reference,
+        QC_TRIM.out.trimmed_reads,
+        bwaidx,
+        faidx
+    )
 }
 
-workflow freeze{
+workflow imputation{
     QC_TRIM(
         input_fastqs
     )
