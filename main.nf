@@ -35,7 +35,7 @@ bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.simpleName, file]}
 bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.simpleName, file]}
 align = bam.join(bamindex)
 
-workflow COV_SUMMARY{
+workflow COVERAGE_SUMMARY{
     take:
     align
     bcfstats1
@@ -68,7 +68,7 @@ workflow FASTQ_ALIGN_VARCALL_COVERAGE{
         bwaidx,
         faidx
     )
-    COV_SUMMARY(ALIGN_VARCALL.out.align, ALIGN_VARCALL.out.bcfstats1)
+    COVERAGE_SUMMARY(ALIGN_VARCALL.out.align, ALIGN_VARCALL.out.bcfstats1)
 }
 
 workflow imputation{
