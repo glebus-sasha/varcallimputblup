@@ -26,7 +26,7 @@ process COV_SUMMARY {
     combined_data <- bind_rows(data_frames)
 
     # Write the combined data to a new CSV file
-    merged_file <- "merged_${workflow.start.format('yyyyMMdd_HHmmss')}.csv"
+    merged_file <- "coverage.csv"
     write_csv(combined_data, merged_file)
     """
 }
