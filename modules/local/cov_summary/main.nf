@@ -1,7 +1,7 @@
 // Define the `COV_SUMMARY` process that generates a summary coverage table for each sample
 process COV_SUMMARY {
     container ''
-    conda ''
+    conda 'r-base'
     tag {
         sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
     }
@@ -18,8 +18,10 @@ process COV_SUMMARY {
 
     script:
     """
-    breadth=\$(cat ${breadthFile})
-    depth=\$(awk '{sum += \$3} END {if (NR > 0) print sum/NR; else print 0}' ${depthFile})
-    echo -e "Sample\\tBreadth\\tAverageDepth\\n${sid}\\t${breadth}\\t${depth}" > ${sid}_summary.txt
+    breadth <- as.numeric(readLines("${breadthFile}"))
+    depth_data <- read.table("${depthFile}", header=FALSE)
+    average_depth <- mean(depth_data[,3])
+    summary_data <- data.frame(Sample=c("${sid}"), Breadth=breadth, AverageDepth=average_depth)
+    write.table(summary_data, file="${sid}_summary.txt", sep="\\t", row.names=FALSE, col.names=TRUE)
     """
 }
