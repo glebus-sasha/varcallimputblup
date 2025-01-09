@@ -1,11 +1,11 @@
 #!/usr/bin/env nextflow
 
 // Include workflows and modules
-include { QC_TRIM       } from './workflows/qc_trim'
-include { ALIGN_VARCALL } from './workflows/align_varcall'
-include { IMPUTE        } from './workflows/impute'
-include { IMPUTE        } from './workflows/coverage_summary'
-include { MULTIQC       } from './modules/multiqc'
+include { QC_TRIM           } from './workflows/qc_trim'
+include { ALIGN_VARCALL     } from './workflows/align_varcall'
+include { IMPUTE            } from './workflows/impute'
+include { COVERAGE_SUMMARY  } from './workflows/coverage_summary'
+include { MULTIQC           } from './modules/multiqc'
 
 
 // Logging pipeline information
