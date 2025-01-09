@@ -4,11 +4,9 @@
 include { QC_TRIM       } from './workflows/qc_trim'
 include { ALIGN_VARCALL } from './workflows/align_varcall'
 include { IMPUTE        } from './workflows/impute'
+include { IMPUTE        } from './workflows/coverage_summary'
 include { MULTIQC       } from './modules/multiqc'
-include { BAM_BREADTH   } from './modules/local/breadth'
-include { BAM_DEPTH     } from './modules/local/depth'
-include { COV_STATS     } from './modules/local/cov_stats'
-include { COV_SUMMARY   } from './modules/local/cov_summary'
+
 
 // Logging pipeline information
 log.info """\
@@ -34,22 +32,6 @@ ref_panel_with_index = ref_panel.join(ref_panel_index)
 bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.simpleName, file]}
 bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.simpleName, file]}
 align = bam.join(bamindex)
-
-workflow COVERAGE_SUMMARY{
-    take:
-    align
-    bcfstats1
-
-    main:
-    align |
-    BAM_BREADTH & BAM_DEPTH
-
-    breadth = BAM_BREADTH.out.breadth
-    depth = BAM_DEPTH.out.depth_stats
-
-    COV_STATS(breadth.join(depth).join(bcfstats1))
-    COV_SUMMARY(COV_STATS.out.cov_stats.map{it -> it[1]}.collect())
-}
 
 workflow FASTQ_ALIGN_VARCALL_COVERAGE{
     take:
