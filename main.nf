@@ -67,8 +67,8 @@ workflow FASTQ_ALIGN_VARCALL_COVERAGE{
         bwaidx,
         faidx
     )
-
     COV_SUMMARY(ALIGN_VARCALL.out.align)
+}
 
 workflow imputation{
     take:
