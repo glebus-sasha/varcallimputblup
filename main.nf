@@ -59,7 +59,7 @@ workflow FASTQ_ALIGN_VARCALL_COVERAGE{
     depth = BAM_DEPTH.out.depth_stats
     bcfstats1 = ALIGN_VARCALL.out.bcfstats1
     breadth.join(depth).join(bcfstats1).view()
-//    COV_SUMMARY(breadth.join(depth).join(bcfstats1))
+    COV_SUMMARY(breadth.join(depth).join(bcfstats1))
 }
 
 workflow imputation{
