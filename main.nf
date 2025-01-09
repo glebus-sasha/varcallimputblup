@@ -35,6 +35,13 @@ bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.simpleNam
 align = bam.join(bamindex)
 
 workflow FASTQ_ALIGN_VARCALL_COVERAGE{
+    take:
+    reference
+    input_fastqs
+    bwaidx
+    faidx
+
+    main:
     QC_TRIM(
         input_fastqs
     )
@@ -75,6 +82,11 @@ workflow imputation{
 }
 
 workflow {
-    FASTQ_ALIGN_VARCALL_COVERAGE()
+    FASTQ_ALIGN_VARCALL_COVERAGE(
+        reference,
+        input_fastqs,
+        bwaidx,
+        faidx
+    )
 }
 
