@@ -22,6 +22,6 @@ process COV_SUMMARY {
     library(purrr)
     library(readr)
 
-    print(sid)
+    print('${sid}')
     """
 }
