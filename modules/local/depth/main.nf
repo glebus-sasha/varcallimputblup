@@ -41,11 +41,11 @@ process BAM_DEPTH {
 
     summary_stats <- bam %>%
       summarise(
-        Mean = mean(depth, na.rm = TRUE),
-        Median = median(depth, na.rm = TRUE),
-        Min = min(depth, na.rm = TRUE),
-        Max = max(depth, na.rm = TRUE),
-        SD = sd(depth, na.rm = TRUE)
+        Mean_Depth = mean(depth, na.rm = TRUE),
+        Median_Depth = median(depth, na.rm = TRUE),
+        Min_Depth = min(depth, na.rm = TRUE),
+        Max_Depth = max(depth, na.rm = TRUE),
+        SD_Depth = sd(depth, na.rm = TRUE)
       )
     write.csv(summary_stats, file="${sid}_depth_stats.csv", row.names=FALSE, quote=FALSE)
     """
