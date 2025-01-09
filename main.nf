@@ -61,7 +61,9 @@ workflow FASTQ_ALIGN_VARCALL_COVERAGE{
     bcfstats1 = ALIGN_VARCALL.out.bcfstats1
 
     COV_STATS(breadth.join(depth).join(bcfstats1))
-    COV_SUMMARY(COV_STATS.out.cov_stats.collect.map { it.collect { it.right } })
+    COV_STATS.out.cov_stats.map{it -> it[1]}.view()
+
+   //COV_SUMMARY(COV_STATS.out.cov_stats.collect.map{it.collect { it.right } })
 
     
 }
