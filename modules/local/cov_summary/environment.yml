@@ -1,4 +1,4 @@
-name: my_r_env
+name: r_env
 channels:
   - conda-forge
   - bioconda
@@ -8,4 +8,3 @@ dependencies:
   - bioconductor-rsamtools
   - bioconductor-genomicranges
   - r-ggplot2
-  - r-samtools
