@@ -16,7 +16,7 @@ process BWA_MEM {
     path idx
     
     output:
-    tuple val(sid), path("*.bam"), emit: bam
+    tuple val(sid), path("${sid}.bam"), emit: bam
     
     script:
     """
