@@ -17,7 +17,8 @@ process COV_SUMMARY {
     script:
     """
     #!/usr/bin/env Rscript
-
+    
+    library(tidyverse)
     # Load the R script
     source('${projectDir}/assets/coverage_summary.R')
 
