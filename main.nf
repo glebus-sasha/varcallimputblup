@@ -40,6 +40,7 @@ workflow COV_SUMMARY{
     align
     bcfstats1
 
+    main:
     align |
     BAM_BREADTH & BAM_DEPTH
 
