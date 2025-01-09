@@ -1,7 +1,7 @@
 // Define the `COV_SUMMARY` process that generates a summary table for all samples
 process COV_SUMMARY {
     container ''
-    conda 'environment.yml'
+    conda "${moduleDir}/environment.yml"
     tag 'summary'
     cpus 10
     publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/COV_SUMMARY"
