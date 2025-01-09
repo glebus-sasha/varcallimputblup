@@ -75,6 +75,6 @@ workflow imputation{
 }
 
 workflow {
-    test()
+    FASTQ_ALIGN_VARCALL_COVERAGE()
 }
 
