@@ -14,7 +14,7 @@ process COV_STATS {
     tuple val(sid), path(breadthFile), path(depthStatsFile), path(bcfstatsFile)
 
     output:
-    path("${sid}_stats.csv")
+    tuple val(sid), path("${sid}_stats.csv"), emit: cov_stats
 
     script:
     """
