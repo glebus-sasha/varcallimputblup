@@ -1,7 +1,7 @@
 // Define the `SAMTOOLS_FLAGSTAT` process that aligns stats
 process SAMTOOLS_FLAGSTAT {
     container 'glebusasha/bwa_samtools'
-    conda 'bwa, samtools'
+    conda 'bioconda::bwa bioconda::samtools'
     tag ""
 //    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/SAMTOOLS_FLAGSTAT"
 //	  debug true
