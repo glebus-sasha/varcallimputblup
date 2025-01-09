@@ -57,7 +57,7 @@ workflow FASTQ_ALIGN_VARCALL_COVERAGE{
         QC_TRIM.out.fastqc_after.collect(),
         ALIGN_VARCALL.out.flagstat.collect(),
         ALIGN_VARCALL.out.bcfstats1.collect(),
-        null
+        'null'
     )
 }
 
