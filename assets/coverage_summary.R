@@ -1,4 +1,4 @@
-create_summary_table <- function(sid, depthStatsFile, bcfstatsFile, breadthFile) {
+create_and_save_summary_table <- function(sid, depthStatsFile, bcfstatsFile, breadthFile) {
   # Чтение данных из файла depthStatsFile
   depth <- read_table(depthStatsFile)
   
@@ -36,8 +36,9 @@ create_summary_table <- function(sid, depthStatsFile, bcfstatsFile, breadthFile)
   # Объедините все данные в один датафрейм
   combined_df <- bind_cols(sid_df, depth, breads = breads, bcfstats_wide)
   
+  # Запись данных в CSV файл
+  output_file <- paste0(sid, "_stats.csv")
+  write.csv(combined_df, file = output_file, row.names = FALSE)
+  
   return(combined_df)
 }
-
-write.csv(summary_table, file = paste0(sid, "_stats.csv"), row.names = FALSE)
-
