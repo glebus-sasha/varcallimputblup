@@ -31,11 +31,12 @@ process BAM_DEPTH {
       group_by(rname, pos) %>%
       summarise(depth = n(), .groups = 'drop')
 
-    p <- bam %>% ggplot() +
-      aes(x=pos, y=depth) +
-      geom_line() +
-      labs(title="Depth of Coverage", x="Genomic Position", y="Depth") +
-      theme_minimal()
+    p <- ggplot(bam, aes(x=pos, y=depth)) +
+    geom_line() +
+    labs(title="Depth of Coverage", x="Genomic Position", y="Depth") +
+    theme_bw() +
+    scale_x_continuous(breaks = seq(0, 1e9, by = 1e7), labels = scales::comma) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
     ggsave("${sid}_depth_plot.png", p, width=10, height=6)
 
     summary_stats <- bam %>%
