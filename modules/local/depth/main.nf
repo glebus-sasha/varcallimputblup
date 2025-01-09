@@ -13,7 +13,8 @@ process BAM_DEPTH {
     tuple val(sid), path(bamFile), path(bamIndex)
 
     output:
-    tuple val(sid), path("${sid}_depth_plot.png"), path("${sid}_depth_stats.txt"), emit: depth
+    tuple val(sid), path("${sid}_depth_plot.png") , emit: depth_plot
+    tuple val(sid), path("${sid}_depth_stats.txt"), emit: depth_stats
 
     script:
     """
