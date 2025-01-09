@@ -10,7 +10,7 @@ process COV_SUMMARY {
     path(csvFiles)
 
     output:
-    path("merged_${workflow.start.format('yyyyMMdd_HHmmss')}.csv"), emit: merged_csv
+    path("coverage.csv"), emit: merged_csv
 
     script:
     """
