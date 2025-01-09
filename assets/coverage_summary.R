@@ -1,6 +1,6 @@
 create_and_save_summary_table <- function(sid, depthStatsFile, bcfstatsFile, breadthFile) {
   # Чтение данных из файла depthStatsFile
-  depth <- read_table(depthStatsFile)
+  depth <- read_csv(depthStatsFile)
   
   # Чтение данных из файла breadthFile
   breads <- read_csv(breadthFile, col_names = FALSE) %>% pull(1) %>% as.numeric()
