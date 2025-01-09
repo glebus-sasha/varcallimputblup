@@ -1,6 +1,7 @@
 // Define the `COV_SUMMARY` process that merges all vcf files
 process COV_SUMMARY {
     container ''
+    conda "${moduleDir}/environment.yml"
     tag {
         sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
     }
@@ -15,16 +16,19 @@ process COV_SUMMARY {
 
     script:
     """
-    # Extract the header from the first file
-    header=$(head -n 1 "${csvFiles[0]}")
+    #!/usr/bin/env Rscript
+    library(dplyr)
+    library(readr)
 
-    # Create the merged file with a unique name
-    merged_file="merged_${workflow.start.format('yyyyMMdd_HHmmss')}.csv"
-    echo "$header" > "$merged_file"
+    # Read all CSV files into a list of data frames
+    csv_files <- c("${csvFiles.join('", "')}")
+    data_frames <- lapply(csv_files, read_csv)
 
-    # Append the data from all files, skipping the header in subsequent files
-    for file in "${csvFiles[@]}"; do
-        tail -n +2 "$file" >> "$merged_file"
-    done
+    # Combine all data frames into one
+    combined_data <- bind_rows(data_frames)
+
+    # Write the combined data to a new CSV file
+    merged_file <- "merged_${workflow.start.format('yyyyMMdd_HHmmss')}.csv"
+    write_csv(combined_data, merged_file)
     """
 }
