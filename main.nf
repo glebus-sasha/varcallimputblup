@@ -59,7 +59,7 @@ workflow FASTQ_ALIGN_VARCALL_COVERAGE{
     depth = BAM_DEPTH.out.depth
     flagstat = ALIGN_VARCALL.out.flagstat
 
-    COV_SUMMARY(breadth.join(depth).join(bcfstats))
+    COV_SUMMARY(breadth.join(depth).join(flagstat))
 }
 
 workflow imputation{
