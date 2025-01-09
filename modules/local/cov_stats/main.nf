@@ -6,7 +6,7 @@ process COV_STATS {
         sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
     }
     cpus 10
-    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/COV_STATS"
+//    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/COV_STATS"
 //	  debug true
 //    errorStrategy 'ignore'
 
