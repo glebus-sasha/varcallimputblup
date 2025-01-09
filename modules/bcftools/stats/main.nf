@@ -16,7 +16,7 @@ process BCFTOOLS_STATS {
     val tag
 
     output:
-    path "${sid}_${tag}.bcfstats",      emit: bcfstats
+    tuple val(sid), path("${sid}_${tag}.bcfstats"),      emit: bcfstats
     
     script:
     """
