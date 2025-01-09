@@ -60,16 +60,8 @@ process COV_SUMMARY {
       return(combined_df)
     }
 
-    # Аргументы командной строки
-    args <- commandArgs(trailingOnly = TRUE)
-    sid <- args[1]
-    depthStatsFile <- args[2]
-    bcfstatsFile <- args[3]
-    breadthFile <- args[4]
-    outputFile <- args[5]
-
     # Создайте сводную таблицу
-    summary_table <- create_summary_table(sid, depthStatsFile, bcfstatsFile, breadthFile)
+    summary_table <- create_summary_table($sid, $depthStatsFile, $bcfstatsFile, $breadthFile)
 
     # Сохраните результат в файл
     write.csv(summary_table, file = outputFile, row.names = FALSE)
