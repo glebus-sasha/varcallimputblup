@@ -48,7 +48,7 @@ process COV_SUMMARY {
 
     # Combine all samples' stats into a single data frame
     combined_results <- pmap_dfr(
-        list(sid, depthStatsFile, breadthFile, bcfstatsFile),
+        list(sid = sid, depthStatsFile = depthStatsFile, breadthFile = breadthFile, bcfstatsFile = bcfstatsFile),
         process_sample
     )
 
