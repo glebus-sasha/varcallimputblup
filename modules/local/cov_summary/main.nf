@@ -15,9 +15,6 @@ process COV_SUMMARY {
 
     script:
     """
-    #!/usr/bin/env bash
-    set -e
-
     # Extract the header from the first file
     header=\$(head -n 1 "${csvFiles[0]}")
 
