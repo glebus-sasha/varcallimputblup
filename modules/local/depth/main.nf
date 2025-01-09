@@ -22,31 +22,30 @@ process BAM_DEPTH {
     library(Rsamtools)
     library(GenomicRanges)
     library(ggplot2)
+    library(dplyr)
 
     bamFile <- "${bamFile}"
-    bam <- BamFile(bamFile, asMates=TRUE)
-    coverage <- as.data.frame(scanBam(bam, which=c("qwidth", "qstart", "qend")))
+    bam <- BamFile(bamFile, asMates=TRUE) %>%
+      scanBam() %>%
+      as.data.frame() %>%
+      group_by(rname, pos) %>%
+      summarise(depth = n(), .groups = 'drop')
 
-    # Calculate depth of coverage
-    depth <- coverage\$qend - coverage\$qstart + 1
-    coverage\$depth <- depth
-
-    # Generate plot
-    p <- ggplot(coverage, aes(x=qstart, y=depth)) +
-        geom_line() +
-        labs(title="Depth of Coverage", x="Genomic Position", y="Depth") +
-        theme_minimal()
+    p <- bam %>% ggplot() +
+      aes(x=pos, y=depth) +
+      geom_line() +
+      labs(title="Depth of Coverage", x="Genomic Position", y="Depth") +
+      theme_minimal()
     ggsave("${sid}_depth_plot.png", p, width=10, height=6)
 
-    # Calculate summary statistics
-    summary_stats <- data.frame(
-        Sample = "${sid}",
-        MeanDepth = mean(depth),
-        MedianDepth = median(depth),
-        MinDepth = min(depth),
-        MaxDepth = max(depth),
-        SDDepth = sd(depth)
-    )
+    summary_stats <- bam %>%
+      summarise(
+        Mean = mean(depth, na.rm = TRUE),
+        Median = median(depth, na.rm = TRUE),
+        Min = min(depth, na.rm = TRUE),
+        Max = max(depth, na.rm = TRUE),
+        SD = sd(depth, na.rm = TRUE)
+      )
     write.table(summary_stats, file="${sid}_depth_stats.txt", sep="\\t", row.names=FALSE, col.names=TRUE)
     """
 }
