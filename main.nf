@@ -53,7 +53,7 @@ workflow FASTQ_ALIGN_VARCALL_COVERAGE{
     )
     ALIGN_VARCALL.out.align |
     BAM_BREADTH & BAM_DEPTH
-    COV_SUMMARY(BAM_BREADTH.out.breadth.join(BAM_DEPTH.out.depth))
+//    COV_SUMMARY(BAM_BREADTH.out.breadth.join(BAM_DEPTH.out.depth))
 }
 
 workflow imputation{
