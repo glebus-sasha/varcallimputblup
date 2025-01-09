@@ -16,6 +16,8 @@ process COV_SUMMARY {
 
     script:
     """
+    #!/usr/bin/env Rscript
+    
     library(dplyr)
     library(readr)
 
