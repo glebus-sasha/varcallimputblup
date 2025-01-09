@@ -18,41 +18,60 @@ process COV_SUMMARY {
     """
     #!/usr/bin/env Rscript
 
-    library(dplyr)
-    library(purrr)
-    library(readr)
+    # Определите функцию create_summary_table
+    create_summary_table <- function(sid, depthStatsFile, bcfstatsFile, breadthFile) {
+      # Чтение данных из файла depthStatsFile
+      depth <- read_table(depthStatsFile)
 
-    # Function to read and process a single sample's stats files
-    process_sample <- function(sid, depthStatsFile, breadthFile, bcfstatsFile) {
-        depth_stats <- read_tsv(depthStatsFile)
-        breadth <- read_tsv(breadthFile)
-        bcfstats <- read_tsv(bcfstatsFile)
+      # Чтение данных из файла breadthFile
+      breads <- read_csv(breadthFile, col_names = FALSE) %>% pull(1) %>% as.numeric()
 
-        # Extract the number of SNPs
-        snp_count <- as.numeric(bcfstats[bcfstats\$Type == "SNP", "Count"])
+      # Чтение данных из файла bcfstatsFile
+      file_lines <- readLines(bcfstatsFile)
 
-        # Combine the stats into a single data frame
-        sample_stats <- tibble(
-            Sample = sid,
-            MeanDepth = depth_stats\$Mean,
-            MedianDepth = depth_stats\$Median,
-            MinDepth = depth_stats\$Min,
-            MaxDepth = depth_stats\$Max,
-            SDDepth = depth_stats\$SD,
-            Breadth = breadth\$V1,
-            SNPCount = snp_count
-        )
+      # Найдите начало нужного отрывка с использованием регулярного выражения
+      start_line <- grep("# SN\\t\\[2\\]id\\t\\[3\\]key\\t\\[4\\]value", file_lines)
 
-        return(sample_stats)
+      # Проверьте, найдена ли строка
+      if (length(start_line) == 0) {
+        stop("Не удалось найти начало нужного отрывка в файле.")
+      }
+
+      # Извлеките строки, начиная с найденной линии
+      relevant_lines <- file_lines[(start_line + 1):(start_line + 10)]
+
+      # Преобразуйте строки в датафрейм
+      bcfstats_data <- read.table(text = relevant_lines, header = FALSE, sep = "\\t", stringsAsFactors = FALSE)
+
+      # Присвоим имена колонкам
+      colnames(bcfstats_data) <- c("SN", "id", "key", "value")
+
+      # Преобразуем данные в широкий формат
+      bcfstats_wide <- bcfstats_data %>%
+        select(key, value) %>%
+        spread(key, value)
+
+      # Создайте датафрейм с sid
+      sid_df <- data.frame(sid = sid)
+
+      # Объедините все данные в один датафрейм
+      combined_df <- bind_cols(sid_df, depth, breads = breads, bcfstats_wide)
+
+      return(combined_df)
     }
 
-    # Combine all samples' stats into a single data frame
-    combined_results <- pmap_dfr(
-        list('${sid}', '${depthStatsFile}', '${breadthFile}', '${bcfstatsFile}'),
-        process_sample
-    )
+    # Аргументы командной строки
+    args <- commandArgs(trailingOnly = TRUE)
+    sid <- args[1]
+    depthStatsFile <- args[2]
+    bcfstatsFile <- args[3]
+    breadthFile <- args[4]
+    outputFile <- args[5]
 
-    # Write the combined results to a file
-    write_tsv(combined_results, "combined_summary.txt")
+    # Создайте сводную таблицу
+    summary_table <- create_summary_table(sid, depthStatsFile, bcfstatsFile, breadthFile)
+
+    # Сохраните результат в файл
+    write.csv(summary_table, file = outputFile, row.names = FALSE)
     """
 }
