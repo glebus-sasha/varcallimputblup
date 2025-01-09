@@ -1,11 +1,12 @@
 #!/usr/bin/env nextflow
 
 // Include workflows and modules
-include { QC_TRIM           } from './workflows/qc_trim'
-include { ALIGN_VARCALL     } from './workflows/align_varcall'
-include { IMPUTE            } from './workflows/impute'
-include { COVERAGE_SUMMARY  } from './workflows/coverage_summary'
-include { MULTIQC           } from './modules/multiqc'
+include { QC_TRIM                       } from './workflows/qc_trim'
+include { ALIGN_VARCALL                 } from './workflows/align_varcall'
+include { IMPUTE                        } from './workflows/impute'
+include { COVERAGE_SUMMARY              } from './workflows/coverage_summary'
+include { IMPUTATION_SUMMARY_MULTIQC    } from './modules/imputation_summary_multiqc'
+include { COVERAGE_SUMMARY_MULTIQC      } from './modules/coverage_summary_multiqc'
 
 
 // Logging pipeline information
@@ -51,13 +52,12 @@ workflow FASTQ_ALIGN_VARCALL_COVERAGE{
         faidx
     )
     COVERAGE_SUMMARY(ALIGN_VARCALL.out.align, ALIGN_VARCALL.out.bcfstats1)
-    MULTIQC(
+    COVERAGE_SUMMARY_MULTIQC(
         QC_TRIM.out.fastp.collect(),
         QC_TRIM.out.fastqc_before.collect(),
         QC_TRIM.out.fastqc_after.collect(),
         ALIGN_VARCALL.out.flagstat.collect(),
         ALIGN_VARCALL.out.bcfstats1.collect(),
-        'null'
     )
 }
 
@@ -86,7 +86,7 @@ workflow imputation{
         ref_panel_index, 
         ALIGN_VARCALL.out.align
     )
-    MULTIQC(
+    IMPUTATION_SUMMARY_MULTIQC(
         QC_TRIM.out.fastp.collect(),
         QC_TRIM.out.fastqc_before.collect(),
         QC_TRIM.out.fastqc_after.collect(),
