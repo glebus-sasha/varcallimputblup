@@ -1,12 +1,12 @@
-// Define the `COV_SUMMARY` process that generates a summary table for all samples
-process COV_SUMMARY {
+// Define the `COV_STATS` process that generates a summary table for each samples
+process COV_STATS {
     container ''
     conda "${moduleDir}/environment.yml"
     tag {
         sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
     }
     cpus 10
-    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/COV_SUMMARY"
+    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/COV_STATS"
 //	  debug true
 //    errorStrategy 'ignore'
 

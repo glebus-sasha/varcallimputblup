@@ -7,6 +7,7 @@ include { IMPUTE        } from './workflows/impute'
 include { MULTIQC       } from './modules/multiqc'
 include { BAM_BREADTH   } from './modules/local/breadth'
 include { BAM_DEPTH     } from './modules/local/depth'
+include { COV_STATS     } from './modules/local/cov_stats'
 include { COV_SUMMARY   } from './modules/local/cov_summary'
 
 // Logging pipeline information
@@ -58,7 +59,7 @@ workflow FASTQ_ALIGN_VARCALL_COVERAGE{
     breadth = BAM_BREADTH.out.breadth
     depth = BAM_DEPTH.out.depth_stats
     bcfstats1 = ALIGN_VARCALL.out.bcfstats1
-    
+
     COV_SUMMARY(breadth.join(depth).join(bcfstats1))
 }
 
