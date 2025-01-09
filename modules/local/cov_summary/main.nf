@@ -12,12 +12,12 @@ process COV_SUMMARY {
     tuple val(sid), path(breadthFile), path(depthStatsFile), path(bcfstatsFile)
 
     output:
-    path("combined_summary.txt")
+    path("${sid}_stats.csv")
 
     script:
     """
     #!/usr/bin/env Rscript
-    
+
     library(tidyverse)
     # Load the R script
     source('${projectDir}/assets/coverage_summary.R')
