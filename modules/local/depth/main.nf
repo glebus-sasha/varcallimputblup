@@ -18,6 +18,7 @@ process BAM_DEPTH {
 
     script:
     """
+    #!/usr/bin/env Rscript
     library(Rsamtools)
     library(GenomicRanges)
     library(ggplot2)
