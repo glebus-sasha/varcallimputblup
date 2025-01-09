@@ -19,6 +19,6 @@ process COVERAGE_SUMMARY_MULTIQC {
 
     script:
     """
-    multiqc $fastqc1 $fastqc2 $fastp $flagstat $bcfstats1 $bcfstats2
+    multiqc $fastqc1 $fastqc2 $fastp $flagstat $bcfstats1
     """
 }
