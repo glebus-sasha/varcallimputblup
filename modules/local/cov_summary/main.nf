@@ -17,25 +17,23 @@ process COV_SUMMARY {
     script:
     """
     #!/usr/bin/env Rscript
-    
+
     library(dplyr)
+    library(purrr)
     library(readr)
 
-    # Initialize an empty data frame to store combined results
-    combined_results <- data.frame()
-
-    # Loop through each sample and read the stats files
-    for (i in 1:length(sid)) {
-        depth_stats <- read_tsv(depthStatsFile[i])
-        breadth <- read_tsv(breadthFile[i])
-        bcfstats <- read_tsv(bcfstatsFile[i])
+    # Function to read and process a single sample's stats files
+    process_sample <- function(sid, depthStatsFile, breadthFile, bcfstatsFile) {
+        depth_stats <- read_tsv(depthStatsFile)
+        breadth <- read_tsv(breadthFile)
+        bcfstats <- read_tsv(bcfstatsFile)
 
         # Extract the number of SNPs
         snp_count <- as.numeric(bcfstats[bcfstats\$Type == "SNP", "Count"])
 
         # Combine the stats into a single data frame
-        sample_stats <- data.frame(
-            Sample = sid[i],
+        sample_stats <- tibble(
+            Sample = sid,
             MeanDepth = depth_stats\$Mean,
             MedianDepth = depth_stats\$Median,
             MinDepth = depth_stats\$Min,
@@ -45,9 +43,14 @@ process COV_SUMMARY {
             SNPCount = snp_count
         )
 
-        # Append to the combined results
-        combined_results <- bind_rows(combined_results, sample_stats)
+        return(sample_stats)
     }
+
+    # Combine all samples' stats into a single data frame
+    combined_results <- map2_dfr(
+        sid, depthStatsFile, breadthFile, bcfstatsFile,
+        ~ process_sample(.x, .y, ..1, ..2)
+    )
 
     # Write the combined results to a file
     write_tsv(combined_results, "combined_summary.txt")
