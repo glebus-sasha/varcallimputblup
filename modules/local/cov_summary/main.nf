@@ -16,15 +16,15 @@ process COV_SUMMARY {
     script:
     """
     # Extract the header from the first file
-    header=\$(head -n 1 "${csvFiles[0]}")
+    header=$(head -n 1 "${csvFiles[0]}")
 
     # Create the merged file with a unique name
     merged_file="merged_${workflow.start.format('yyyyMMdd_HHmmss')}.csv"
-    echo "\$header" > "\$merged_file"
+    echo "$header" > "$merged_file"
 
     # Append the data from all files, skipping the header in subsequent files
-    for file in "\${csvFiles[@]}"; do
-        tail -n +2 "\$file" >> "\$merged_file"
+    for file in "${csvFiles[@]}"; do
+        tail -n +2 "$file" >> "$merged_file"
     done
     """
 }
