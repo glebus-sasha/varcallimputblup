@@ -2,7 +2,9 @@
 process COV_SUMMARY {
     container ''
     conda "${moduleDir}/environment.yml"
-    tag 'summary'
+    tag {
+        sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
+    }
     cpus 10
     publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/COV_SUMMARY"
 //	  debug true

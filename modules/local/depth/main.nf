@@ -47,6 +47,6 @@ process BAM_DEPTH {
         Max = max(depth, na.rm = TRUE),
         SD = sd(depth, na.rm = TRUE)
       )
-    write.table(summary_stats, file="${sid}_depth_stats.txt", sep="\\t", row.names=FALSE, col.names=TRUE)
+    write.csv(summary_stats, file="${sid}_depth_stats.csv", row.names=FALSE, quote=FALSE)
     """
 }
