@@ -1,7 +1,7 @@
 // Define the `BAM_DEPTH` process that calculates the depth of coverage and generates a plot and summary statistics
 process BAM_DEPTH {
     container ''
-    conda 'r-base bioconductor-rsamtools bioconductor-genomicranges'
+    conda "${moduleDir}/environment.yml"
     tag {
         sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
     }
