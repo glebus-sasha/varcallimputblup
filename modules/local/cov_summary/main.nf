@@ -30,7 +30,7 @@ process COV_SUMMARY {
       file_lines <- readLines(bcfstatsFile)
 
       # Найдите начало нужного отрывка с использованием регулярного выражения
-      start_line <- grep("""# SN\t[2]id\t[3]key\t[4]value""", file_lines)
+      start_line <- grep("# SN\\t\\[2\\]id\\t\\[3\\]key\\t\\[4\\]value", file_lines)
 
       # Проверьте, найдена ли строка
       if (length(start_line) == 0) {
