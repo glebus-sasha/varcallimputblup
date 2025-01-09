@@ -5,6 +5,8 @@ include { QC_TRIM       } from './workflows/qc_trim'
 include { ALIGN_VARCALL } from './workflows/align_varcall'
 include { IMPUTE        } from './workflows/impute'
 include { MULTIQC       } from './modules/multiqc'
+include { BAM_BREADTH   } from './modules/local/breadth'
+include { BAM_DEPTH   } from './modules/local/depth'
 
 // Logging pipeline information
 log.info """\
@@ -41,6 +43,8 @@ workflow test{
         bwaidx,
         faidx
     )
+    ALIGN_VARCALL.out.align |
+    BAM_BREADTH & BAM_DEPTH
 }
 
 workflow imputation{
