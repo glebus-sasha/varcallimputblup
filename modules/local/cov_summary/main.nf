@@ -47,9 +47,9 @@ process COV_SUMMARY {
     }
 
     # Combine all samples' stats into a single data frame
-    combined_results <- map2_dfr(
-        sid, depthStatsFile, breadthFile, bcfstatsFile,
-        ~ process_sample(.x, .y, ..1, ..2)
+    combined_results <- pmap_dfr(
+        list(sid, depthStatsFile, breadthFile, bcfstatsFile),
+        process_sample
     )
 
     # Write the combined results to a file
