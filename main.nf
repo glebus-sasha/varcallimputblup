@@ -58,7 +58,7 @@ workflow FASTQ_ALIGN_VARCALL_COVERAGE{
     breadth = BAM_BREADTH.out.breadth
     depth = BAM_DEPTH.out.depth
     flagstat = ALIGN_VARCALL.out.flagstat
-    breadth.join(depth).view()
+    breadth.join(depth).join(flagstat).view()
 
     COV_SUMMARY(breadth.join(depth).join(flagstat))
 }
