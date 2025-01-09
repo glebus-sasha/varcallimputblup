@@ -18,8 +18,8 @@ process COV_SUMMARY {
 
     script:
     """
-    Breadth=\$(awk '{print \$1}' ${breadthFile})
-    depth=\$(awk '{sum += \$3} END {print sum/NR}' ${depthFile})
-    echo -e "Sample\\tBreadth\\tDepth\\n${sid}\\t${Breadth}\\t${depth}" > ${sid}_summary.txt
+    breadth=\$(cat ${breadthFile})
+    depth=\$(awk '{sum += \$3} END {if (NR > 0) print sum/NR; else print 0}' ${depthFile})
+    echo -e "Sample\\tBreadth\\tAverageDepth\\n${sid}\\t${breadth}\\t${depth}" > ${sid}_summary.txt
     """
 }
