@@ -2,7 +2,7 @@
 process COV_SUMMARY {
     container ''
     conda "${moduleDir}/environment.yml"
-    tag ''
+    tag 'all samples'
     publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/COV_SUMMARY"
     errorStrategy 'ignore'
 
