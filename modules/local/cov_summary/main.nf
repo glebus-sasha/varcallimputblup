@@ -22,6 +22,37 @@ process COV_SUMMARY {
     library(purrr)
     library(readr)
 
-    print('${sid}')
+    # Function to read and process a single sample's stats files
+    process_sample <- function(sid, depthStatsFile, breadthFile, bcfstatsFile) {
+        depth_stats <- read_tsv(depthStatsFile)
+        breadth <- read_tsv(breadthFile)
+        bcfstats <- read_tsv(bcfstatsFile)
+
+        # Extract the number of SNPs
+        snp_count <- as.numeric(bcfstats[bcfstats\$Type == "SNP", "Count"])
+
+        # Combine the stats into a single data frame
+        sample_stats <- tibble(
+            Sample = sid,
+            MeanDepth = depth_stats\$Mean,
+            MedianDepth = depth_stats\$Median,
+            MinDepth = depth_stats\$Min,
+            MaxDepth = depth_stats\$Max,
+            SDDepth = depth_stats\$SD,
+            Breadth = breadth\$V1,
+            SNPCount = snp_count
+        )
+
+        return(sample_stats)
+    }
+
+    # Combine all samples' stats into a single data frame
+    combined_results <- pmap_dfr(
+        list(sid = c('${sid}'), depthStatsFile = c('${depthStatsFile}'), breadthFile = c('${breadthFile}'), bcfstatsFile = c('${bcfstatsFile}')),
+        process_sample
+    )
+
+    # Write the combined results to a file
+    write_tsv(combined_results, "combined_summary.txt")
     """
 }
