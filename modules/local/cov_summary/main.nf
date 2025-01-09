@@ -9,7 +9,7 @@ process COV_SUMMARY {
 //    errorStrategy 'ignore'
 
     input:
-    tuple val(sid), path(depthStatsFile), path(breadthFile), path(bcfstatsFile)
+    tuple val(sid), path(breadthFile), path(depthStatsFile), path(bcfstatsFile)
 
     output:
     path("combined_summary.txt")
