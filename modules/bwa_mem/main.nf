@@ -16,14 +16,14 @@ process BWA_MEM {
     path idx
     
     output:
-    tuple val(sid), path("*.sorted.bam"), emit: bam
+    tuple val(sid), path("*.bam"), emit: bam
     
     script:
     """
         bwa mem \
             -t 6 ${reference} ${fq_1_trimmed} ${fq_2_trimmed} | \
         samtools view -bh | \
-        samtools sort --threads 6 -o ${sid}.sorted.bam
+        samtools sort --threads 6 -o ${sid}.bam
 
     """
 }

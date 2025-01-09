@@ -1,7 +1,7 @@
 // Define the `BAM_DEPTH` process that calculates the depth of coverage
 process BAM_DEPTH {
     container ''
-    conda 'bioconda::samtools'
+    conda 'bioconda::bwa bioconda::samtools'
     tag {
         sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
     }
