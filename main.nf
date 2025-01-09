@@ -6,7 +6,8 @@ include { ALIGN_VARCALL } from './workflows/align_varcall'
 include { IMPUTE        } from './workflows/impute'
 include { MULTIQC       } from './modules/multiqc'
 include { BAM_BREADTH   } from './modules/local/breadth'
-include { BAM_DEPTH   } from './modules/local/depth'
+include { BAM_DEPTH     } from './modules/local/depth'
+include { COV_SUMMARY   } from './modules/local/cov_summary'
 
 // Logging pipeline information
 log.info """\
@@ -33,7 +34,7 @@ bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.simpleName, file]}
 bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.simpleName, file]}
 align = bam.join(bamindex)
 
-workflow test{
+workflow FASTQ_ALIGN_VARCALL_COVERAGE{
     QC_TRIM(
         input_fastqs
     )
@@ -45,6 +46,7 @@ workflow test{
     )
     ALIGN_VARCALL.out.align |
     BAM_BREADTH & BAM_DEPTH
+    COV_SUMMARY(BAM_BREADTH.out.breath.join(BAM_DEPTH.out.depth))
 }
 
 workflow imputation{
