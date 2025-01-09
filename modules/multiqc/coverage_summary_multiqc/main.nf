@@ -2,7 +2,7 @@
 process COVERAGE_SUMMARY_MULTIQC {
     container 'staphb/multiqc:latest'
     conda 'multiqc'
-    tag ""
+    tag "all samples"
     publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/COVERAGE_SUMMARY_MULTIQC"
 //	  debug true
 //    errorStrategy 'ignore'

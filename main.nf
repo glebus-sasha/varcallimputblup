@@ -5,8 +5,8 @@ include { QC_TRIM                       } from './workflows/qc_trim'
 include { ALIGN_VARCALL                 } from './workflows/align_varcall'
 include { IMPUTE                        } from './workflows/impute'
 include { COVERAGE_SUMMARY              } from './workflows/coverage_summary'
-include { IMPUTATION_SUMMARY_MULTIQC    } from './modules/imputation_summary_multiqc'
-include { COVERAGE_SUMMARY_MULTIQC      } from './modules/coverage_summary_multiqc'
+include { IMPUTATION_SUMMARY_MULTIQC    } from './modules/multiqc/imputation_summary_multiqc'
+include { COVERAGE_SUMMARY_MULTIQC      } from './modules/multiqc/coverage_summary_multiqc'
 
 
 // Logging pipeline information
