@@ -19,6 +19,6 @@ process MOSDEPTH {
 
     script:
     """
-        mosdepth -n -t 6 -f ${sid} ${bam}
+        mosdepth -n -t 6 ${sid} ${bam}
     """
 }
