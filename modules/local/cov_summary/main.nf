@@ -1,6 +1,6 @@
 // Define the `COV_SUMMARY` process that merges all vcf files
 process COV_SUMMARY {
-    container ''
+    container 'glebusasha/r_env_image:latest'
     conda "${moduleDir}/environment.yml"
     tag 'all samples'
     publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}"

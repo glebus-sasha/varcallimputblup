@@ -1,6 +1,6 @@
 // Define the `COV_STATS` process that generates a summary table for each samples
 process COV_STATS {
-    container ''
+    container 'glebusasha/r_env_image:latest'
     conda "${moduleDir}/environment.yml"
     tag {
         sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
