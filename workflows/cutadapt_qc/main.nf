@@ -12,5 +12,5 @@ workflow CUTADAPT_QC{
     main:
     FASTQC_BEFORE(input_fastqs)
     CUTADAPT(input_fastqs, adapters)
-    FASTQC_AFTER(FASTP.out.trimmed_reads)    
+    FASTQC_AFTER(CUTADAPT.out.cutadapted_reads)    
 }
