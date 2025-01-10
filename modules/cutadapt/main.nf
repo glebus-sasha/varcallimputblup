@@ -14,7 +14,7 @@ process CUTADAPT {
     tuple val(adapter_3f), val(adapter_3r), val(adapter5f), val(adapter5r)
 
     output:
-    tuple val(sid), path("${sid}_R1.fq.gz"), path("${sid}_R2.fq.gz"), emit: cutadapted_reads
+    tuple val(sid), path("${sid}.R1.fq.gz"), path("${sid}.R2.fq.gz"), emit: cutadapted_reads
     
     script:
     """
