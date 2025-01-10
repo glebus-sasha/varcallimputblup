@@ -13,9 +13,8 @@ process MOSDEPTH {
     tuple val(sid), path(bam), path(bamIndex)
 
     output:
-    tuple val(sid), path("${sid}.mosdepth.global.dist.txt"), emit: global_dist
-    tuple val(sid), path("${sid}.per-base.bed.gz")         , emit: per_base
-    tuple val(sid), path("${sid}.regions.bed.gz")          , emit: regions
+    tuple val(sid), path("${sid}.mosdepth.global.dist.txt")     , emit: global_dist
+    tuple val(sid), path("${sid}.mosdepth.mosdepth.summary.txt"), emit: summary
 
     script:
     """
