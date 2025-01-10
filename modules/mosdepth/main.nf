@@ -11,7 +11,6 @@ process MOSDEPTH {
 
     input:
     tuple val(sid), path(bam)
-    path reference
 
     output:
     tuple val(sid), path("${sid}.mosdepth.global.dist.txt"), emit: global_dist
@@ -20,6 +19,6 @@ process MOSDEPTH {
 
     script:
     """
-        mosdepth -n -t 6 -f ${reference} ${bam}
+        mosdepth -n -t 6 -f ${sid} ${bam}
     """
 }
