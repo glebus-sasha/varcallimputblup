@@ -5,6 +5,7 @@ include { SAMTOOLS_INDEX                    } from '../../modules/samtools/index
 include { BCFTOOLS_MPILEUP                  } from '../../modules/bcftools/mpileup'
 include { BCFTOOLS_INDEX                    } from '../../modules/bcftools/index'
 include { BCFTOOLS_STATS as BCFTOOLS_STATS1 } from '../../modules/bcftools/stats'
+include { MOSDEPTH                          } from '../../modules/mosdepth'
 
 workflow ALIGN_VARCALL { 
     take:
@@ -17,6 +18,7 @@ workflow ALIGN_VARCALL {
     BWA_MEM(trimmed_reads, reference, bwaidx)
     SAMTOOLS_FLAGSTAT(BWA_MEM.out.bam)
     SAMTOOLS_INDEX(BWA_MEM.out.bam)
+    MOSDEPTH(BWA_MEM.out.bam, reference)
     BCFTOOLS_MPILEUP(reference, BWA_MEM.out.bam.join(SAMTOOLS_INDEX.out.bai), faidx)
     BCFTOOLS_INDEX(BCFTOOLS_MPILEUP.out.bcf)
     BCFTOOLS_STATS1(BCFTOOLS_MPILEUP.out.bcf, 'before')
