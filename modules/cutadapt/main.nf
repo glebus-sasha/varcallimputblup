@@ -11,13 +11,13 @@ process CUTADAPT {
 	
     input:
     tuple val(sid), path(read1), path(read2)
-    tuple val(adapter_3f), val(adapter_3r), val(adapter5f), val(adapter5r)
+    tuple val(adapter5f), val(adapter5r)
 
     output:
     tuple val(sid), path("${sid}.R1.fq.gz"), path("${sid}.R2.fq.gz"), emit: cutadapted_reads
     
     script:
     """
-    cutadapt -a $adapter_3f -A $adapter_3r -g $adapter5f -G $adapter5r -o ${sid}.R1.fq.gz -p ${sid}.R2.fq.gz ${read1} ${read2}
+    cutadapt -g $adapter5f -G $adapter5r -o ${sid}.R1.fq.gz -p ${sid}.R2.fq.gz ${read1} ${read2}
     """
 }
