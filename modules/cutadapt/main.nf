@@ -16,8 +16,25 @@ process CUTADAPT {
     output:
     tuple val(sid), path("${sid}.R1.fq.gz"), path("${sid}.R2.fq.gz"), emit: cutadapted_reads
     
+
     script:
+    def command = "cutadapt"
+
+    if (adapter_3f) {
+        command += " -a ${adapter_3f}"
+    }
+    if (adapter_3r) {
+        command += " -A ${adapter_3r}"
+    }
+    if (adapter5f) {
+        command += " -g ${adapter5f}"
+    }
+    if (adapter5r) {
+        command += " -G ${adapter5r}"
+    }
+
+    command += " -o ${sid}.R1.fq.gz -p ${sid}.R2.fq.gz ${read1} ${read2}"
     """
-    cutadapt -a $adapter_3f -A $adapter_3r -g $adapter5f -G $adapter5r -o ${sid}.R1.fq.gz -p ${sid}.R2.fq.gz ${read1} ${read2}
+    ${command}
     """
 }
