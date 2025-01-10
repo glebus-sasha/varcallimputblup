@@ -16,5 +16,5 @@ workflow CUTADAPT_QC{
     FASTQC_AFTER(CUTADAPT.out.cutadapted_reads)
     COVERAGE_SUMMARY_MULTIQC(
         FASTQC_BEFORE.out.zip.collect(),
-        FASTQC_AFTER.out.zip.collect(),
+        FASTQC_AFTER.out.zip.collect()
 }
