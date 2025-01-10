@@ -13,6 +13,7 @@ process COVERAGE_SUMMARY_MULTIQC {
     path fastqc2
     path flagstat
     path bcfstats1
+    path mosdepth
 
     output:
     path '*.html', emit: html

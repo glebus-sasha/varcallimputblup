@@ -58,6 +58,7 @@ workflow FASTQ_ALIGN_VARCALL_COVERAGE{
         QC_TRIM.out.fastqc_after.collect(),
         ALIGN_VARCALL.out.flagstat.collect(),
         ALIGN_VARCALL.out.bcfstats1.map{it -> it[1]}.collect(),
+        ALIGN_VARCALL.out.mosdepth.map{it -> it[1]}.collect()
     )
 }
 

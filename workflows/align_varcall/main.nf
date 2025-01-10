@@ -27,4 +27,5 @@ workflow ALIGN_VARCALL {
     align = BWA_MEM.out.bam.join(SAMTOOLS_INDEX.out.bai)
     flagstat = SAMTOOLS_FLAGSTAT.out.flagstat
     bcfstats1 = BCFTOOLS_STATS1.out.bcfstats
+    mosdepth = MOSDEPTH.out.global_dist
 }
