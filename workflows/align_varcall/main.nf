@@ -18,7 +18,7 @@ workflow ALIGN_VARCALL {
     BWA_MEM(trimmed_reads, reference, bwaidx)
     SAMTOOLS_FLAGSTAT(BWA_MEM.out.bam)
     SAMTOOLS_INDEX(BWA_MEM.out.bam)
-    MOSDEPTH(WA_MEM.out.bam.join(SAMTOOLS_INDEX.out.bai))
+    MOSDEPTH(BWA_MEM.out.bam.join(SAMTOOLS_INDEX.out.bai))
     BCFTOOLS_MPILEUP(reference, BWA_MEM.out.bam.join(SAMTOOLS_INDEX.out.bai), faidx)
     BCFTOOLS_INDEX(BCFTOOLS_MPILEUP.out.bcf)
     BCFTOOLS_STATS1(BCFTOOLS_MPILEUP.out.bcf, 'before')
