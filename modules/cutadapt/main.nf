@@ -18,6 +18,6 @@ process CUTADAPT {
     
     script:
     """
-    cutadapt -a $adapter_3f -A $adapter_3r -g $adapter5f -G $adapter5r -o ${sid}_R1.fq.gz -p ${sid}_R2.fq.gz ${read1} ${read2}
+    cutadapt -a $adapter_3f -A $adapter_3r -g $adapter5f -G $adapter5r -o ${sid}.R1.fq.gz -p ${sid}.R2.fq.gz ${read1} ${read2}
     """
 }
