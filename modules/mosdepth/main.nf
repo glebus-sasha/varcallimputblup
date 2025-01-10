@@ -10,7 +10,7 @@ process MOSDEPTH {
 //    errorStrategy 'ignore'
 
     input:
-    tuple val(sid), path(bam)
+    tuple val(sid), path(bam), path(bamIndex)
 
     output:
     tuple val(sid), path("${sid}.mosdepth.global.dist.txt"), emit: global_dist
