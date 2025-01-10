@@ -10,9 +10,6 @@ process CUTADAPT_SUMMARY_MULTIQC {
     input:
     path fastqc1
     path fastqc2
-    path flagstat
-    path bcfstats1
-    path mosdepth
 
     output:
     path '*.html', emit: html
