@@ -3,7 +3,7 @@ include { FASTQC as FASTQC_BEFORE } from '../../modules/fastqc'
 include { FASTP                   } from '../../modules/fastp'
 include { CUTADAPT                } from '../../modules/cutadapt'
 include { FASTQC as FASTQC_AFTER  } from '../../modules/fastqc'
-include { COVERAGE_SUMMARY_MULTIQC} from '../../modules/cutudapt_summary_multiqc'
+include { COVERAGE_SUMMARY_MULTIQC} from '../../modules/multiqc/cutudapt_summary_multiqc'
 
 workflow CUTADAPT_QC{
     take:
