@@ -99,6 +99,6 @@ workflow imputation{
 }
 
 workflow {
-    CUTADAPT_QC(input_fastqs, [[""], [""], "GCAG", "GCAG"])
+    CUTADAPT_QC(input_fastqs, ["", "", "GCAG", "GCAG"])
 }
 
