@@ -14,8 +14,8 @@ workflow CUTADAPT_QC{
     FASTQC_BEFORE(input_fastqs)
     CUTADAPT(input_fastqs, adapters)
     FASTQC_AFTER(CUTADAPT.out.cutadapted_reads)
-    CUTADAPT_SUMMARY_MULTIQC(
-        FASTQC_BEFORE.out.zip.collect(),
-        FASTQC_AFTER.out.zip.collect()
-    )
+//    CUTADAPT_SUMMARY_MULTIQC(
+//        FASTQC_BEFORE.out.zip.collect(),
+//        FASTQC_AFTER.out.zip.collect()
+//    )
 }
