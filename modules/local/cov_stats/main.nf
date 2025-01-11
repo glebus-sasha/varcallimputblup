@@ -75,7 +75,7 @@ process COV_STATS {
         geom_violin() +
         labs(title = "Violin Plot of Chromosome Coverage", x = "Group", y = "Coverage Mean") +
         theme_bw() +
-        scale_y_log10(labels = comma)  # Добавление логарифмической шкалы по оси y
+        scale_y_log10(labels = function(x) format(x, scientific = FALSE))  # Добавление логарифмической шкалы по оси y
 
     # Сохранение картинки
     ggsave(filename = paste0(sid, "_coverage_plot.png"), plot = plot, width = 10, height = 8)
