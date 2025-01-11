@@ -20,6 +20,6 @@ workflow COVERAGE_SUMMARY{
     DEPTH_BREADTH(mosdepth_summary.join(breadth), GENOME_LENGTH.out.genome_length)
 
 //    COV_STATS(breadth.join(depth).join(bcfstats))
-//    COV_SUMMARY(DEPTH_BREADTH.out.cov_stats.map{it -> it[1]}.collect())
+    COV_SUMMARY(DEPTH_BREADTH.out.cov_stats.map{it -> it[1]}.collect())
 
 }
