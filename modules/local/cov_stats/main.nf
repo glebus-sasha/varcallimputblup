@@ -24,8 +24,7 @@ process COV_STATS {
     library(tidyverse)
     library(readr)
     library(ggplot2)
-    library(gridExtra)
-
+    
     # Определение функции
     process_chromosome_data <- function(sid, filename, reference_length_file, coverage_width_file) {
     # Чтение таблицы из файла
