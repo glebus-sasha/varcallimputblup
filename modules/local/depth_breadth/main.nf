@@ -24,7 +24,12 @@ process DEPTH_BREADTH {
     library(readr)
 
     # Определение функции
+
     process_chromosome_data <- function(filename, reference_length_file, coverage_width_file) {
+
+    filename <-
+    reference_length_file <-
+    coverage_width_file <-
     # Чтение таблицы из файла
     data <- read_table(filename)
 
@@ -62,6 +67,6 @@ process DEPTH_BREADTH {
     write_csv(result, "${sid}_stats.csv")
 
     }
-    process_chromosome_data(${mosdepth_summary}, ${reference_length}, ${coverage_width})
+    process_chromosome_data("${mosdepth_summary}", "${reference_length}", "${coverage_width}")
     """
 }
