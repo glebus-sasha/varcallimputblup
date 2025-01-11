@@ -11,10 +11,10 @@ process GENOME_LENGTH {
     path reference
 
     output:
-    val length, emit: genome_length
+    path "${reference.baseName}_length.txt", emit: genome_length
 
     script:
     """
-    length=`grep -v '^>' "$reference" | tr -d '\n' | wc -c`
+    `grep -v '^>' "$reference" | tr -d '\n' | wc -c` > "${reference.baseName}_length.txt"
     """
 }
