@@ -15,6 +15,6 @@ process GENOME_LENGTH {
 
     script:
     """
-    `grep -v '^>' "$reference" | tr -d '\n' | wc -c` > "${reference.baseName}_length.txt"
+    grep -v '^>' "$reference" | tr -d '\n' | wc -c > "${reference.baseName}_length.txt"
     """
 }
