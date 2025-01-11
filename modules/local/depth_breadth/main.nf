@@ -7,7 +7,7 @@ process DEPTH_BREADTH {
     }
     publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/DEPTH_BREADTH"
 //	  debug true
-    errorStrategy 'ignore'
+//    errorStrategy 'ignore'
 
     input:
     tuple val(sid), path(mosdepth_summary), path(coverage_width)
@@ -22,7 +22,7 @@ process DEPTH_BREADTH {
 
     library(dplyr)
     library(readr)
-    
+
     # Определение функции
     process_chromosome_data <- function(filename, reference_length_file, coverage_width_file) {
     # Чтение таблицы из файла
