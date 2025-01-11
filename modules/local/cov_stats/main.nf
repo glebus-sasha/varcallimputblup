@@ -14,13 +14,17 @@ process COV_STATS {
     path reference_length
 
     output:
-    tuple val(sid), path("${sid}_stats.csv"), emit: cov_stats
+    tuple val(sid), path("${sid}_stats.csv")        , emit: cov_stats
+    tuple val(sid), path("${sid}_coverage_plot.png"), emit: coverage_plot
 
     script:
     """
     #!/usr/bin/env Rscript
+
     library(dplyr)
     library(readr)
+    library(ggplot2)
+
     # Определение функции
     process_chromosome_data <- function(sid, filename, reference_length_file, coverage_width_file) {
     # Чтение таблицы из файла
@@ -60,6 +64,23 @@ process COV_STATS {
 
     # Запись результата в CSV файл
     write_csv(result, "${sid}_stats.csv")
+
+    # Построение violin plot
+    data_long <- data %>%
+        filter(chrom != 'total') %>%
+        gather(key = "metric", value = "value", -chrom)
+
+    data_long <- data_long %>%
+        mutate(group = ifelse(chrom %in% c(as.character(1:29), 'X', 'Y', 'MT'), "selected", "all"))
+
+    plot <- ggplot(data_long, aes(x = group, y = value, fill = group)) +
+        geom_violin() +
+        facet_wrap(~ metric, scales = "free") +
+        labs(title = "Violin Plot of Chromosome Metrics", x = "Group", y = "Value") +
+        theme_minimal()
+
+    # Сохранение картинки
+    ggsave(filename = paste0(sid, "_coverage_plot.png"), plot = plot, width = 10, height = 8)
 
     }
     process_chromosome_data('${sid}', '${mosdepth_summary}', '${reference_length}', '${coverage_width}')
