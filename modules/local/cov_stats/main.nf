@@ -24,7 +24,7 @@ process COV_STATS {
     library(tidyverse)
     library(readr)
     library(ggplot2)
-    
+
     # Определение функции
     process_chromosome_data <- function(sid, filename, reference_length_file, coverage_width_file) {
     # Чтение таблицы из файла
@@ -65,31 +65,30 @@ process COV_STATS {
     # Запись результата в CSV файл
     write_csv(result, "${sid}_stats.csv")
 
-    # Построение violin plot только для данных покрытия (столбец mean)
-    data_long <- data %>%
-        filter(chrom != 'total') %>%
-        mutate(group = ifelse(chrom %in% c(as.character(1:29), 'X', 'Y', 'MT'), "selected", "all")) %>%
-        select(chrom, mean, group) %>%
-        pivot_longer(cols = mean, names_to = "metric", values_to = "value")
+    # Вычисление среднего и квартилей
+    summary_stats <- data_long %>%
+        group_by(group) %>%
+        summarise(
+        mean_value = mean(value, na.rm = TRUE),
+        q1 = quantile(value, 0.25, na.rm = TRUE),
+        q3 = quantile(value, 0.75, na.rm = TRUE)
+        )
 
-    # Добавление столбца для типа шкалы
-    data_long <- data_long %>%
-        mutate(scale_type = "Linear") %>%
-        bind_rows(data_long %>% mutate(scale_type = "Log"))
-
-    # Построение графиков
+    # Построение графика
     plot <- ggplot(data_long, aes(x = group, y = value, fill = group)) +
         geom_violin() +
-        facet_wrap(~ scale_type, scales = "free_y") +
-        scale_y_continuous(trans = "identity") +
-        scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
-                    labels = scales::trans_format("log10", scales::math_format(10^.x))) +
-        labs(title = "Violin Plot of Chromosome Coverage", x = "Group", y = "Coverage Mean") +
+        scale_y_log10() +  # Логарифмическая шкала по оси y
+        labs(title = "Violin Plot of Chromosome Coverage", x = "Group", y = "Coverage Mean (log scale)") +
         theme_minimal() +
-        theme(plot.title = element_text(hjust = 0.5))
+        geom_point(data = summary_stats, aes(y = mean_value), color = "red", size = 3, shape = 16) +
+        geom_point(data = summary_stats, aes(y = q1), color = "blue", size = 3, shape = 17) +
+        geom_point(data = summary_stats, aes(y = q3), color = "blue", size = 3, shape = 17) +
+        geom_text(data = summary_stats, aes(y = mean_value, label = paste("Mean: ", round(mean_value, 2))), vjust = -1, hjust = 0.5, color = "red") +
+        geom_text(data = summary_stats, aes(y = q1, label = paste("Q1: ", round(q1, 2))), vjust = -1, hjust = 0.5, color = "blue") +
+        geom_text(data = summary_stats, aes(y = q3, label = paste("Q3: ", round(q3, 2))), vjust = -1, hjust = 0.5, color = "blue")
 
     # Сохранение картинки
-    ggsave(filename = paste0(sid, "_coverage_plot.png"), plot = plot, width = 10, height = 8)
+    ggsave(filename = paste0(sid, "_violin_plot.png"), plot = plot, width = 10, height = 8)
 
     }
     process_chromosome_data('${sid}', '${mosdepth_summary}', '${reference_length}', '${coverage_width}')
