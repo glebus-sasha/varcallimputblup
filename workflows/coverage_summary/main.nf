@@ -20,5 +20,6 @@ workflow COVERAGE_SUMMARY{
 
     COV_STATS(breadth.join(depth).join(bcfstats))
     COV_SUMMARY(COV_STATS.out.cov_stats.map{it -> it[1]}.collect())
+    GENOME_LENGTH(reference)
     GENOME_LENGTH.out.genome_length.view()
 }
