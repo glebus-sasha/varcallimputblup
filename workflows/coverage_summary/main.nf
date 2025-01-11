@@ -1,5 +1,5 @@
 // Include processes
-include { BAM_BREADTH       } from '../../modules/local/breadth'
+include { BAM_BREADTH       } from '../../modules/local/bam_breadth'
 include { BAM_DEPTH         } from '../../modules/local/depth'
 include { COV_STATS         } from '../../modules/local/cov_stats'
 include { COV_SUMMARY       } from '../../modules/local/cov_summary'
