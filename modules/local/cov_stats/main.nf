@@ -68,7 +68,7 @@ process COV_STATS {
     # Построение violin plot
     data_long <- data %>%
         filter(chrom != 'total') %>%
-        gather(key = "metric", value = "value", -chrom)
+        pivot_longer(cols = -chrom, names_to = "metric", values_to = "value")
 
     data_long <- data_long %>%
         mutate(group = ifelse(chrom %in% c(as.character(1:29), 'X', 'Y', 'MT'), "selected", "all"))
