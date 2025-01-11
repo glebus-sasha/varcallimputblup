@@ -57,8 +57,7 @@ process DEPTH_BREADTH {
         mutate(breadth = (coverage_width / reference_length) * 100)
 
     # Запись результата в CSV файл
-    output_filename <- sub("\\..*$", ".csv", filename)
-    write_csv(result, output_filename)
+    write_csv(result, "${sid}_stats.csv")
 
     }
     process_chromosome_data(${mosdepth_summary.name}, ${reference_length.name}, ${coverage_width.name})
