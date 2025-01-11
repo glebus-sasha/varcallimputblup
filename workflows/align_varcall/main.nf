@@ -28,4 +28,5 @@ workflow ALIGN_VARCALL {
     flagstat = SAMTOOLS_FLAGSTAT.out.flagstat
     bcfstats1 = BCFTOOLS_STATS1.out.bcfstats
     mosdepth = MOSDEPTH.out.global_dist
+    mosdepth_summary = MOSDEPTH.out.summary
 }

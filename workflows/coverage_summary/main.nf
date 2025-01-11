@@ -9,17 +9,17 @@ workflow COVERAGE_SUMMARY{
     take:
     align
     bcfstats
+    mosdepth_summary
     reference
 
     main:
     align |
-    BAM_BREADTH & BAM_DEPTH
-
-    breadth = BAM_BREADTH.out.breadth
-    depth = BAM_DEPTH.out.depth_stats
-
-    COV_STATS(breadth.join(depth).join(bcfstats))
-    COV_SUMMARY(COV_STATS.out.cov_stats.map{it -> it[1]}.collect())
+    BAM_BREADTH
     GENOME_LENGTH(reference)
-    GENOME_LENGTH.out.genome_length.view()
+    breadth = BAM_BREADTH.out.breadth
+    DEPTH_BREADTH(mosdepth_summary.join(breadth), GENOME_LENGTH.out.genome_length)
+
+//    COV_STATS(breadth.join(depth).join(bcfstats))
+//    COV_SUMMARY(COV_STATS.out.cov_stats.map{it -> it[1]}.collect())
+
 }
