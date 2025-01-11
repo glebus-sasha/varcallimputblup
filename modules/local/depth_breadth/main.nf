@@ -14,7 +14,7 @@ process DEPTH_BREADTH {
     path reference_length
 
     output:
-    path "${sid}_stats.csv", emit: cov_stats
+    tuple val(sid), path("${sid}_stats.csv"), emit: cov_stats
 
     script:
     """

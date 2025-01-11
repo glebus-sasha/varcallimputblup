@@ -21,6 +21,6 @@ workflow COVERAGE_SUMMARY{
 
 //    COV_STATS(breadth.join(depth).join(bcfstats))
     DEPTH_BREADTH.out.cov_stats.map{it -> it[1]}.collect().view()
-//    COV_SUMMARY(DEPTH_BREADTH.out.cov_stats.map{it -> it[1]}.collect())
+    COV_SUMMARY(DEPTH_BREADTH.out.cov_stats.map{it -> it[1]}.collect())
 
 }
