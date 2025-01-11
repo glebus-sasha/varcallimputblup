@@ -55,7 +55,8 @@ process COV_STATS {
     # Добавление колонки с процентом breadth
     result <- result %>%
         mutate(`breadth, %` = (coverage_width / reference_length) * 100) %>%
-        mutate(sid = sid)
+        mutate(sid = sid) %>%
+        select(sid, everything())
 
     # Запись результата в CSV файл
     write_csv(result, "${sid}_stats.csv")
