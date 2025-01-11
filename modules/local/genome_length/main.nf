@@ -2,9 +2,7 @@
 process GENOME_LENGTH {
     container ''
     conda ""
-    tag {
-        reference.length() > 40 ? "${reference.take(20)}...${reference.takeRight(20)}" : reference
-    }
+    tag "$reference"
     // publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/GENOME_LENGTH"
     // debug true
     errorStrategy 'ignore'
