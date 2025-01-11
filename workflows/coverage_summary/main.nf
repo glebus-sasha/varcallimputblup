@@ -3,6 +3,7 @@ include { BAM_BREADTH       } from '../../modules/local/bam_breadth'
 include { COV_STATS         } from '../../modules/local/cov_stats'
 include { COV_SUMMARY       } from '../../modules/local/cov_summary'
 include { GENOME_LENGTH     } from '../../modules/local/genome_length'
+include { DEPTH_BREADTH     } from '../../modules/local/depth_breadth'
 
 workflow COVERAGE_SUMMARY{
     take:
