@@ -65,6 +65,13 @@ process COV_STATS {
     # Запись результата в CSV файл
     write_csv(result, "${sid}_stats.csv")
 
+    # Построение violin plot только для данных покрытия (столбец mean)
+    data_long <- data %>%
+        filter(chrom != 'total') %>%
+        mutate(group = ifelse(chrom %in% c(as.character(1:29), 'X', 'Y', 'MT'), "selected", "all")) %>%
+        select(chrom, mean, group) %>%
+        pivot_longer(cols = mean, names_to = "metric", values_to = "value")
+
     # Вычисление среднего и квартилей
     summary_stats <- data_long %>%
         group_by(group) %>%
