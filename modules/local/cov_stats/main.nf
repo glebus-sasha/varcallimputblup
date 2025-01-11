@@ -65,19 +65,17 @@ process COV_STATS {
     # Запись результата в CSV файл
     write_csv(result, "${sid}_stats.csv")
 
-    # Построение violin plot
+    # Построение violin plot только для данных покрытия (столбец mean)
     data_long <- data %>%
         filter(chrom != 'total') %>%
-        pivot_longer(cols = -chrom, names_to = "metric", values_to = "value")
-
-    data_long <- data_long %>%
-        mutate(group = ifelse(chrom %in% c(as.character(1:29), 'X', 'Y', 'MT'), "selected", "all"))
+        mutate(group = ifelse(chrom %in% c(as.character(1:29), 'X', 'Y', 'MT'), "selected", "all")) %>%
+        select(chrom, mean, group) %>%
+        pivot_longer(cols = mean, names_to = "metric", values_to = "value")
 
     plot <- ggplot(data_long, aes(x = group, y = value, fill = group)) +
         geom_violin() +
-        facet_wrap(~ metric, scales = "free") +
-        labs(title = "Violin Plot of Chromosome Metrics", x = "Group", y = "Value") +
-        theme_minimal()
+        labs(title = "Violin Plot of Chromosome Coverage", x = "Group", y = "Coverage Mean") +
+        theme_bw()
 
     # Сохранение картинки
     ggsave(filename = paste0(sid, "_coverage_plot.png"), plot = plot, width = 10, height = 8)
