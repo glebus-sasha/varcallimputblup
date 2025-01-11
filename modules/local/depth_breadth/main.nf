@@ -14,10 +14,12 @@ process DEPTH_BREADTH {
     path reference_length
 
     output:
-    path "${sid}_stats.csv"
+    path "${sid}_stats.csv", emit: cov_stats
 
     script:
     """
+    #!/usr/bin/env Rscript
+    
     library(dplyr)
     library(readr)
 
