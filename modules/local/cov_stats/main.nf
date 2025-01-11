@@ -24,6 +24,7 @@ process COV_STATS {
     library(tidyverse)
     library(readr)
     library(ggplot2)
+    library(gridExtra)
 
     # Определение функции
     process_chromosome_data <- function(sid, filename, reference_length_file, coverage_width_file) {
@@ -72,10 +73,20 @@ process COV_STATS {
         select(chrom, mean, group) %>%
         pivot_longer(cols = mean, names_to = "metric", values_to = "value")
 
-    plot <- ggplot(data_long, aes(x = group, y = value, fill = group)) +
+    violin_plot <- ggplot(data_long, aes(x = group, y = value, fill = group)) +
         geom_violin() +
         labs(title = "Violin Plot of Chromosome Coverage", x = "Group", y = "Coverage Mean") +
-        theme_bw()
+        theme_minimal()
+
+    # Построение графика с логарифмической шкалой по оси y
+    log_plot <- ggplot(data_long, aes(x = group, y = value, fill = group)) +
+        geom_violin() +
+        scale_y_log10() +
+        labs(title = "Log-Scaled Violin Plot of Chromosome Coverage", x = "Group", y = "Coverage Mean (Log Scale)") +
+        theme_minimal()
+
+    # Объединение двух графиков на одном холсте
+    combined_plot <- grid.arrange(violin_plot, log_plot, nrow = 1)
 
     # Сохранение картинки
     ggsave(filename = paste0(sid, "_coverage_plot.png"), plot = plot, width = 10, height = 8)
