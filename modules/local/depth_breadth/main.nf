@@ -18,9 +18,9 @@ process DEPTH_BREADTH {
 
     script:
     """
-    echo ${mosdepth_summary.name}
-    echo ${reference_length.name}
-    echo ${coverage_width.name}
+    echo ${mosdepth_summary}
+    echo ${reference_length}
+    echo ${coverage_width}
     touch "${sid}_stats.csv"
     """
 }
