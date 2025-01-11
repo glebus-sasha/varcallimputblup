@@ -21,7 +21,7 @@ process COV_STATS {
     """
     #!/usr/bin/env Rscript
 
-    library(dplyr)
+    library(tidyverse)
     library(readr)
     library(ggplot2)
 
