@@ -19,7 +19,7 @@ process DEPTH_BREADTH {
     script:
     """
     #!/usr/bin/env Rscript
-    
+
     library(dplyr)
     library(readr)
 
@@ -60,7 +60,7 @@ process DEPTH_BREADTH {
 
     # Запись результата в CSV файл
     write_csv(result, "${sid}_stats.csv")
-
+    }
     process_chromosome_data($mosdepth_summary, $reference_length, $coverage_width)
     """
 }
