@@ -74,7 +74,7 @@ process COV_STATS {
     plot <- ggplot(data_long, aes(x = group, y = value, fill = group)) +
         geom_violin() +
         labs(title = "Violin Plot of Chromosome Coverage", x = "Group", y = "Coverage Mean") +
-        theme_minimal() +
+        theme_bw() +
         scale_y_log10()  # Добавление логарифмической шкалы по оси y
 
     # Сохранение картинки
