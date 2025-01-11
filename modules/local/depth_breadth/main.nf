@@ -54,7 +54,7 @@ process DEPTH_BREADTH {
 
     # Добавление колонки с процентом breadth
     result <- result %>%
-        mutate(`breadth %` = (coverage_width / reference_length) * 100)
+        mutate(`breadth, %` = (coverage_width / reference_length) * 100)
 
     # Запись результата в CSV файл
     write_csv(result, "${sid}_stats.csv")
