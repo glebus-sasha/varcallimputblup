@@ -5,7 +5,7 @@ process GENOME_LENGTH {
     tag "$reference"
     // publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/GENOME_LENGTH"
     // debug true
-    errorStrategy 'ignore'
+    // errorStrategy 'ignore'
 
     input:
     path reference
