@@ -73,20 +73,21 @@ process COV_STATS {
         select(chrom, mean, group) %>%
         pivot_longer(cols = mean, names_to = "metric", values_to = "value")
 
-    violin_plot <- ggplot(data_long, aes(x = group, y = value, fill = group)) +
+    # Добавление столбца для типа шкалы
+    data_long <- data_long %>%
+        mutate(scale_type = "Linear") %>%
+        bind_rows(data_long %>% mutate(scale_type = "Log"))
+
+    # Построение графиков
+    plot <- ggplot(data_long, aes(x = group, y = value, fill = group)) +
         geom_violin() +
+        facet_wrap(~ scale_type, scales = "free_y") +
+        scale_y_continuous(trans = "identity") +
+        scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+                    labels = scales::trans_format("log10", scales::math_format(10^.x))) +
         labs(title = "Violin Plot of Chromosome Coverage", x = "Group", y = "Coverage Mean") +
-        theme_minimal()
-
-    # Построение графика с логарифмической шкалой по оси y
-    log_plot <- ggplot(data_long, aes(x = group, y = value, fill = group)) +
-        geom_violin() +
-        scale_y_log10() +
-        labs(title = "Log-Scaled Violin Plot of Chromosome Coverage", x = "Group", y = "Coverage Mean (Log Scale)") +
-        theme_minimal()
-
-    # Объединение двух графиков на одном холсте
-    combined_plot <- grid.arrange(violin_plot, log_plot, nrow = 1)
+        theme_minimal() +
+        theme(plot.title = element_text(hjust = 0.5))
 
     # Сохранение картинки
     ggsave(filename = paste0(sid, "_coverage_plot.png"), plot = plot, width = 10, height = 8)
