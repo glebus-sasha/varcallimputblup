@@ -7,7 +7,7 @@ process BWA_MEM {
     }
 //    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/BWA_MEM"
 //	  debug true
-//    errorStrategy 'ignore'
+    errorStrategy 'ignore'
 
     input:
     tuple val(sid), path(fq_1_trimmed), path(fq_2_trimmed)
@@ -23,6 +23,5 @@ process BWA_MEM {
             -t 6 ${reference} ${fq_1_trimmed} ${fq_2_trimmed} | \
         samtools view -bh | \
         samtools sort --threads 6 -o ${sid}.bam
-
     """
 }
