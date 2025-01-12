@@ -10,7 +10,7 @@ process COV_STATS {
 //    errorStrategy 'ignore'
 
     input:
-    tuple val(sid), path(mosdepth_summary), path(coverage_width)
+    tuple val(sid), path(mosdepth_summary), path(coverage_width), path(bcfstatsFile)
     path reference_length
 
     output:
@@ -25,14 +25,14 @@ process COV_STATS {
     library(readr)
 
     # Определение функции
-    process_chromosome_data <- function(sid, filename, reference_length_file, coverage_width_file) {
+    process_chromosome_data <- function(sid, filename, reference_length_file, coverage_width_file, bcfstatsFile) {
     # Чтение таблицы из файла
     data <- read_table(filename)
-
+    
     # Чтение значений reference_length и coverage_width из файлов
     reference_length <- as.numeric(read_lines(reference_length_file))
     coverage_width <- as.numeric(read_lines(coverage_width_file))
-
+    
     # Фильтрация и суммирование для выбранных хромосом
     selected_chromosomes <- data %>%
         filter(chrom %in% c(as.character(1:29), 'X', 'Y', 'MT')) %>%
@@ -43,43 +43,56 @@ process COV_STATS {
         min = min(min),
         max = max(max)
         )
-
+    
     # Фильтрация строки total из оригинальной таблицы
     original_total <- data %>%
         filter(chrom == 'total') %>%
         select(-chrom)
-
+    
     # Объединение результатов в одну строку
     result <- bind_cols(
         original_total %>% rename_with(~ paste0("mosdepth:", ., "_all_chr")),
         selected_chromosomes %>% rename_with(~ paste0("mosdepth:", ., "_selected_chr"))
     )
-
+    
     # Добавление колонки с процентом breadth
     result <- result %>%
         mutate(`breadth, %` = (coverage_width / reference_length) * 100) %>%
         mutate(sid = sid) %>%
         select(sid, everything())
-
-    # Запись результата в CSV файл
-    write_csv(result, "${sid}_stats.csv")
-
-    # Построение violin plot только для данных покрытия (столбец mean)
-    data_long <- data %>%
-        filter(chrom != 'total') %>%
-        mutate(group = ifelse(chrom %in% c(as.character(1:29), 'X', 'Y', 'MT'), "selected", "all")) %>%
-        select(chrom, mean, group) %>%
-        pivot_longer(cols = mean, names_to = "metric", values_to = "value")
-
-    plot <- ggplot(data_long, aes(x = group, y = value, fill = group)) +
-        geom_violin() +
-        labs(title = "Violin Plot of Chromosome Coverage", x = "Group", y = "Coverage Mean") +
-        theme_bw() +
-        scale_y_log10(labels = function(x) format(x, scientific = FALSE))  # Добавление логарифмической шкалы по оси y
-
-    # Сохранение картинки
-    ggsave(filename = paste0(sid, "_coverage_plot.png"), plot = plot, width = 10, height = 8)
+    # Чтение данных из файла bcfstatsFile
+    file_lines <- readLines(bcfstatsFile)
+    
+    # Найдите начало нужного отрывка с использованием регулярного выражения
+    start_line <- grep("# SN\\t\\[2\\]id\\t\\[3\\]key\\t\\[4\\]value", file_lines)
+    
+    # Проверьте, найдена ли строка
+    if (length(start_line) == 0) {
+        stop("Не удалось найти начало нужного отрывка в файле.")
     }
-    process_chromosome_data('${sid}', '${mosdepth_summary}', '${reference_length}', '${coverage_width}')
+    
+    # Извлеките строки, начиная с найденной линии
+    relevant_lines <- file_lines[(start_line + 1):(start_line + 10)]
+    
+    # Преобразуйте строки в датафрейм
+    bcfstats_data <- read.table(text = relevant_lines, header = FALSE, sep = "\t", stringsAsFactors = FALSE)
+    
+    # Присвоим имена колонкам
+    colnames(bcfstats_data) <- c("SN", "id", "key", "value")
+    
+    # Преобразуем данные в широкий формат
+    bcfstats_wide <- bcfstats_data %>%
+        select(key, value) %>%
+        spread(key, value)
+    
+    # Добавление префикса к именам колонок
+    colnames(bcfstats_wide) <- paste0("bcftools:", colnames(bcfstats_wide))
+    
+    combined_df <- bind_cols(result, bcfstats_wide)
+    
+    write_csv(combined_df, "${sid}_stats.csv")
+    }
+
+    process_chromosome_data('${sid}', '${mosdepth_summary}', '${reference_length}', '${coverage_width}', '${bcfstatsFile}')
     """
 }
