@@ -1,5 +1,4 @@
-library(tidyverse)
-library(readr)
+
 
 # Определение функции
 process_chromosome_data <- function(sid, filename, reference_length_file, coverage_width_file, bcfstatsFile) {
@@ -67,5 +66,5 @@ process_chromosome_data <- function(sid, filename, reference_length_file, covera
 
   combined_df <- bind_cols(result, bcfstats_wide)
 
-  write_csv(combined_df, "${sid}_stats.csv")
+  return(combined_df)
 }

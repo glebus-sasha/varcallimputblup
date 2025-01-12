@@ -15,13 +15,15 @@ process COV_STATS {
 
     output:
     tuple val(sid), path("${sid}_stats.csv")        , emit: cov_stats
-    tuple val(sid), path("${sid}_coverage_plot.png"), emit: coverage_plot
 
     script:
     """
     #!/usr/bin/env Rscript
+    library(tidyverse)
+    library(readr)
     source('${projectDir}/assets/process_chromosome_data.R')
 
-    process_chromosome_data('$sid', '$mosdepth_summary', '$reference_length', '$coverage_width', '$bcfstatsFile')
+    combined_df <- process_chromosome_data('$sid', '$mosdepth_summary', '$reference_length', '$coverage_width', '$bcfstatsFile')
+    write_csv(combined_df, "${sid}_stats.csv")
     """
 }
