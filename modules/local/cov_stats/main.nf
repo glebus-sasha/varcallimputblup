@@ -19,6 +19,6 @@ process COV_STATS {
 
     script:
     """
-    Rscript -e "source('assets/process_chromosome_data.R'); process_chromosome_data('$sid', '$filename', '$reference_length_file', '$coverage_width_file', '$bcfstatsFile')"
+    Rscript -e "source('assets/process_chromosome_data.R'); process_chromosome_data('$sid', '$mosdepth_summary', '$reference_length', '$coverage_width', '$bcfstatsFile')"
     """
 }
