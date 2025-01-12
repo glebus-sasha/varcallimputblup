@@ -27,6 +27,6 @@ process COV_SUMMARY {
 
     # Write the combined data to a new CSV file
     merged_file <- "coverage.csv"
-    write_csv(combined_data, merged_file)
+    write_excel_csv2(combined_data, merged_file)
     """
 }
