@@ -11,7 +11,7 @@ process_chromosome_data <- function(sid, filename, reference_length_file, covera
 
   # Фильтрация и суммирование для выбранных хромосом
   selected_chromosomes <- data %>%
-      filter(chrom %in% c(as.character(1:29), 'X', 'Y', 'MT')) %>%
+      filter(chrom %in% c(as.character(1:29), 'X', 'Y')) %>%
       summarise(
       length = sum(length),
       bases = sum(bases),
