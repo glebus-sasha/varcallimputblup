@@ -99,12 +99,13 @@ workflow imputation{
 }
 
 workflow {
-//    CUTADAPT_QC(input_fastqs, ["", "", "GCAG", "GCAG"])
-    FASTQ_ALIGN_VARCALL_COVERAGE(
+    imputation(
         reference,
         input_fastqs,
         bwaidx,
-        faidx
+        faidx,
+        ref_panel_with_index,
+        ref_panel_index
     )
 }
 
