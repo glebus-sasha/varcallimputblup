@@ -88,14 +88,14 @@ workflow imputation{
         ref_panel_index, 
         ALIGN_VARCALL.out.align
     )
-    IMPUTATION_SUMMARY_MULTIQC(
-        QC_TRIM.out.fastp.collect(),
-        QC_TRIM.out.fastqc_before.collect(),
-        QC_TRIM.out.fastqc_after.collect(),
-        ALIGN_VARCALL.out.flagstat.collect(),
-        ALIGN_VARCALL.out.bcfstats1.collect(),
-        IMPUTE.out.bcfstats2.collect()
-    )
+    QC_TRIM.out.fastp                                       |
+        mix(QC_TRIM.out.fastqc_before)                      |
+        mix(QC_TRIM.out.fastqc_after)                       |
+        mix(ALIGN_VARCALL.out.flagstat)                     |
+        mix(ALIGN_VARCALL.out.bcfstats1.map{it -> it[1]})   |
+        mix(IMPUTE.out.bcfstats2.map{it -> it[1]})          |
+        collect                                             |
+        IMPUTATION_SUMMARY_MULTIQC
 }
 
 workflow {

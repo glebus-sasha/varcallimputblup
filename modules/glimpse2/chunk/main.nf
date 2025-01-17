@@ -9,7 +9,7 @@ process GLIMPSE2_CHUNK {
     tuple val(chr), path(ref_panel), path(ref_panel_index)
 
     output:
-    path("${ref_panel.simpleName}.txt"), emit: chunk_chr
+    tuple val(chr), path("${ref_panel.simpleName}.txt"), emit: chunk_chr
 
     script:
     """

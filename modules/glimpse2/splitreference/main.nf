@@ -4,13 +4,13 @@ process GLIMPSE2_SPLITREFERENCE {
     conda "${moduleDir}/environment.yml"
     container 'imary116/glimpse2:with-bcftools-and-updated-info-score'
 //    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/GLIMPSE2_SPLITREFERENCE"
-    errorStrategy 'ignore'   
+//    errorStrategy 'ignore'   
 
     input:
     tuple val(chr), path(ref_panel), path(ref_panel_index), val(input_region), val(output_region)
 
     output:
-    tuple val(chr), path("*.bin"), emit: bin_ref
+    tuple val(chr), path("*.bin"), emit: bin_ref, optional: true
 
     script:
     def prefix = "${chr}_${output_region.replace(":","_")}"
