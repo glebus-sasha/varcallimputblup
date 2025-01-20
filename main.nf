@@ -99,13 +99,11 @@ workflow imputation{
 }
 
 workflow {
-    imputation(
+    FASTQ_ALIGN_VARCALL_COVERAGE(
         reference,
         input_fastqs,
         bwaidx,
-        faidx,
-        ref_panel_with_index,
-        ref_panel_index
+        faidx
     )
 }
 
