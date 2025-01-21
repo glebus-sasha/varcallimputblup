@@ -53,7 +53,7 @@ workflow FASTQ_ALIGN_VARCALL_COVERAGE{
         bwaidx,
         faidx
     )
-    VCF_CLUSTER(ALIGN_VARCALL.out.bcf.map{it -> it[1]}.collect())
+//    VCF_CLUSTER(ALIGN_VARCALL.out.bcf.map{it -> it[1]}.collect())
     COVERAGE_SUMMARY(ALIGN_VARCALL.out.align, ALIGN_VARCALL.out.bcfstats1, ALIGN_VARCALL.out.mosdepth_summary, reference)
     COVERAGE_SUMMARY_MULTIQC(
         QC_TRIM.out.fastp.collect(),
