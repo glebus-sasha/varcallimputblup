@@ -49,6 +49,10 @@ perform_pca <- function(gds_file, output_dir) {
   ibs_hc <- snpgdsHCluster(ibs_mat)
   dend <- as.dendrogram(ibs_hc$dendrogram)
   
+  # Save dendrogram as Newick format
+  newick_file <- paste0(output_dir, "/dendrogram.nwk")
+  write.tree(as.phylo(dend), file = newick_file)
+
   # Save dendrogram
   dend_file <- paste0(output_dir, "/dendrogram.png")
   png(dend_file, width = 800, height = 1000)

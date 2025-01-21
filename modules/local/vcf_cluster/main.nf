@@ -10,9 +10,10 @@ process VCF_CLUSTER {
     path bcf_files
 
     output:
-    path "cluster.png"
-    path "cluster_tab.tsv"
-    path "dendrogram.png"
+    path 'cluster.png'
+    path 'cluster_tab.tsv'
+    path 'dendrogram.png'
+    path 'dendrogram.nwk'
 
     script:
     """    
