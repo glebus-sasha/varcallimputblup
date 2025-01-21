@@ -8,6 +8,7 @@ include { COVERAGE_SUMMARY              } from './workflows/coverage_summary'
 include { CUTADAPT_QC                   } from './workflows/cutadapt_qc'
 include { IMPUTATION_SUMMARY_MULTIQC    } from './modules/multiqc/imputation_summary_multiqc'
 include { COVERAGE_SUMMARY_MULTIQC      } from './modules/multiqc/coverage_summary_multiqc'
+include { VCF_CLUSTER                   } from './modules/local/vcf_cluster'
 
 
 // Logging pipeline information
@@ -52,6 +53,7 @@ workflow FASTQ_ALIGN_VARCALL_COVERAGE{
         bwaidx,
         faidx
     )
+    VCF_CLUSTER(ALIGN_VARCALL.out.bcf.map{it -> it[1]}.collect())
     COVERAGE_SUMMARY(ALIGN_VARCALL.out.align, ALIGN_VARCALL.out.bcfstats1, ALIGN_VARCALL.out.mosdepth_summary, reference)
     COVERAGE_SUMMARY_MULTIQC(
         QC_TRIM.out.fastp.collect(),

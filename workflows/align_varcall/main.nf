@@ -24,6 +24,7 @@ workflow ALIGN_VARCALL {
     BCFTOOLS_STATS1(BCFTOOLS_MPILEUP.out.bcf, 'before')
 
     emit:
+    bcf = BCFTOOLS_MPILEUP.out.bcf
     align = BWA_MEM.out.bam.join(SAMTOOLS_INDEX.out.bai)
     flagstat = SAMTOOLS_FLAGSTAT.out.flagstat
     bcfstats1 = BCFTOOLS_STATS1.out.bcfstats
