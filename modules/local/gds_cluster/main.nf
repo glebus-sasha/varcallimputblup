@@ -3,8 +3,8 @@ process GDS_CLUSTER {
     conda "${moduleDir}/environment.yml"
     tag 'all_samples'
     publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/GDS_CLUSTER"
-//	debug true
-    errorStrategy 'ignore'
+	debug true
+//    errorStrategy 'ignore'
 	
     input:
     path gds_file
