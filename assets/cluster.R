@@ -8,6 +8,7 @@ library(phylogram)
 library(ggplot2)
 library(readr)
 library(ape)
+library(ggfortify)
 
 # Function to perform LD pruning, PCA, and return both dendrogram and PCA results
 gds_cluster <- function() {
@@ -48,6 +49,13 @@ gds_cluster <- function() {
   # Perform PCA
   pca <- snpgdsPCA(genofile, snp.id = snpset.id, num.thread = 40, autosome.only=FALSE)
   pc.percent <- pca$varprop * 100
+
+  p <- autoplot(pca_res, data = pca,
+         loadings = TRUE, loadings.colour = 'blue',
+         loadings.label = TRUE, loadings.label.size = 3)
+  
+  # Сохранение графика в файл
+  ggsave("pca_plot.png", plot = p, width = 10, height = 8, dpi = 300)
 
   # Table with PCA results
   tab <- tibble(
