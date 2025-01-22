@@ -10,6 +10,7 @@ dependencies:
   - r-dendextend
   - r-phylogram
   - r-ggplot2
+  - r-ggfortify
   - r-readr
   - r-ape
   - r-purrr
