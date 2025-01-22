@@ -14,6 +14,7 @@ process GDS_CLUSTER {
     path 'dendrogram.nwk'   , emit: dendrogram_nwk
     path 'dendrogram.png'   , emit: dendrogram_png
     path 'pca.png'          , emit: pca_png
+    path 'pca_plot.png'     , emit: pca_plot_png
 
     script:
     """    
