@@ -1,0 +1,10 @@
+reference:        '/storage/aglebus/gbs/data/reference/ARS-UCD1.2_Btau5.0.1Y/ARS-UCD1.2_Btau5.0.1Y.fa'
+faidx:            '/storage/aglebus/gbs/data/reference/ARS-UCD1.2_Btau5.0.1Y/faidx'
+bwaidx:           '/storage/aglebus/gbs/data/reference/ARS-UCD1.2_Btau5.0.1Y/bwaidx'
+reads:            '/storage/aglebus/gbs/data/reads/train_fastq'
+ref_panel:        '/storage/aglebus/gbs/data/ref_panel/BGVD/*.vcf.gz'
+ref_panel_index:  '/storage/aglebus/gbs/data/ref_panel/BGVD/*.vcf.gz.tbi'
+outdir:           'results'
+reports:          true
+cpus:             '96'
+memory:           '2 TB'

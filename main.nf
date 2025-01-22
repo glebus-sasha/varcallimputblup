@@ -6,9 +6,10 @@ include { ALIGN_VARCALL                 } from './workflows/align_varcall'
 include { IMPUTE                        } from './workflows/impute'
 include { COVERAGE_SUMMARY              } from './workflows/coverage_summary'
 include { CUTADAPT_QC                   } from './workflows/cutadapt_qc'
+include { BCF_CLUSTERING                } from './workflows/bcf_clustering'
+include { FASTQ_ALIGN_VARCALL_COVERAGE  } from './workflows/fastq_align_varcall_coverage'
 include { IMPUTATION_SUMMARY_MULTIQC    } from './modules/multiqc/imputation_summary_multiqc'
 include { COVERAGE_SUMMARY_MULTIQC      } from './modules/multiqc/coverage_summary_multiqc'
-include { VCF_CLUSTER                   } from './modules/local/vcf_cluster'
 
 
 // Logging pipeline information
@@ -36,35 +37,6 @@ bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.simpleName, file]}
 bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.simpleName, file]}
 align = bam.join(bamindex)
 
-workflow FASTQ_ALIGN_VARCALL_COVERAGE{
-    take:
-    reference
-    input_fastqs
-    bwaidx
-    faidx
-
-    main:
-    QC_TRIM(
-        input_fastqs
-    )
-    ALIGN_VARCALL(
-        reference,
-        QC_TRIM.out.trimmed_reads,
-        bwaidx,
-        faidx
-    )
-    VCF_CLUSTER(ALIGN_VARCALL.out.bcf.map{it -> it[1]}.collect())
-    COVERAGE_SUMMARY(ALIGN_VARCALL.out.align, ALIGN_VARCALL.out.bcfstats1, ALIGN_VARCALL.out.mosdepth_summary, reference)
-    COVERAGE_SUMMARY_MULTIQC(
-        QC_TRIM.out.fastp.collect(),
-        QC_TRIM.out.fastqc_before.collect(),
-        QC_TRIM.out.fastqc_after.collect(),
-        ALIGN_VARCALL.out.flagstat.collect(),
-        ALIGN_VARCALL.out.bcfstats1.map{it -> it[1]}.collect(),
-        ALIGN_VARCALL.out.mosdepth.map{it -> it[1]}.collect()
-    )
-}
-
 workflow imputation{
     take:
     reference
@@ -73,7 +45,6 @@ workflow imputation{
     faidx
     ref_panel_with_index
     ref_panel_index
-
 
     main:
     QC_TRIM(
@@ -107,5 +78,5 @@ workflow {
         bwaidx,
         faidx
     )
+    BCF_CLUSTERING(FASTQ_ALIGN_VARCALL_COVERAGE.out.bcf)
 }
-
