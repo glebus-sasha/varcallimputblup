@@ -50,7 +50,7 @@ gds_cluster <- function() {
   pca <- snpgdsPCA(genofile, snp.id = snpset.id, num.thread = 40, autosome.only=FALSE)
   pc.percent <- pca$varprop * 100
 
-  p <- autoplot(pca_res, data = pca,
+  p <- autoplot(pca, data = genofile,
          loadings = TRUE, loadings.colour = 'blue',
          loadings.label = TRUE, loadings.label.size = 3)
   
