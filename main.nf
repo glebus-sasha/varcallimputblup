@@ -31,8 +31,44 @@ bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.simpleNam
 align = bam.join(bamindex)
 */
 
-workflow {
+workflow imputation{
+    take:
+    reference
+    input_fastqs
+    bwaidx
+    faidx
+    ref_panel_with_index
+    ref_panel_index
+
+    main:
+    IMPUTATION(
+        reference,
+        input_fastqs,
+        bwaidx,
+        faidx,
+        ref_panel_with_index,
+        ref_panel_index
+    )
+}
+
+workflow clustering{
+    take:
+    reference
+    input_fastqs
+    bwaidx
+    faidx
+
+    main:
     CLUSTERING(
+        reference,
+        input_fastqs,
+        bwaidx,
+        faidx
+    )
+}
+
+workflow{
+    clustering(
         reference,
         input_fastqs,
         bwaidx,
