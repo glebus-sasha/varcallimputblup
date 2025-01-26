@@ -1,10 +1,10 @@
 // Include processes
-include { GLIMPSE2_CHUNK                    } from '../../modules/glimpse2/chunk'
-include { GLIMPSE2_CONCORDANCE              } from '../../modules/glimpse2/concordance'
-include { GLIMPSE2_LIGATE                   } from '../../modules/glimpse2/ligate'
-include { GLIMPSE2_PHASE                    } from '../../modules/glimpse2/phase'
-include { GLIMPSE2_SPLITREFERENCE           } from '../../modules/glimpse2/splitreference'
-include { BCFTOOLS_STATS as BCFTOOLS_STATS2 } from '../../modules/bcftools/stats'
+include { GLIMPSE2_CHUNK                     } from '../../modules/glimpse2/chunk'
+include { GLIMPSE2_CONCORDANCE               } from '../../modules/glimpse2/concordance'
+include { GLIMPSE2_LIGATE                    } from '../../modules/glimpse2/ligate'
+include { GLIMPSE2_PHASE                     } from '../../modules/glimpse2/phase'
+include { GLIMPSE2_SPLITREFERENCE            } from '../../modules/glimpse2/splitreference'
+include { BCFTOOLS_STATS as BCFTOOLS_STATS_2 } from '../../modules/bcftools/stats'
 
 workflow IMPUTE {
     take:
@@ -22,11 +22,11 @@ workflow IMPUTE {
     GLIMPSE2_SPLITREFERENCE(ref_panel_with_index.combine(chr_IRG_ORG, by: 0))
     GLIMPSE2_PHASE(
         GLIMPSE2_SPLITREFERENCE.out.bin_ref.combine(align).combine(ref_panel_index, by: 0)
-        )
+    )
     GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants.groupTuple())
-    BCFTOOLS_STATS2(GLIMPSE2_LIGATE.out.merged_variants, 'after')
+    BCFTOOLS_STATS_2(GLIMPSE2_LIGATE.out.merged_variants, 'after')
 
     emit:
     imputed_bcf = GLIMPSE2_LIGATE.out.merged_variants
-    bcfstats2 = BCFTOOLS_STATS2.out.bcfstats
+    bcfstats_imputed = BCFTOOLS_STATS_2.out.bcfstats
 }

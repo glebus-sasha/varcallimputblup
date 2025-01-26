@@ -16,10 +16,10 @@ process BCFTOOLS_STATS {
     val tag
 
     output:
-    tuple val(sid), path("${sid}_${tag}.bcfstats"),      emit: bcfstats
+    tuple val(sid), path("${sid}${tag}.bcfstats"),      emit: bcfstats
     
     script:
     """
-    bcftools stats $vcf > "${sid}_${tag}.bcfstats"
+    bcftools stats $vcf > "${sid}${tag}.bcfstats"
     """
 }

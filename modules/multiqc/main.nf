@@ -3,18 +3,19 @@ process MULTIQC {
     container 'staphb/multiqc:latest'
     conda "${moduleDir}/environment.yml"
     tag "all_samples"
-    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/MULTIQC"
+    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}"
 //	  debug true
 //    errorStrategy 'ignore'
 	
     input:
     path files
+    val report_title
 
     output:
     path '*.html', emit: html
 
     script:
     """
-    multiqc .
+    multiqc . -n "$report_title"
     """
 }

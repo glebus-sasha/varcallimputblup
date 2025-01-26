@@ -14,9 +14,9 @@ process FASTP{
     tuple val(sid), path(read1), path(read2)
 
     output:
-    tuple val(sid), path("${sid}.R1.fastq.gz"), path("${sid}.R2.fastq.gz"), emit: trimmed_reads
-    path '*.html', emit: html, optional: true
-    path '*.json', emit: json, optional: true
+    tuple val(sid), path("${sid}_trimmed_R1.fastq.gz"), path("${sid}_trimmed_R2.fastq.gz"), emit: fastq_gz
+    path "${sid}_fastp_stats.html"                                                        , emit: html, optional: true
+    path "${sid}_fastp_stats.json"                                                        , emit: json, optional: true
 
     script:
     """
@@ -24,9 +24,9 @@ process FASTP{
     --thread ${task.cpus} \
     --in1 $read1 \
     --in2 $read2 \
-    --out1 "${sid}.R1.fastq.gz" \
-    --out2 "${sid}.R2.fastq.gz" \
-    --html ${sid}.fastp_stats.html \
-    --json ${sid}.fastp_stats.json 
+    --out1 ${sid}_trimmed_R1.fastq.gz \
+    --out2 ${sid}_trimmed_R2.fastq.gz \
+    --html ${sid}_fastp_stats.html \
+    --json ${sid}_fastp_stats.json 
     """
 }

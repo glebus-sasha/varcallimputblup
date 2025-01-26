@@ -11,12 +11,14 @@ process SAMTOOLS_FLAGSTAT {
 
     input:
     tuple val(sid), path(bamFile)
+    val tag
+
     
     output:
-    path "*.flagstat", emit: flagstat
+    path "${sid}${tag}.flagstat", emit: flagstat
     
     script:
     """
-    samtools flagstat $bamFile > ${sid}.flagstat
+    samtools flagstat $bamFile > ${sid}${tag}.flagstat
     """
 }

@@ -1,20 +1,20 @@
 // Include processes
-include { FASTQC as FASTQC_BEFORE } from '../../modules/fastqc'
-include { FASTP                   } from '../../modules/fastp'
-include { FASTQC as FASTQC_AFTER  } from '../../modules/fastqc'
+include { FASTQC              } from '../../modules/fastqc'
+include { FASTP               } from '../../modules/fastp'
+include { FASTQC as FASTQC_2  } from '../../modules/fastqc'
 
 workflow QC_TRIM { 
     take:
     input_fastqs
 
     main:
-    FASTQC_BEFORE(input_fastqs)
+    FASTQC(input_fastqs)
     FASTP(input_fastqs)
-    FASTQC_AFTER(FASTP.out.trimmed_reads)
+    FASTQC_2(FASTP.out.fastq_gz)
 
     emit:
-    trimmed_reads   = FASTP.out.trimmed_reads
-    fastp           = FASTP.out.json
-    fastqc_before   = FASTQC_BEFORE.out.zip
-    fastqc_after    = FASTQC_AFTER.out.zip
+    trimmed_reads   = FASTP.out.fastq_gz
+    fastp_json      = FASTP.out.json
+    fastqc          = FASTQC.out.zip
+    fastqc_trimmed  = FASTQC_2.out.zip
 }
