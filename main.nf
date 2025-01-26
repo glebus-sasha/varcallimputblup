@@ -8,9 +8,7 @@ include { COVERAGE_SUMMARY              } from './workflows/coverage_summary'
 include { CUTADAPT_QC                   } from './workflows/cutadapt_qc'
 include { BCF_CLUSTERING                } from './workflows/bcf_clustering'
 include { FASTQ_ALIGN_VARCALL_COVERAGE  } from './workflows/fastq_align_varcall_coverage'
-include { IMPUTATION_SUMMARY_MULTIQC    } from './modules/multiqc/imputation_summary_multiqc'
-include { COVERAGE_SUMMARY_MULTIQC      } from './modules/multiqc/coverage_summary_multiqc'
-
+include { MULTIQC                       } from './modules/multiqc'
 
 // Logging pipeline information
 log.info """\
@@ -68,7 +66,7 @@ workflow imputation{
         mix(ALIGN_VARCALL.out.bcfstats1.map{it -> it[1]})   |
         mix(IMPUTE.out.bcfstats2.map{it -> it[1]})          |
         collect                                             |
-        IMPUTATION_SUMMARY_MULTIQC
+        MULTIQC
 }
 
 workflow {
