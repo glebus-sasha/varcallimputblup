@@ -11,13 +11,18 @@ process MOSDEPTH {
 
     input:
     tuple val(sid), path(bam), path(bamIndex)
+    val tag
 
     output:
-    tuple val(sid), path("${sid}.mosdepth.global.dist.txt"), emit: global_dist
-    tuple val(sid), path("${sid}.mosdepth.summary.txt")    , emit: summary
+    tuple val(sid), path("${sid}${tag}.mosdepth.global.dist.txt"), emit: global_dist
+    tuple val(sid), path("${sid}${tag}.mosdepth.summary.txt")    , emit: summary
 
     script:
     """
-        mosdepth -n -t 6 ${sid} ${bam}
+    mosdepth -n -t 6 ${sid} ${bam}
+    if [ -n "${tag}" ]; then
+        mv ${sid}.mosdepth.global.dist.txt ${sid}${tag}.mosdepth.global.dist.txt
+        mv ${sid}.mosdepth.summary.txt ${sid}${tag}.mosdepth.summary.txt
+    fi
     """
 }

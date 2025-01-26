@@ -24,7 +24,7 @@ workflow CLUSTERING {
     COVERAGE_SUMMARY(
         ALIGN_VARCALL.out.align, 
         ALIGN_VARCALL.out.bcfstats, 
-        ALIGN_VARCALL.out.mosdepth_summary, 
+        ALIGN_VARCALL.out.mosdepth_dedup_summary, 
         reference
     )
     BCF_CLUSTERING(ALIGN_VARCALL.out.bcf)
@@ -36,6 +36,7 @@ workflow CLUSTERING {
         mix(ALIGN_VARCALL.out.flagstat_dedup.map{it -> it[1]})  |
         mix(ALIGN_VARCALL.out.bcfstats.map{it -> it[1]})        |
         mix(ALIGN_VARCALL.out.mosdepth.map{it -> it[1]})        |
+        mix(ALIGN_VARCALL.out.mosdepth_dedup.map{it -> it[1]})  |
         collect,
         'summary'
     )
