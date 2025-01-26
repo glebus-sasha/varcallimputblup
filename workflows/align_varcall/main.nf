@@ -37,10 +37,11 @@ workflow ALIGN_VARCALL {
     BCFTOOLS_STATS(BCFTOOLS_MPILEUP.out.bcf, '')
 
     emit:
-    bcf = BCFTOOLS_MPILEUP.out.bcf
-    align = SAMTOOLS_RMDUP.out.bam.join(SAMTOOLS_INDEX.out.bai)
-    flagstat = SAMTOOLS_FLAGSTAT.out.flagstat
-    bcfstats = BCFTOOLS_STATS.out.bcfstats
-    mosdepth = MOSDEPTH.out.global_dist
-    mosdepth_summary = MOSDEPTH.out.summary
+    bcf                 = BCFTOOLS_MPILEUP.out.bcf
+    align               = SAMTOOLS_RMDUP.out.bam.join(SAMTOOLS_INDEX.out.bai)
+    flagstat            = SAMTOOLS_FLAGSTAT.out.flagstat
+    flagstat_dedup      = SAMTOOLS_FLAGSTAT_2.out.flagstat
+    bcfstats            = BCFTOOLS_STATS.out.bcfstats
+    mosdepth            = MOSDEPTH.out.global_dist
+    mosdepth_summary    = MOSDEPTH.out.summary
 }

@@ -15,7 +15,7 @@ process SAMTOOLS_FLAGSTAT {
 
     
     output:
-    path "${sid}${tag}.flagstat", emit: flagstat
+    tuple val(sid), path("${sid}${tag}.flagstat"), emit: flagstat
     
     script:
     """

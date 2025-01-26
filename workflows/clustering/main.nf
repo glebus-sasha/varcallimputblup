@@ -29,12 +29,13 @@ workflow CLUSTERING {
     )
     BCF_CLUSTERING(ALIGN_VARCALL.out.bcf)
     MULTIQC(
-        QC_TRIM.out.fastp_json                              |
-        mix(QC_TRIM.out.fastqc)                             |
-        mix(QC_TRIM.out.fastqc_trimmed)                     |
-        mix(ALIGN_VARCALL.out.flagstat)                     |
-        mix(ALIGN_VARCALL.out.bcfstats.map{it -> it[1]})    |
-        mix(ALIGN_VARCALL.out.mosdepth.map{it -> it[1]})    |
+        QC_TRIM.out.fastp_json                                  |
+        mix(QC_TRIM.out.fastqc)                                 |
+        mix(QC_TRIM.out.fastqc_trimmed)                         |
+        mix(ALIGN_VARCALL.out.flagstat.map{it -> it[1]})        |
+        mix(ALIGN_VARCALL.out.flagstat_dedup.map{it -> it[1]})  |
+        mix(ALIGN_VARCALL.out.bcfstats.map{it -> it[1]})        |
+        mix(ALIGN_VARCALL.out.mosdepth.map{it -> it[1]})        |
         collect,
         'summary'
     )
