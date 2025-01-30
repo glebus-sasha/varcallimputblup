@@ -39,12 +39,9 @@ workflow ALIGN_VARCALL {
     bcf                     = BCFTOOLS_MPILEUP.out.bcf
     align                   = BWA_MEM.out.bam.join(SAMTOOLS_INDEX.out.bai)
     flagstat                = SAMTOOLS_FLAGSTAT.out.flagstat
-    flagstat_dedup          = Channel.empty()
     bcfstats                = BCFTOOLS_STATS.out.bcfstats
     mosdepth                = MOSDEPTH.out.global_dist
     mosdepth_summary        = MOSDEPTH.out.summary
-    mosdepth_dedup          = Channel .empty()
-    mosdepth_dedup_summary  = Channel .empty()
 }
 
 workflow ALIGN_DEDUP_VARCALL { 
