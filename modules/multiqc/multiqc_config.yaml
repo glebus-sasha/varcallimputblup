@@ -1,0 +1,11 @@
+mosdepth_config:
+  general_stats_coverage:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 10
+    - 30
+    - 50
+    - 100

@@ -16,6 +16,6 @@ process MULTIQC {
 
     script:
     """
-    multiqc . -n "$report_title"
+    multiqc . -n "$report_title" -c ${moduleDir}/multiqc_config.yaml
     """
 }
