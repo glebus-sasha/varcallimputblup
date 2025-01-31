@@ -7,14 +7,14 @@ nextflow run -latest glebus-sasha/varcallimputblup -params-file params.yaml -pro
 
 ```mermaid
 %%{init: {'theme':'base'}}%%
-flowchart TB
+flowchart LR
     subgraph " "
-    v0["Channel.fromPath"]
-    v2["Channel.fromFilePairs"]
-    v3["Channel.fromPath"]
-    v5["Channel.fromPath"]
-    v7["Channel.fromPath"]
-    v9["Channel.fromPath"]
+    v0["Reference"]
+    v2["Reads"]
+    v3["bwa index"]
+    v5["faindex"]
+    v7["Ref panel index"]
+    v9["Ref panel"]
     v20["tag"]
     v24["tag"]
     v29["tag"]
@@ -157,39 +157,52 @@ flowchart TB
     v74 --> v75
 ```
 
-FASTQC: Quality control of raw sequencing data using FastQC.
+- **FASTQC**: Quality control of raw sequencing data using FastQC.
+- **FASTP**: Trimming of reads to remove adapters and low-quality sequences using fastp.
+- **BWA_MEM**: Alignment of reads to the reference genome using BWA MEM.
+- **SAMTOOLS_FLAGSTAT**: Quality assessment of alignment using SAMtools flagstat.
+- **SAMTOOLS_INDEX**: Indexing of BAM files using SAMtools index.
+- **MOSDEPTH**: Calculation of sequencing depth using mosdepth.
+- **SAMTOOLS_RMDUP**: Removal of PCR duplicates using SAMtools rmdup.
+- **BCFTOOLS_MPILEUP**: Variant calling using BCFtools mpileup.
+- **BCFTOOLS_INDEX**: Indexing of VCF files using BCFtools index.
+- **BCFTOOLS_STATS**: Statistical analysis of variant calls using BCFtools stats.
+- **BAM_BREADTH**: Calculation of breadth of coverage using BAM files.
+- **GENOME_LENGTH**: Calculation of genome length.
+- **COV_STATS**: Statistical analysis of coverage using coverage statistics.
+- **COV_SUMMARY**: Summary of coverage statistics.
+- **BCF_TO_VCF**: Conversion of BCF files to VCF format.
+- **VCF_TO_GDS**: Conversion of VCF files to GDS format.
+- **COMBINE_GDS**: Combining multiple GDS files.
+- **GDS_CLUSTER**: Clustering of GDS files.
+- **MULTIQC**: Compilation of a comprehensive report including QC metrics, alignment results, and variant calling statistics.
 
-FASTP: Trimming of reads to remove adapters and low-quality sequences using fastp.
+## Usage
 
-BWA_MEM: Alignment of reads to the reference genome using BWA MEM.
+### Quick Start
 
-SAMTOOLS_FLAGSTAT: Quality assessment of alignment using SAMtools flagstat.
+To quickly run the pipeline, use the following command:
 
-SAMTOOLS_INDEX: Indexing of BAM files using SAMtools index.
+```bash
+nextflow run <your-username>/<your-repository> \
+    -profile <docker/singularity> \
+    --reads <path-to-reads-folder> \
+    --kraken2_db <path-to-kraken2-database> \
+    --outdir <path-to-results-folder>
+```
 
-MOSDEPTH: Calculation of sequencing depth using mosdepth.
+### Requirements
 
-SAMTOOLS_RMDUP: Removal of PCR duplicates using SAMtools rmdup.
+- Nextflow (https://www.nextflow.io/docs/latest/install.html)
+- Docker (https://docs.docker.com/engine/install/) or
+- Singularity (https://github.com/sylabs/singularity/blob/main/INSTALL.md)
 
-BCFTOOLS_MPILEUP: Variant calling using BCFtools mpileup.
+## Contributors
 
-BCFTOOLS_INDEX: Indexing of VCF files using BCFtools index.
+- Oxana Kolpakova ([@OxanaKolpakova](https://github.com/OxanaKolpakova))
+- Glebus Aleksandr ([@glebus-sasha](https://github.com/glebus-sasha/))
 
-BCFTOOLS_STATS: Statistical analysis of variant calls using BCFtools stats.
+## License
 
-BAM_BREADTH: Calculation of breadth of coverage using BAM files.
+This project is licensed under the [MIT License](LICENSE).
 
-GENOME_LENGTH: Calculation of genome length.
-
-COV_STATS: Statistical analysis of coverage using coverage statistics.
-
-COV_SUMMARY: Summary of coverage statistics.
-
-BCF_TO_VCF: Conversion of BCF files to VCF format.
-
-VCF_TO_GDS: Conversion of VCF files to GDS format.
-
-COMBINE_GDS: Combining multiple GDS files.
-
-GDS_CLUSTER: Clustering of GDS files.
-MULTIQC: Compilation of a comprehensive report including QC metrics, alignment results, and variant calling statistics.
