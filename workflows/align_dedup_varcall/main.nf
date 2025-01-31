@@ -11,39 +11,6 @@ include { BCFTOOLS_STATS                            } from '../../modules/bcftoo
 include { MOSDEPTH                                  } from '../../modules/mosdepth'
 include { MOSDEPTH as MOSDEPTH_2                    } from '../../modules/mosdepth'
 
-workflow ALIGN_VARCALL { 
-    take:
-    reference
-    trimmed_reads
-    bwaidx
-    faidx
-
-    main:
-    BWA_MEM(trimmed_reads, reference, bwaidx)
-    SAMTOOLS_FLAGSTAT(BWA_MEM.out.bam, '')
-    SAMTOOLS_INDEX(BWA_MEM.out.bam)
-    MOSDEPTH(
-        BWA_MEM.out.bam                 |
-        join(SAMTOOLS_INDEX.out.bai),
-        ''
-    )
-    BCFTOOLS_MPILEUP(
-        reference, 
-        BWA_MEM.out.bam.join(SAMTOOLS_INDEX.out.bai), 
-        faidx
-        )
-    BCFTOOLS_INDEX(BCFTOOLS_MPILEUP.out.bcf)
-    BCFTOOLS_STATS(BCFTOOLS_MPILEUP.out.bcf, '')
-
-    emit:
-    bcf                     = BCFTOOLS_MPILEUP.out.bcf
-    align                   = BWA_MEM.out.bam.join(SAMTOOLS_INDEX.out.bai)
-    flagstat                = SAMTOOLS_FLAGSTAT.out.flagstat
-    bcfstats                = BCFTOOLS_STATS.out.bcfstats
-    mosdepth                = MOSDEPTH.out.global_dist
-    mosdepth_summary        = MOSDEPTH.out.summary
-}
-
 workflow ALIGN_DEDUP_VARCALL { 
     take:
     reference

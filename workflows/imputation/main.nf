@@ -1,8 +1,8 @@
 // Include processes
-include { QC_TRIM       } from '../qc_trim'
-include { ALIGN_VARCALL } from '../align_varcall'
-include { IMPUTE        } from '../impute'
-include { MULTIQC       } from '../../modules/multiqc'
+include { QC_TRIM               } from '../qc_trim'
+include { ALIGN_DEDUP_VARCALL   } from '../align_dedup_varcall'
+include { IMPUTE                } from '../impute'
+include { MULTIQC               } from '../../modules/multiqc'
 
 workflow IMPUTATION{
     take:
