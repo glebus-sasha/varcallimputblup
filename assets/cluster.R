@@ -22,7 +22,7 @@ gds_cluster <- function() {
 
   # LD pruning with all chromosomes included
   set.seed(1000)
-  snpset <- snpgdsLDpruning(genofile, ld.threshold = 0.2, autosome.only=FALSE)
+  snpset <- snpgdsLDpruning(genofile, ld.threshold = 0.8, autosome.only=FALSE)
   snpset.id <- unlist(snpset)
 
   # Extract sample IDs
@@ -34,7 +34,8 @@ gds_cluster <- function() {
 
   # Construct dendrogram
   ibs_hc <- snpgdsHCluster(ibs_mat)
-  dend <- as.dendrogram(ibs_hc$dendrogram)
+  rv <- snpgdsCutTree(ibs_hc)
+  dend <- as.dendrogram(rv$dendrogram)
 
   # Save dendrogram as Newick format
   newick_file <- "dendrogram.nwk"
@@ -42,8 +43,9 @@ gds_cluster <- function() {
 
   # Save dendrogram
   dend_file <- "dendrogram.png"
-  png(dend_file, width = 800, height = 1000)
-  plot(dend)
+  png(dend_file, width = 800, height = 2500)
+  par(cex=1,font=20)
+  rv$dendrogram %>% set("labels", c(samp.id)) %>% set("labels_cex", 0.9) %>% plot(horiz = TRUE)
   dev.off()
 
   # Perform PCA
