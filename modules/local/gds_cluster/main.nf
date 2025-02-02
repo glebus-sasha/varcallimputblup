@@ -10,7 +10,7 @@ process GDS_CLUSTER {
     path gds_file
 
     output:
-    path 'cluster_tab.tsv'  , emit: cluster_tab
+    path 'cluster.tsv'  , emit: cluster_tab
     path 'dendrogram.nwk'   , emit: dendrogram_nwk
     path 'dendrogram.png'   , emit: dendrogram_png
     path 'pca.png'          , emit: pca_png
