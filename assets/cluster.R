@@ -18,6 +18,7 @@ gds_cluster <- function() {
     stop("combined.gds file not found in the current directory.")
   }
 
+
   genofile <- snpgdsOpen(gds_file)
 
   # LD pruning with all chromosomes included
