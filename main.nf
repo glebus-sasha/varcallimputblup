@@ -68,10 +68,21 @@ workflow clustering{
 }
 
 workflow{
+    /*
     clustering(
         reference,
         input_fastqs,
         bwaidx,
         faidx
     )
+    */
+    imputation(
+        reference,
+        input_fastqs,
+        bwaidx,
+        faidx,
+        ref_panel_with_index,
+        ref_panel_index
+    )
+
 }

@@ -1,5 +1,8 @@
 process GLIMPSE2_PHASE {
-    tag "${ref_panel_bin.baseName}_${bam.baseName}"
+    tag { 
+        sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
+    }
+    
     label 'process_medium'
     conda "${moduleDir}/environment.yml"
     container 'imary116/glimpse2:with-bcftools-and-updated-info-score'
