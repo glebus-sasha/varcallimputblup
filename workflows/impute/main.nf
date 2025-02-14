@@ -14,15 +14,18 @@ workflow IMPUTE {
 
     main:
     GLIMPSE2_CHUNK(ref_panel_with_index)
+
     chr_IRG_ORG = GLIMPSE2_CHUNK.out.chunk_chr.flatMap { chr, file ->
         file.splitCsv(header:false,sep:'\t').collect { coord ->
             [chr, coord[2], coord[3]]
         }
     }
+
     GLIMPSE2_SPLITREFERENCE(ref_panel_with_index.combine(chr_IRG_ORG, by: 0))
     GLIMPSE2_PHASE(
-        GLIMPSE2_SPLITREFERENCE.out.bin_ref.combine(align).combine(ref_panel_index, by: 0)
+        GLIMPSE2_SPLITREFERENCE.out.bin_ref.combine(align)
     )
+
     GLIMPSE2_LIGATE(GLIMPSE2_PHASE.out.phased_variants.groupTuple())
     BCFTOOLS_STATS_2(GLIMPSE2_LIGATE.out.merged_variants, '_imputed')
 

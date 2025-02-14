@@ -13,14 +13,15 @@ process GLIMPSE2_SPLITREFERENCE {
     tuple val(chr), path("*.bin"), emit: bin_ref, optional: true
 
     script:
-    def prefix = "${chr}_${output_region.replace(":","_")}"
+    //def prefix = "${chr}_${output_region.replace(":","_")}"
+    def prefix = "${chr}"
     """
     GLIMPSE2_split_reference \
         --reference ${ref_panel} \
         --input-region $input_region \
         --output-region $output_region \
         --thread $task.cpus \
-        --output ${prefix}
+        --output '${prefix}'
     """
 
     stub:

@@ -9,7 +9,7 @@ process GLIMPSE2_CHUNK {
     tuple val(chr), path(ref_panel), path(ref_panel_index)
 
     output:
-    tuple val(chr), path("${ref_panel.simpleName}.txt"), emit: chunk_chr
+    tuple val(chr), path("${chr}.txt"), emit: chunk_chr
 
     script:
     """
@@ -18,11 +18,11 @@ process GLIMPSE2_CHUNK {
         --region $chr \
         --sequential \
         --threads 60 \
-        --output ${ref_panel.simpleName}.txt
+        --output ${chr}.txt
     """
 
     stub:
     """
-    touch ${ref_panel.simpleName}.txt
+    touch ${chr}.txt
     """
 }
