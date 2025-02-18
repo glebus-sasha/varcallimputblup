@@ -3,7 +3,7 @@ include { FASTQC              } from '../../modules/fastqc'
 include { FASTP               } from '../../modules/fastp'
 include { FASTQC as FASTQC_2  } from '../../modules/fastqc'
 
-workflow QC_TRIM { 
+workflow FASTQ_QC_TRIM_FASTQ_FASTP { 
     take:
     input_fastqs
 

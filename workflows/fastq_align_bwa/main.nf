@@ -19,8 +19,8 @@ workflow FASTQ_ALIGN_BWA {
     MOSDEPTH(align, '')
 
     emit:
-    align                   = align
-    flagstat                = SAMTOOLS_FLAGSTAT.out.flagstat
-    mosdepth                = MOSDEPTH.out.global_dist
-    mosdepth_summary        = MOSDEPTH.out.summary
+    align            = align
+    flagstat         = SAMTOOLS_FLAGSTAT.out.flagstat
+    mosdepth         = MOSDEPTH.out.global_dist
+    mosdepth_summary = MOSDEPTH.out.summary
 }

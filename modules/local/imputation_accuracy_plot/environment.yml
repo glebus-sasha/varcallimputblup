@@ -1,0 +1,10 @@
+name: r_environment
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - r-base
+  - r-ggplot2
+  - r-readr
+  - r-dplyr
+  - r-purrr

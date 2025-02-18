@@ -21,9 +21,11 @@ bwaidx = Channel.fromPath("${params.bwaidx}/*").collect()
 faidx = Channel.fromPath("${params.faidx}/*.fai").collect()
 
 // reference panel channels
-ref_panel = Channel.fromPath("${params.ref_panel}").map{file->[file.simpleName, file]}
-ref_panel_index = Channel.fromPath("${params.ref_panel_index}").map{file->[file.simpleName, file]}
-ref_panel_with_index = ref_panel.join(ref_panel_index)
+ref_panel_vcf       = Channel.fromPath("${params.ref_panel_vcf}").map{file->[file.simpleName, file]}
+ref_panel_index     = Channel.fromPath("${params.ref_panel_index}").map{file->[file.simpleName, file]}
+ref_panel_tsv       = Channel.fromPath("${params.ref_panel_tsv}").map{file->[file.simpleName, file]}
+ref_panel_tsv_index = Channel.fromPath("${params.ref_panel_tsv_index}").map{file->[file.simpleName, file]}
+ref_panel = ref_panel_vcf.join(ref_panel_index).join(ref_panel_tsv).join(ref_panel_tsv_index)
 
 // aligments channels
 /* bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.simpleName, file]}
@@ -37,8 +39,7 @@ workflow imputation{
     input_fastqs
     bwaidx
     faidx
-    ref_panel_with_index
-    ref_panel_index
+    ref_panel
 
     main:
     IMPUTATION(
@@ -46,8 +47,7 @@ workflow imputation{
         input_fastqs,
         bwaidx,
         faidx,
-        ref_panel_with_index,
-        ref_panel_index
+        ref_panel
     )
 }
 
@@ -82,8 +82,7 @@ workflow{
         input_fastqs,
         bwaidx,
         faidx,
-        ref_panel_with_index,
-        ref_panel_index
+        ref_panel
     )
 
 }

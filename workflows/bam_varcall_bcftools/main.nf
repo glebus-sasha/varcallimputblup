@@ -10,11 +10,12 @@ workflow BAM_VARCALL_BCFTOOLS {
     align
 
     main:
-    BCFTOOLS_MPILEUP(reference, faidx, align)
+    BCFTOOLS_MPILEUP(reference, align, faidx)
     BCFTOOLS_INDEX(BCFTOOLS_MPILEUP.out.bcf)
     BCFTOOLS_STATS(BCFTOOLS_MPILEUP.out.bcf, '')
 
     emit:
-    bcf                     = BCFTOOLS_MPILEUP.out.bcf
-    bcfstats                = BCFTOOLS_STATS.out.bcfstats
+    bcf      = BCFTOOLS_MPILEUP.out.bcf
+    csi      = BCFTOOLS_INDEX.out.csi
+    bcfstats = BCFTOOLS_STATS.out.bcfstats
 }

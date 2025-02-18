@@ -12,7 +12,7 @@ process BCFTOOLS_STATS {
 //    errorStrategy 'ignore'
 	
     input:
-    tuple val(sid), path(vcf)
+    tuple val(sid), path(bcf), path(csi)
     val tag
 
     output:
@@ -20,6 +20,6 @@ process BCFTOOLS_STATS {
     
     script:
     """
-    bcftools stats $vcf > "${sid}${tag}.bcfstats"
+    bcftools stats $bcf > "${sid}${tag}.bcfstats"
     """
 }

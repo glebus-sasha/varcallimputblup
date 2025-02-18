@@ -1,9 +1,9 @@
-include { QC_TRIM          } from '../qc_trim'
-include { ALIGN_VARCALL    } from '../align_varcall'
-include { COVERAGE_SUMMARY } from '../coverage_summary'
-include { BCFTOOLS_FILTER  } from '../../modules/bcftools/filter'
-include { BCF_CLUSTERING   } from '../bcf_clustering'
-include { MULTIQC          } from '../../modules/multiqc'
+include { FASTQ_QC_TRIM_FASTQ_FASTP } from '../fastq_qc_trim_fastqc_fastp'
+include { ALIGN_VARCALL             } from '../align_varcall'
+include { COVERAGE_SUMMARY          } from '../coverage_summary'
+include { BCFTOOLS_FILTER           } from '../../modules/bcftools/filter'
+include { BCF_CLUSTERING            } from '../bcf_clustering'
+include { MULTIQC                   } from '../../modules/multiqc'
 
 workflow CLUSTERING {
     take:

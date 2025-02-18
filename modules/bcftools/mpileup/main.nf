@@ -12,14 +12,14 @@ process BCFTOOLS_MPILEUP {
 	
     input:
     path reference
-    tuple val(sid), path(bamFile), path(bai)
+    tuple val(sid), path("${sid}.bam"), path("${sid}.bai")
     path fai
     
     output:
-    tuple val(sid), path("${sid}.bcf")    ,     emit: bcf
+    tuple val(sid), path("${sid}.bcf"), emit: bcf
     
     script:
     """    
-    bcftools mpileup -f $reference $bamFile -Ou | bcftools call -mv -Ob -o ${sid}.bcf --threads ${task.cpus}
+    bcftools mpileup -f $reference "${sid}.bam" -Ou | bcftools call -mv -Ob -o ${sid}.bcf --threads ${task.cpus}
     """
 }
