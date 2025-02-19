@@ -8,6 +8,8 @@ include { BCFTOOLS_INDEX                        } from '../../modules/bcftools/i
 include { BCFTOOLS_STATS                        } from '../../modules/bcftools/stats'
 include { GLIMPSE2_CONCORDANCE                  } from '../../modules/glimpse2/concordance'
 include { BCF_RENAME_BCFTOOLS                   } from '../../modules/local/bcf_rename_bcftools'
+include { PREPARE_CONCORDANCE                   } from '../../modules/local/prepare_concordance'
+include { MERGE_PREPARE_CONCORDANCE             } from '../../modules/local/merge_prepare_concordance'
 include { VARCALL_REF_BCFTOOLS                  } from '../../modules/local/varcall_ref_bcftools'
 include { IMPUTATION_ACCURACY_PLOT              } from '../../modules/local/imputation_accuracy_plot'
 include { MULTIQC                               } from '../../modules/multiqc'
@@ -36,16 +38,27 @@ workflow IMPUTATION{
     ch_chrs                 = ref_panel.map{it[0]}.collect()
     ch_sids                 = ch_validate.map{it[0]}.collect()
     ch_ref_panel_with_index = ref_panel.map{[it[1], it[2]]}.collect()
-    ch_validate_flat        = ch_validate
-        .map{[it[0], it[2], it[3]]}
-        .groupTuple()
-        .map { it.flatten() }
-        .map { [it[0], it[1..-1]] }
-    ch_concordance = BCF_RENAME_BCFTOOLS.out.imputed_fixed_bcf.combine(ch_validate_flat, by: 0)
+   
+    PREPARE_CONCORDANCE(ch_chrs, BCF_RENAME_BCFTOOLS.out.imputed_fixed_bcf)
+    ch_sids         = PREPARE_CONCORDANCE.out.imputed.map{it[0]}.collect()
+    ch_concordance  = PREPARE_CONCORDANCE.out.concordance_list.map{it[1]}.collect()
+    MERGE_PREPARE_CONCORDANCE(ch_sids, ch_concordance)
+    
+    ch_validate_flat            = ch_validate
+        .map{[it[2], it[3]]}
+        .collect()
+    ch_imputed                  = PREPARE_CONCORDANCE.out.imputed.map{it[1]}.collect()
 
-    GLIMPSE2_CONCORDANCE(ch_chrs, ch_ref_panel_with_index, ch_concordance)
+    GLIMPSE2_CONCORDANCE(
+        MERGE_PREPARE_CONCORDANCE.out.sids, 
+        ch_ref_panel_with_index, 
+        ch_imputed, 
+        MERGE_PREPARE_CONCORDANCE.out.merged_concordance, 
+        ch_validate_flat, 
+        '1 5 10 20 50 100 200 500 1000 2000 5000 10000  20000 50000 100000 150000', 
+        0, 0
+        )
     IMPUTATION_ACCURACY_PLOT(GLIMPSE2_CONCORDANCE.out.rsquare_grp)
-
     MULTIQC(
         FASTQ_QC_TRIM_FASTQ_FASTP.out.fastp_json                       |
         mix(FASTQ_QC_TRIM_FASTQ_FASTP.out.fastqc)                      |

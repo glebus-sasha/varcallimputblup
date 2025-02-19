@@ -10,7 +10,7 @@ process IMPUTATION_ACCURACY_PLOT {
     tuple val(sid), path(errors_grp)
 
     output:
-    tuple val(sid), path("${sid}_${chr}_accplot.png"), emit: accplot
+    tuple val(sid), path("${sid}_accplot.png"), emit: accplot
 
     script:
     """
@@ -45,7 +45,7 @@ process IMPUTATION_ACCURACY_PLOT {
             y = expression(r^2~"imputed vs true genotypes"),
             title = "Imputation accuracy"
         ) +
-        theme_minimal(base_size = 20) +
+        theme_bw(base_size = 20) +
         theme(
             panel.grid.major = element_line(linetype = "dashed"),
             legend.position = "bottom"
@@ -54,6 +54,6 @@ process IMPUTATION_ACCURACY_PLOT {
         xlim(0.05, 60)  # X-ось тоже в процентах
 
     # Сохраняем график
-    ggsave("${sid}_${chr}_accplot.png", p, width = 16, height = 12, dpi = 300)
+    ggsave("${sid}_accplot.png", p, width = 16, height = 12, dpi = 300)
     """
 }
