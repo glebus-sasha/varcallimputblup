@@ -5,9 +5,10 @@ include { SAMTOOLS_INDEX                       } from '../../modules/samtools/in
 workflow BAM_DOWNSAMPLE_SAMTOOLS { 
     take:
     bam
+    downsample_rate
 
     main:
-    SAMTOOLS_DOWNSAMPLE(bam, 0.9)
+    SAMTOOLS_DOWNSAMPLE(bam, downsample_rate)
     SAMTOOLS_INDEX(SAMTOOLS_DOWNSAMPLE.out.bam)
 
     emit:

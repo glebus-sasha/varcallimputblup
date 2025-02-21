@@ -6,6 +6,7 @@ ref_panel_vcf:        '/storage/aglebus/gbs/data/ref_panel/BGVD_fixed/*.vcf.gz'
 ref_panel_index:      '/storage/aglebus/gbs/data/ref_panel/BGVD_fixed/*.vcf.gz.tbi'
 ref_panel_tsv:        '/storage/aglebus/gbs/data/ref_panel/BGVD_fixed/*.tsv.gz'
 ref_panel_tsv_index:  '/storage/aglebus/gbs/data/ref_panel/BGVD_fixed/*.tsv.gz.tbi'
+downsample_rate:      '0.9'
 outdir:               'results'
 reports:              true
 cpus:                 '96'

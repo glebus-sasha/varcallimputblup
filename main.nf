@@ -27,6 +27,7 @@ ref_panel_tsv       = Channel.fromPath("${params.ref_panel_tsv}").map{file->[fil
 ref_panel_tsv_index = Channel.fromPath("${params.ref_panel_tsv_index}").map{file->[file.simpleName, file]}
 ref_panel = ref_panel_vcf.join(ref_panel_index).join(ref_panel_tsv).join(ref_panel_tsv_index)
 
+downsample_rate = params.downsample_rate
 // aligments channels
 /* bam = Channel.fromPath("${params.bam}/*.bam").map{file->[file.simpleName, file]}
 bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.simpleName, file]}
@@ -40,6 +41,7 @@ workflow imputation{
     bwaidx
     faidx
     ref_panel
+    downsample_rate
 
     main:
     IMPUTATION(
@@ -47,7 +49,8 @@ workflow imputation{
         input_fastqs,
         bwaidx,
         faidx,
-        ref_panel
+        ref_panel,
+        downsample_rate
     )
 }
 
@@ -82,7 +85,8 @@ workflow{
         input_fastqs,
         bwaidx,
         faidx,
-        ref_panel
+        ref_panel,
+        downsample_rate
     )
 
 }

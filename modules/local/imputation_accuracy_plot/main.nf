@@ -1,7 +1,9 @@
 // Define the `IMPUTATION_ACCURACY_PLOT` process that plots concordance accuracy
 process IMPUTATION_ACCURACY_PLOT {
     conda "${moduleDir}/environment.yml"
-    tag 'all_samples'
+    tag { 
+        sid.length() > 40 ? "${sid.take(20)}...${sid.takeRight(20)}" : sid
+    }
     publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/IMPUTATION_ACCURACY_PLOT"
 //	debug true
     errorStrategy 'ignore'
@@ -10,7 +12,7 @@ process IMPUTATION_ACCURACY_PLOT {
     tuple val(sid), path(errors_grp)
 
     output:
-    tuple val(sid), path("${sid}_accplot.png"), emit: accplot
+    path "${sid}_accplot.png", emit: accplot
 
     script:
     """
