@@ -63,10 +63,11 @@ workflow IMPUTATION{
         mix(FASTQ_QC_TRIM_FASTQ_FASTP.out.fastqc)                      |
         mix(FASTQ_QC_TRIM_FASTQ_FASTP.out.fastqc_trimmed)              |
         mix(FASTQ_ALIGN_BWA.out.flagstat.map{it[1]})                   |
-       // mix(BCFTOOLS_STATS.out.bcfstats.map{it[1]})                   |
-       mix(GLIMPSE2_CONCORDANCE.out.errors_grp.map{it[1]})             |
-       mix(GLIMPSE2_CONCORDANCE.out.errors_spl.map{it[1]})             |
+        mix(FASTQ_ALIGN_BWA.out.mosdepth.map{it[1]})                   |
         mix(BAM_IMPUTE_GLIMPSE2.out.bcfstats_imputed.map{it[1]})       |
+        mix(FASTQ_ALIGN_BWA.out.mosdepth_summary.map{it[1]})           |
+        mix(GLIMPSE2_CONCORDANCE.out.errors_grp.map{it[1]})            |
+        mix(GLIMPSE2_CONCORDANCE.out.errors_spl.map{it[1]})            |
         collect,
         'summary'
     ) 
