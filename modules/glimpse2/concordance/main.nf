@@ -6,7 +6,7 @@ process GLIMPSE2_CONCORDANCE {
     conda "${moduleDir}/environment.yml"
     container 'imary116/glimpse2:with-bcftools-and-updated-info-score'
     errorStrategy 'ignore'
-    publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/GLIMPSE2_CONCORDANCE"
+    //publishDir "${params.outdir}/${workflow.start.format('yyyy-MM-dd_HH-mm-ss')}_${workflow.runName}/GLIMPSE2_CONCORDANCE"
 
     input:
     path ref_panel_with_index
