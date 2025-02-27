@@ -35,6 +35,8 @@ bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.simpleNam
 align = bam.join(bamindex)
 */
 
+
+
 workflow{
     /*
     CLUSTERING(
@@ -54,11 +56,15 @@ workflow{
         downsample_rate
     )*/
 
+
+    // regions channels
+    bed = Channel.fromPath("${params.bed}").collect()
     IMPUTATION(
         reference,
         input_fastqs,
         bwaidx,
         faidx,
-        ref_panel
+        ref_panel,
+        bed
     )
 }

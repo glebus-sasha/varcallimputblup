@@ -31,5 +31,6 @@ workflow BAM_IMPUTE_GLIMPSE2 {
 
     emit:
     bcf              = GLIMPSE2_LIGATE.out.merged_variants
+    csi              = BCFTOOLS_INDEX.out.csi
     bcfstats_imputed = BCFTOOLS_STATS.out.bcfstats
 }

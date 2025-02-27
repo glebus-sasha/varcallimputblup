@@ -7,6 +7,7 @@ ref_panel_index:      '/storage/aglebus/gbs/data/ref_panel/BGVD_fixed/*.vcf.gz.t
 ref_panel_tsv:        '/storage/aglebus/gbs/data/ref_panel/BGVD_fixed/*.tsv.gz'
 ref_panel_tsv_index:  '/storage/aglebus/gbs/data/ref_panel/BGVD_fixed/*.tsv.gz.tbi'
 downsample_rate:      '0.9'
+bed:                  '/storage/aglebus/gbs/data/regions/SNV_53_converted_to_GCF_002263795.3_chr.bed'
 outdir:               'results'
 reports:              true
 cpus:                 '96'
