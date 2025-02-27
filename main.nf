@@ -1,8 +1,9 @@
 #!/usr/bin/env nextflow
 
 // Include workflows
-include { CLUSTERING } from './workflows/clustering'
-include { IMPUTATION } from './workflows/imputation'
+include { CLUSTERING                     } from './workflows/clustering'
+include { IMPUTATION_LOW_PASS_SIMULATION } from './workflows/imputation_low_pass_simulation'
+include { IMPUTATION                     } from './workflows/imputation'
 
 
 // Logging pipeline information
@@ -34,59 +35,30 @@ bamindex = Channel.fromPath("${params.bam}/*.bam.bai").map{file->[file.simpleNam
 align = bam.join(bamindex)
 */
 
-workflow imputation{
-    take:
-    reference
-    input_fastqs
-    bwaidx
-    faidx
-    ref_panel
-    downsample_rate
-
-    main:
-    IMPUTATION(
-        reference,
-        input_fastqs,
-        bwaidx,
-        faidx,
-        ref_panel,
-        downsample_rate
-    )
-}
-
-workflow clustering{
-    take:
-    reference
-    input_fastqs
-    bwaidx
-    faidx
-
-    main:
+workflow{
+    /*
     CLUSTERING(
         reference,
         input_fastqs,
         bwaidx,
         faidx
     )
-}
-
-workflow{
-    
-    /*
-    clustering(
-        reference,
-        input_fastqs,
-        bwaidx,
-        faidx
-    )
     */
-    imputation(
+    /*
+    IMPUTATION_LOW_PASS_SIMULATION(
         reference,
         input_fastqs,
         bwaidx,
         faidx,
         ref_panel,
         downsample_rate
-    )
+    )*/
 
+    IMPUTATION(
+        reference,
+        input_fastqs,
+        bwaidx,
+        faidx,
+        ref_panel
+    )
 }
