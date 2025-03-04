@@ -1,0 +1,14 @@
+name: my_r_environment
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - r-base=4.1.0
+  - r-tidyverse
+  - r-vcfR
+  - r-plotly
+  - r-ggplot2
+  - r-dt
+  - r-htmlwidgets
+  - r-htmltools
+  - r-optparse

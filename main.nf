@@ -58,13 +58,15 @@ workflow{
 
 
     // regions channels
-    bed = Channel.fromPath("${params.bed}").collect()
+    bed             = Channel.fromPath("${params.bed}").collect()
+    interpretation  = Channel.fromPath("${params.interpretation}").collect()
     IMPUTATION(
         reference,
         input_fastqs,
         bwaidx,
         faidx,
         ref_panel,
-        bed
+        bed,
+        interpretation
     )
 }

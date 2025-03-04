@@ -20,6 +20,6 @@ process BCFTOOLS_MPILEUP {
     
     script:
     """    
-    bcftools mpileup -f $reference "${sid}.bam" -Ou | bcftools call -mv -Ob -o ${sid}.bcf --threads ${task.cpus}
+    bcftools mpileup -f $reference "${sid}.bam" -Ou | bcftools call -m -Ob -o ${sid}.bcf --threads ${task.cpus}
     """
 }

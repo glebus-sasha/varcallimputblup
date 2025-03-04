@@ -9,7 +9,7 @@ process BCF_TO_VCF {
     errorStrategy 'ignore'
 
     input:
-    tuple val(sid), path(bcf)
+    tuple val(sid), path(bcf), path(csi)
 
     output:
     tuple val(sid), path("${sid}.vcf"), emit: vcf

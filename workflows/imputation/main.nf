@@ -17,13 +17,21 @@ workflow IMPUTATION{
     faidx
     ref_panel
     bed
+    interpretation
 
     main:
     FASTQ_QC_TRIM_FASTQ_FASTP(input_fastqs)
     FASTQ_ALIGN_BWA(reference, FASTQ_QC_TRIM_FASTQ_FASTP.out.trimmed_reads, bwaidx)
     PICARD_MARK_DUPLICATES(FASTQ_ALIGN_BWA.out.align)
     BAM_IMPUTE_GLIMPSE2(ref_panel, FASTQ_ALIGN_BWA.out.align)
-    CARPET(BAM_IMPUTE_GLIMPSE2.out.bcf.join(BAM_IMPUTE_GLIMPSE2.out.csi), bed)
+    CARPET(
+        BAM_IMPUTE_GLIMPSE2.out.bcf.join(BAM_IMPUTE_GLIMPSE2.out.csi), 
+        bed, 
+        interpretation,
+        FASTQ_ALIGN_BWA.out.align,
+        reference,
+        faidx
+        )
 
     MULTIQC(
         FASTQ_QC_TRIM_FASTQ_FASTP.out.fastp_json                       |
